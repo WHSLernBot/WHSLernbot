@@ -46,7 +46,7 @@ let FB_VERIFY_TOKEN = null;
 crypto.randomBytes(8, (err, buff) => {
   if (err) throw err;
   FB_VERIFY_TOKEN = buff.toString('hex');
-  console.log(`/webhook will accept the Verify Token "${FB_VERIFY_TOKEN}"`);
+  console.log(`		/webhook will accept the Verify Token "${FB_VERIFY_TOKEN}"`);
 });
 
 // ----------------------------------------------------------------------------
@@ -150,7 +150,7 @@ app.use(bodyParser.json({ verify: verifyRequestSignature }));
 // Webhook setup
 app.get('/webhook', (req, res) => {
   if (req.query['hub.mode'] === 'subscribe' &&
-    req.query['hub.verify_token'] === FB_VERIFY_TOKEN) {
+    req.query['hub.verify_token'] === 'chatbot') {
     res.send(req.query['hub.challenge']);
   } else {
     res.sendStatus(400);
