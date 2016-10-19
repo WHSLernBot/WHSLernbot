@@ -41,6 +41,7 @@ const FB_PAGE_TOKEN = process.env.FB_PAGE_TOKEN;
 if (!FB_PAGE_TOKEN) { throw new Error('missing FB_PAGE_TOKEN') }
 const FB_APP_SECRET = process.env.FB_APP_SECRET;
 if (!FB_APP_SECRET) { throw new Error('missing FB_APP_SECRET') }
+
 const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 if (!FB_VERIFY_TOKEN) { throw new Error('missing FB_APP_SECRET') }
 
@@ -55,7 +56,7 @@ const fbMessage = (id, text) => {
     recipient: { id },
     message: { text },
   });
-  const qs = 'access_token=' + FB_PAGE_TOKEN;
+  const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
   return fetch('https://graph.facebook.com/me/messages?' + qs, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -97,7 +98,7 @@ const findOrCreateSession = (fbid) => {
 
 // Our bot actions
 const actions = {
-  send(sessionId, text) {
+  send({sessionId}, {text}) {
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
@@ -140,7 +141,7 @@ app.use(({method, url}, rsp, next) => {
   });
   next();
 });
-app.use(bodyParser.json( verify: verifyRequestSignature ));
+app.use(bodyParser.json({ verify: verifyRequestSignature }));
 
 // Webhook setup
 app.get('/webhook', (req, res) => {
