@@ -55,7 +55,7 @@ const fbMessage = (id, text) => {
     recipient: { id },
     message: { text },
   });
-  const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
+  const qs = 'access_token=' + FB_PAGE_TOKEN;
   return fetch('https://graph.facebook.com/me/messages?' + qs, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -134,7 +134,7 @@ const wit = new Wit({
 
 // Starting our webserver and putting it all together
 const app = express();
-app.use((function(method, url), rsp, next) => {
+app.use(({method, url}, rsp, next) => {
   rsp.on('finish', () => {
     console.log(`${rsp.statusCode} ${method} ${url}`);
   });
