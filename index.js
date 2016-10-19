@@ -134,13 +134,13 @@ const wit = new Wit({
 
 // Starting our webserver and putting it all together
 const app = express();
-app.use(({method, url}, rsp, next) => {
+app.use(((method, url), rsp, next) => {
   rsp.on('finish', () => {
     console.log(`${rsp.statusCode} ${method} ${url}`);
   });
   next();
 });
-app.use(bodyParser.json({ verify: verifyRequestSignature }));
+app.use(bodyParser.json( verify: verifyRequestSignature ));
 
 // Webhook setup
 app.get('/webhook', (req, res) => {
