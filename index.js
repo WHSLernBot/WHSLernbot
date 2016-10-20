@@ -153,12 +153,12 @@ const actions = {
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
   
-  //Eine Test Funktionen
+  //Eine Test Funktion
   getForecast({context, entities}) {
   return new Promise(function(resolve, reject) {
     var location = firstEntityValue(entities, "location")
     if (location) {
-      context.forecast = 'sunny in ' + location; // we should call a weather API here
+      context.forecast = 'sonnig in ' + location; // we should call a weather API here
       delete context.missingLocation;
     } else {
       context.missingLocation = true;
