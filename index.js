@@ -30,6 +30,9 @@ try {
   log = require('node-wit').log;
 }
 
+
+//Alle Token werden auf dem Server ausgelesen. Bei Localer überprüfung müssen diese mitangegeben werden!
+
 // Webserver parameter
 const PORT = process.env.PORT || 8445;
 
@@ -42,6 +45,8 @@ if (!FB_PAGE_TOKEN) { throw new Error('missing FB_PAGE_TOKEN') }
 const FB_APP_SECRET = process.env.FB_APP_SECRET;
 if (!FB_APP_SECRET) { throw new Error('missing FB_APP_SECRET') }
 
+
+//Diesen Token kann man auch noch generieren lassen
 const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 if (!FB_VERIFY_TOKEN) { throw new Error('missing FB_APP_SECRET') }
 
@@ -77,10 +82,12 @@ const fbMessage = (id, text) => {
 // This will contain all user sessions.
 // Each session has an entry:
 // sessionId -> {fbid: facebookUserId, context: sessionState}
+
 const sessions = {};
 
 const findOrCreateSession = (fbid) => {
   let sessionId;
+  
   // Let's see if we already have a session for the user fbid
   Object.keys(sessions).forEach(k => {
     if (sessions[k].fbid === fbid) {
@@ -96,16 +103,22 @@ const findOrCreateSession = (fbid) => {
   return sessionId;
 };
 
-// Our bot actions
+// Innerhalb von Actions müssen unsere Funktionen reingepackt werden
 const actions = {
+	
   send({sessionId}, {text}) {
+	  
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
+	
     if (recipientId) {
+		
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
+	  
+	  
       return fbMessage(recipientId, text)
       .then(() => null)
       .catch((err) => {
@@ -117,6 +130,7 @@ const actions = {
         );
       });
     } else {
+		
       console.error('Oops! Couldn\'t find user for session:', sessionId);
       // Giving the wheel back to our bot
       return Promise.resolve()
@@ -124,6 +138,24 @@ const actions = {
   },
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
+  
+  //Eine Test Funktionen
+  getForecast({context, entities}) {
+  return new Promise(function(resolve, reject) {
+    var location = firstEntityValue(entities, "location")
+    if (location) {
+      context.forecast = 'sunny in ' + location; // we should call a weather API here
+      delete context.missingLocation;
+    } else {
+      context.missingLocation = true;
+      delete context.forecast;
+    }
+    return resolve(context);
+  });
+},
+
+  
+  
 };
 
 // Setting up our bot
@@ -164,6 +196,7 @@ app.post('/webhook', (req, res) => {
     data.entry.forEach(entry => {
       entry.messaging.forEach(event => {
         if (event.message) {
+			
           // Yay! We got a new message!
           // We retrieve the Facebook user ID of the sender
           const sender = event.sender.id;
@@ -176,6 +209,7 @@ app.post('/webhook', (req, res) => {
           const {text, attachments} = event.message;
 
           if (attachments) {
+			  
             // We received an attachment
             // Let's reply with an automatic message
             fbMessage(sender, 'Sorry I can only process text messages for now.')
