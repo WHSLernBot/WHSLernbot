@@ -18,6 +18,7 @@ const crypto = require('crypto');
 const express = require('express');
 const fetch = require('node-fetch');
 const request = require('request');
+var http = require('http');
 
 let Wit = null;
 let log = null;
@@ -156,6 +157,17 @@ const actions = {
   //Eine Test Funktion
   getForecast({context, entities}) {
   return new Promise(function(resolve, reject) {
+	  
+	http.get('http://localhost:5000/test', function (response) {
+		
+		response.setEncoding('utf8');
+		response.on('readable', function() {
+			console.log(response.read);
+		});
+		
+		  
+	  });
+	  
     var location = firstEntityValue(entities, "location")
     if (location) {
       context.forecast = 'sonnig in ' + location; // we should call a weather API here
