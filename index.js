@@ -154,6 +154,22 @@ const actions = {
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
   
+  gibAufgabe({context, entities}) {
+  return new Promise(function(resolve, reject) {
+    var thema = firstEntityValue(entities, "thema")
+    if (thema) {
+      context.thema = 'Hier ist deine ' + thema + ' Aufgabe !!!'; 
+      delete context.missingThema;
+    } else {
+      context.missingThema = true;
+      delete context.thema;
+    }
+    return resolve(context);
+  });
+},
+
+  
+  
   //Eine Test Funktion
   getForecast({context, entities}) {
   return new Promise(function(resolve, reject) {
