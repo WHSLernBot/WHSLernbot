@@ -173,12 +173,7 @@ const actions = {
   //Eine Test Funktion
   getForecast({context, entities}) {
   return new Promise(function(resolve, reject) {
-	  
-	http.get('http://secure-plateau-70134.herokuapp.com/test', function(response) {
-		
-		console.dir(response);
-		
-	});
+
 	  
 	  
     var location = firstEntityValue(entities, "location")
