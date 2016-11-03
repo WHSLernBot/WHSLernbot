@@ -164,7 +164,7 @@ const actions = {
 	  button.value = "A";
 	  
 		
-      context.thema = 'Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ?' + button; 
+      context.thema = 'Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ???' + button; 
 	  
       delete context.missingThema;
     } else {
