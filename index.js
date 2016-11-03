@@ -157,6 +157,8 @@ const actions = {
   gibAufgabe({context, entities}) {
   return new Promise(function(resolve, reject) {
     var thema = firstEntityValue(entities, "thema")
+    
+    console.log(context);
     if (thema) {
               
         context.thema ='Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ???'; 
