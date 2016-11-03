@@ -158,7 +158,14 @@ const actions = {
   return new Promise(function(resolve, reject) {
     var thema = firstEntityValue(entities, "thema")
     if (thema) {
-      context.thema = 'Hier ist deine ' + thema + ' Aufgabe !!!'; 
+		
+	  var button = document.createElement("input");
+	  button.type = "button";
+	  button.value = "A";
+	  
+		
+      context.thema = 'Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ?' + button; 
+	  
       delete context.missingThema;
     } else {
       context.missingThema = true;
