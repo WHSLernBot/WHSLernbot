@@ -158,9 +158,11 @@ const actions = {
 
   return new Promise(function(resolve, reject) {
     var thema = firstEntityValue(entities, "thema");
-    
-      console.log(entities);
-      console.log(context);    
+        
+      console.log("Entities:");  
+      console.dir(entities);
+      console.log("Context:");  
+      console.dir(context);    
     
     if (thema) {
               
