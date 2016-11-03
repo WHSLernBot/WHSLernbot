@@ -124,18 +124,22 @@ const firstEntityValue = (entities, entity) => {
 // Innerhalb von Actions müssen unsere Funktionen reingepackt werden
 const actions = {
 	
-  send({sessionId}, {text}) {
-	  
-    // Our bot has something to say!
-    // Let's retrieve the Facebook user whose session belongs to
+//  send({sessionId}, {text}) {
+    send(request, response) { 
+        
+    const {sessionId, context, entities} = request;
+    const {text, quickreplies} = response;
+    
+        
+//    // Our bot has something to say!
+//    // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
-	
     if (recipientId) {
-		
-      // Yay, we found our recipient!
-      // Let's forward our bot response to her.
-      // We return a promise to let our bot know when we're done sending
-	  
+//		
+//      // Yay, we found our recipient!
+//      // Let's forward our bot response to her.
+//      // We return a promise to let our bot know when we're done sending
+//	  
 	  
       return fbMessage(recipientId, text)
       .then(() => null)
@@ -158,6 +162,7 @@ const actions = {
   // See https://wit.ai/docs/quickstart
   
   gibAufgabe({context, entities}) {
+      
   return new Promise(function(resolve, reject) {
     var thema = firstEntityValue(entities, "thema")
     if (thema) {
@@ -229,7 +234,7 @@ app.post('/webhook', (req, res) => {
   const data = req.body;
   
   console.log("BITTTTEEEESSEHR");
-  console.dir(req);
+  console.dir(req.body);
 
   if (data.object === 'page') {
     data.entry.forEach(entry => {
