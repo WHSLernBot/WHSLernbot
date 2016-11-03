@@ -68,12 +68,14 @@ const fbMessage = (id, text) => {
     headers: {'Content-Type': 'application/json'},
     body,
   })
-  .then(rsp => rsp.json())
+  .then(rsp =>  {
+      console.dir(rsp);
+      return rsp.json()})
   .then(json => {
     if (json.error && json.error.message) {
       throw new Error(json.error.message);
     }
-    console.dir(json);
+    
     return json;
   });
 };
