@@ -31,6 +31,8 @@ try {
   log = require('node-wit').log;
 }
 
+var dotenv = require('dotenv');
+dotenv.load();
 
 //Alle Token werden auf dem Server ausgelesen. Bei Localer überprüfung müssen diese mitangegeben werden!
 
@@ -62,6 +64,7 @@ const fbMessage = (id, text) => {
     recipient: { id },
     message: { text },
   });
+  
   const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
   return fetch('https://graph.facebook.com/me/messages?' + qs, {
     method: 'POST',
@@ -73,6 +76,7 @@ const fbMessage = (id, text) => {
     if (json.error && json.error.message) {
       throw new Error(json.error.message);
     }
+    console.dir(json);
     return json;
   });
 };
@@ -158,7 +162,7 @@ const actions = {
   getForecast({context, entities}) {
   return new Promise(function(resolve, reject) {
 	  
-	http.get('https://secure-plateau-70134.herokuapp.com/test', function(response) {
+	http.get("https://secure-plateau-70134.herokuapp.com/test", function(response) {
 		
 		console.dir(response);
 		
