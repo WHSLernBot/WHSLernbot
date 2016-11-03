@@ -159,8 +159,8 @@ const actions = {
   return new Promise(function(resolve, reject) {
     var thema = firstEntityValue(entities, "thema");
     
-      console.log(entities + " HIEEEERR");
-      console.log(context + " HIEEEERRRRRRR!!!");    
+      console.log(entities);
+      console.log(context);    
     
     if (thema) {
               
