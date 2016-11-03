@@ -159,7 +159,25 @@ const actions = {
     var thema = firstEntityValue(entities, "thema")
     if (thema) {
         
-        context.thema = 'Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ???'; 
+            message = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": [{
+                            "title": "Aufgabe XY",
+                            "subtitle": "Was ist die Lösung ?",
+                            "buttons": [{
+                                "type": "postback",
+                                "title": "(A)",
+                                },
+                            }]
+                        }]
+                    }
+                };
+            
+        
+        context.thema = message;//'Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ???'; 
 
         delete context.missingThema;
     } else {
