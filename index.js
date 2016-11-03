@@ -121,35 +121,14 @@ const firstEntityValue = (entities, entity) => {
 // Innerhalb von Actions müssen unsere Funktionen reingepackt werden
 const actions = {
 	
-  send({sessionId}, {text}) {
-	  
-    // Our bot has something to say!
-    // Let's retrieve the Facebook user whose session belongs to
-    const recipientId = sessions[sessionId].fbid;
-	
-    if (recipientId) {
-		
-      // Yay, we found our recipient!
-      // Let's forward our bot response to her.
-      // We return a promise to let our bot know when we're done sending
-	  
-	  
-      return fbMessage(recipientId, text)
-      .then(() => null)
-      .catch((err) => {
-        console.error(
-          'Oops! An error occurred while forwarding the response to',
-          recipientId,
-          ':',
-          err.stack || err
-        );
-      });
-    } else {
-		
-      console.error('Oops! Couldn\'t find user for session:', sessionId);
-      // Giving the wheel back to our bot
-      return Promise.resolve()
-    }
+  send(request, response) {
+    const {sessionId, context, entities} = request;
+    const {text, quickreplies} = response;
+    return new Promise(function(resolve, reject) {
+        console.log('user said...', request.text);
+        console.log('sending...', JSON.stringify(response));
+        return resolve();
+    });
   },
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
@@ -160,6 +139,7 @@ const actions = {
     if (thema) {
               
         context.thema ='Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ???'; 
+        
 
         delete context.missingThema;
     } else {
