@@ -155,11 +155,12 @@ const actions = {
   // See https://wit.ai/docs/quickstart
   
   gibAufgabe({context, entities}) {
-      console.log(entities + " HIEEEERR");
-      console.log(context + " HIEEEERRRRRRR!!!");
+
   return new Promise(function(resolve, reject) {
-    var thema = firstEntityValue(entities, "thema")
+    var thema = firstEntityValue(entities, "thema");
     
+      console.log(entities + " HIEEEERR");
+      console.log(context + " HIEEEERRRRRRR!!!");    
     
     if (thema) {
               
