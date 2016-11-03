@@ -158,18 +158,31 @@ const actions = {
   return new Promise(function(resolve, reject) {
     var thema = firstEntityValue(entities, "thema")
     if (thema) {
-		
-	  var button = document.createElement("input");
-	  button.type = "button";
-	  button.value = "A";
-	  
-		
-      context.thema = 'Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ???' + button; 
-	  
-      delete context.missingThema;
+        
+        message = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": [{
+                            "title": "Aufgabe XY",
+                            "subtitle": "Hier ist deine Aufgabe ! Was ist die Antzwort ?", //+ thema + "Aufgabe",
+                            
+                            "buttons": [{
+                                "type": "postback",
+                                "title": "(A)",
+                                }]
+                        }]
+                    }
+                }
+            };
+
+        context.thema = message; 
+
+        delete context.missingThema;
     } else {
-      context.missingThema = true;
-      delete context.thema;
+        context.missingThema = true;
+        delete context.thema;
     }
     return resolve(context);
   });
