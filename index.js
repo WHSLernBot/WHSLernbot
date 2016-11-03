@@ -31,9 +31,6 @@ try {
   log = require('node-wit').log;
 }
 
-var dotenv = require('dotenv');
-dotenv.load();
-
 //Alle Token werden auf dem Server ausgelesen. Bei Localer überprüfung müssen diese mitangegeben werden!
 
 // Webserver parameter
