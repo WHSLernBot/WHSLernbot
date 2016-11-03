@@ -68,7 +68,10 @@ const fbMessage = (id, text) => {
     headers: {'Content-Type': 'application/json'},
     body,
   })
-  .then(rsp => rsp.json())
+  .then(rsp => {
+      console.log("HIIIIIIEERR");
+      console.dir(rsp.json());
+                return rsp.json()})
   .then(json => {
     if (json.error && json.error.message) {
       throw new Error(json.error.message);
@@ -155,15 +158,8 @@ const actions = {
   // See https://wit.ai/docs/quickstart
   
   gibAufgabe({context, entities}) {
-
   return new Promise(function(resolve, reject) {
-    var thema = firstEntityValue(entities, "thema");
-        
-      console.log("Entities:");  
-      console.dir(entities);
-      console.log("Context:");  
-      console.dir(context);    
-    
+    var thema = firstEntityValue(entities, "thema")
     if (thema) {
               
         context.thema ='Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ???'; 
@@ -195,10 +191,7 @@ const actions = {
     }
     return resolve(context);
   });
-},
-
-  
-  
+  }
 };
 
 // Setting up our bot
@@ -234,6 +227,9 @@ app.post('/webhook', (req, res) => {
   // See the Webhook reference
   // https://developers.facebook.com/docs/messenger-platform/webhook-reference
   const data = req.body;
+  
+  console.log("BITTTTEEEESSEHR");
+  console.dir(req);
 
   if (data.object === 'page') {
     data.entry.forEach(entry => {
