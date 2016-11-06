@@ -800,7 +800,7 @@ const actions = {
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
   
-  gibAufgabe({context, entities, response}) {
+  gibAufgabe({context, entities}) {
       
   return new Promise(function(resolve, reject) {
     var thema = firstEntityValue(entities, "thema")
