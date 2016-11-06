@@ -805,18 +805,9 @@ const actions = {
   return new Promise(function(resolve, reject) {
     var thema = firstEntityValue(entities, "thema")
     if (thema) {
-              
-        //function(context) {
-            
-            //context.res.text() = "Test 123";
-            
-            context.res = { status: 202, body: 'You successfully ordered more coffee!' };
-            context.thema = { status: 202, body: 'klappt es ?' };
-        //}
-            
-        
-                //'Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ???'; 
-        
+
+        context.thema = 'Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ???'; 
+        //context.res = { status: 202, body: 'You successfully ordered more coffee!' };   
         delete context.missingThema;
     } else {
         context.missingThema = true;
