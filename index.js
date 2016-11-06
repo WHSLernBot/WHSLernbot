@@ -126,6 +126,7 @@ const actions = {
     const {sessionId, context, entities} = request;
     const {text, quickreplies} = response;
     return new Promise(function(resolve, reject) {
+        response.quickreplies.map(context.thema => {"title": "HTML", "content_type": "text", "payload": "empty"});
         console.log('user said...', request.text);
         console.log('sending...', JSON.stringify(response));
         return resolve();
@@ -178,7 +179,13 @@ const actions = {
 // Setting up our bot
 const wit = new Wit({
   accessToken: WIT_TOKEN,
-  actions,
+  actions: {
+    send(request, response) {
+      return new Promise(function(resolve, reject) {
+        console.log(JSON.stringify(response));
+        return resolve();
+      });
+    },
   logger: new log.Logger(log.INFO)
 });
 
