@@ -806,8 +806,8 @@ const actions = {
     var thema = firstEntityValue(entities, "thema")
     if (thema) {
 
-        context.thema = 'Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ???'; 
-        //context.res = { status: 202, body: 'You successfully ordered more coffee!' };   
+        context.thema = 'Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ???';
+        
         delete context.missingThema;
     } else {
         context.missingThema = true;
