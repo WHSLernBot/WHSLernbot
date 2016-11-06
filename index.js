@@ -836,7 +836,7 @@ const actions = {
     }
     return resolve(context);
   });
-  }
+  },
 };
 
 // Setting up our bot
