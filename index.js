@@ -800,20 +800,30 @@ const actions = {
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
   
-  gibAufgabe({context, entities}) {
+  gibAufgabe({context, entities, response}) {
       
   return new Promise(function(resolve, reject) {
     var thema = firstEntityValue(entities, "thema")
     if (thema) {
               
-        context.thema ='Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ???'; 
-
+        //function(context) {
+            
+            //context.res.text() = "Test 123";
+            
+            context.res = { status: 202, body: 'You successfully ordered more coffee!' };
+            context.thema = { status: 202, body: 'klappt es ?' };
+        //}
+            
+        
+                //'Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ???'; 
+        
         delete context.missingThema;
     } else {
         context.missingThema = true;
         delete context.thema;
     }
     return resolve(context);
+    
   });
 },
 
