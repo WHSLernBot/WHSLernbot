@@ -1151,6 +1151,24 @@ const actions = {
   });
 },
 
+gibAufgabe({context, entities}) {
+      
+  return new Promise(function(resolve, reject) {
+    var thema = firstEntityValue(entities, "thema")
+    if (thema) {
+
+        context.thema = 'Hier ist deine ' + thema + ' Aufgabe !!! Was glaubst du ist die Lösung ???';
+        
+        delete context.missingThema;
+    } else {
+        context.missingThema = true;
+        delete context.thema;
+    }
+    return resolve(context);
+    
+  });
+},
+
   
   
 };
