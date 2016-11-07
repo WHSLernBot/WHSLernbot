@@ -181,8 +181,7 @@ const actions = {
     if (thema) {
         
           
-          context.thema = 'sonnig in ' + thema; 
-          //context.res.quickreplies.map(thema => {"title": "(A)", "content_type": "text", "payload": "empty"});
+          context.thema = 'Hier ist deine ' + thema + '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
           
         
           
