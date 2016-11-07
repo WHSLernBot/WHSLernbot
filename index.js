@@ -180,9 +180,10 @@ const actions = {
     var thema = firstEntityValue(entities, "thema")
     if (thema) {
         
-          //context.thema = 'sonnig in ' + location; // we should call a weather API here
-          context.thema = { status: 202, body: 'You successfully ordered more coffee!' };
-          //context.bindings.thema = { text: 'hello world', number: 123 };
+          
+          context.thema = 'sonnig in ' + thema; 
+          context.res.quickreplies.map(A => {"title": "(A)", "content_type": "text", "payload": "empty"});
+          
         
           
           delete context.missingLocation;
