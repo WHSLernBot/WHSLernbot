@@ -161,13 +161,6 @@ const actions = {
   getForecast({context, entities}) {
   return new Promise(function(resolve, reject) {
 	  
-	http.get("https://secure-plateau-70134.herokuapp.com/test", function(response) {
-		
-		console.dir(response);
-		
-	});
-	  
-	  
     var location = firstEntityValue(entities, "location")
     if (location) {
       context.forecast = 'sonnig in ' + location; // we should call a weather API here
