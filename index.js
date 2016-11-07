@@ -173,6 +173,29 @@ const actions = {
   });
 },
 
+//Eine Test Funktion
+  gibAufgabe({context, entities}) {
+  return new Promise(function(resolve, reject) {
+	  
+    var thema = firstEntityValue(entities, "thema")
+    if (thema) {
+        
+          //context.thema = 'sonnig in ' + location; // we should call a weather API here
+      
+          context.bindings.thema = { text: 'hello world', number: 123 };
+        
+          context.done(null, { thema: { text: 'hello there, world', noNumber: true }});
+          
+          delete context.missingLocation;
+          
+    } else {
+      context.missingLocation = true;
+      delete context.forecast;
+    }
+    return resolve(context);
+  });
+},
+
   
   
 };
