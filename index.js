@@ -181,7 +181,7 @@ const actions = {
     if (thema) {
         
           //context.thema = 'sonnig in ' + location; // we should call a weather API here
-          context.res = { status: 202, body: 'You successfully ordered more coffee!' };
+          context.thema = { status: 202, body: 'You successfully ordered more coffee!' };
           //context.bindings.thema = { text: 'hello world', number: 123 };
         
           
