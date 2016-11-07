@@ -182,7 +182,7 @@ const actions = {
         
           
           context.thema = 'sonnig in ' + thema; 
-          context.thema.quickreplies.map(A => {"title": "(A)", "content_type": "text", "payload": "empty"});
+          context.thema.res.quickreplies.map(thema => {"title": "(A)", "content_type": "text", "payload": "empty"});
           
         
           
