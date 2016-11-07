@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 'use strict';
 
 // Messenger API integration example
@@ -124,15 +121,7 @@ const firstEntityValue = (entities, entity) => {
 // Innerhalb von Actions müssen unsere Funktionen reingepackt werden
 const actions = {
 	
-  send(request, response) {
-    const {sessionId, context, entities} = request;
-    const {text, quickreplies} = response;
-    return new Promise(function(resolve, reject) {
-        response.quickreplies.map(context.thema => {"title": "HTML", "content_type": "text", "payload": "empty"});
-        console.log('user said...', request.text);
-        console.log('sending...', JSON.stringify(response));
-        return resolve();
-    });
+  
   },
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
