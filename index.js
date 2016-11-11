@@ -134,7 +134,7 @@ const actions = {
     
     
     if (recipientId) {
-		
+	console.log("VOR TEXT UMWANDLUNG");	
         text =  {
                 "attachment": {
                     "type": "template",
@@ -157,7 +157,7 @@ const actions = {
                     }
                 }
             };
-        
+        console.log("DANAAAAAAAAAAAAAAAAAAAAACH");
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
