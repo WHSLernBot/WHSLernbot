@@ -60,7 +60,11 @@ const fbMessage = (id, text) => {
   const body = JSON.stringify({
     recipient: { id },
     message: { text },
-  });
+  }
+          
+   console.log("HIIiiiiiiiiiiiiiiiiiiiiiiiiER");
+   console.log(body); 
+);
   
   const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
   return fetch('https://graph.facebook.com/me/messages?' + qs, {
@@ -130,8 +134,7 @@ const actions = {
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
     
-    console.log("HAAAAALLLLLLLLLLLLLLLOOOOOOOOOOOOOOOOO♥");
-    console.log(text);
+    
     
     if (recipientId) {
 		
