@@ -129,7 +129,10 @@ const actions = {
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
-	
+    
+    console.log("HAAAAALLLLLLLLLLLLLLLOOOOOOOOOOOOOOOOO♥");
+    console.log(text);
+    
     if (recipientId) {
 		
       // Yay, we found our recipient!
@@ -181,11 +184,12 @@ const actions = {
     if (thema) {
         
           
-          context.thema = 'Hier ist deine ' + thema + '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
+        context.thema = 'Hier ist deine ' + thema + 
+                '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
           
         
           
-          delete context.missingLocation;
+        delete context.missingLocation;
           
     } else {
       context.missingLocation = true;
