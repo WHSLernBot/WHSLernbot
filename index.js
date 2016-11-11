@@ -63,7 +63,7 @@ const fbMessage = (id, text) => {
   });
   
   console.log("HIIiiiiiiiiiiiiiiiiiiiiiiiiER");
-  console.log(body); 
+  console.log(body.message); 
   
   const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
   return fetch('https://graph.facebook.com/me/messages?' + qs, {
@@ -71,9 +71,7 @@ const fbMessage = (id, text) => {
     headers: {'Content-Type': 'application/json'},
     body,
   })
-  .then(rsp =>  {
-      console.dir(rsp);
-      return rsp.json()})
+  .then(rsp =>  rsp.json())
   .then(json => {
     if (json.error && json.error.message) {
       throw new Error(json.error.message);
@@ -137,6 +135,26 @@ const actions = {
     
     if (recipientId) {
 		
+        text = "attachment":{
+        "type":"template",
+        "payload":{
+        "template_type":"button",
+        "text":"What do you want to do next?",
+        "buttons":[
+         {
+            "type":"web_url",
+            "url":"www.google.de",
+            "title":"Show Website"
+         },
+         {
+            "type":"postback",
+            "title":"Start Chatting",
+            "payload":"USER_DEFINED_PAYLOAD"
+         }
+        ]
+        }
+        };
+        
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
