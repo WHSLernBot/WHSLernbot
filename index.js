@@ -143,15 +143,15 @@ const actions = {
                         "elements": [{
                             "title": "Kitten",
                             "subtitle": "Cute kitten picture",
-                            "image_url": imageUrl ,
+                            "image_url": "www.google.de" ,
                             "buttons": [{
                                 "type": "web_url",
-                                "url": imageUrl,
+                                "url": "www.google.de",
                                 "title": "Show kitten"
                                 }, {
                                 "type": "postback",
                                 "title": "I like this",
-                                "payload": "User " + recipientId + " likes kitten " + imageUrl,
+                                "payload": "User " + recipientId + " likes kitten  www.google.de",
                             }]
                         }]
                     }
