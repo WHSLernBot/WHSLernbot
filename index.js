@@ -59,11 +59,9 @@ if (!FB_VERIFY_TOKEN) { throw new Error('missing FB_APP_SECRET') }
 const fbMessage = (id, text) => {
   const body = JSON.stringify({
     recipient: { id },
-    message:  text ,
+    message:  { text } ,
   });
   
-  console.log("HIIiiiiiiiiiiiiiiiiiiiiiiiiER");
-  console.log(body.message); 
   
   const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
   return fetch('https://graph.facebook.com/me/messages?' + qs, {
@@ -134,23 +132,23 @@ const actions = {
     
     
     if (recipientId) {
-	console.log("VOR TEXT UMWANDLUNG");	
-        text =  {
-                "text":"Pick a color:",
-                    "quick_replies":[
-                      {
-                        "content_type":"text",
-                        "title":"Red",
-                        "payload":"Du hast Rot gewählt"
-                      },
-                      {
-                        "content_type":"text",
-                        "title":"Green",
-                        "payload":"Du hast grün gewählt"
-                      }
-                                    ]
-            };
-        console.log("DANAAAAAAAAAAAAAAAAAAAAACH");
+//	console.log("VOR TEXT UMWANDLUNG");	
+//        text =  {
+//                "text":"Pick a color:",
+//                    "quick_replies":[
+//                      {
+//                        "content_type":"text",
+//                        "title":"Red",
+//                        "payload":"Du hast Rot gewählt"
+//                      },
+//                      {
+//                        "content_type":"text",
+//                        "title":"Green",
+//                        "payload":"Du hast grün gewählt"
+//                      }
+//                                    ]
+//            };
+//        console.log("DANAAAAAAAAAAAAAAAAAAAAACH");
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
