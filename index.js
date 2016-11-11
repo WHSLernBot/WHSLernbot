@@ -136,26 +136,19 @@ const actions = {
     if (recipientId) {
 	console.log("VOR TEXT UMWANDLUNG");	
         text =  {
-                "attachment": {
-                    "type": "template",
-                    "payload": {
-                        "template_type": "generic",
-                        "elements": [{
-                            "title": "Kitten",
-                            "subtitle": "Cute kitten picture",
-                            "image_url": "www.google.de" ,
-                            "buttons": [{
-                                "type": "web_url",
-                                "url": "www.google.de",
-                                "title": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
-                                }, {
-                                "type": "postback",
-                                "title": "I like this",
-                                "payload": "User " + recipientId + " likes kitten  www.google.de",
-                            }]
-                        }]
-                    }
-                }
+                "text":"Pick a color:",
+                    "quick_replies":[
+                      {
+                        "content_type":"text",
+                        "title":"Red",
+                        "payload":"Du hast Rot gewählt"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"Green",
+                        "payload":"Du hast grün gewählt"
+                      }
+                                    ]
             };
         console.log("DANAAAAAAAAAAAAAAAAAAAAACH");
       // Yay, we found our recipient!
