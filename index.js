@@ -139,7 +139,7 @@ const actions = {
             
    
         
-        text =  {"text" : messageText,
+        text =  {"text" : sessions[sessionId].context.thema,
                 "quick_replies" : [
                   {
                     "content_type" : "text",
