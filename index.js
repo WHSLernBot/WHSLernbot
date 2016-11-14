@@ -201,7 +201,8 @@ const actions = {
 //Eine Test Funktion
   gibAufgabe({context, entities}) {
   return new Promise(function(resolve, reject) {
-	  
+    console.log("HIIIER DER CONTEXT");
+    console.log(context)
     var thema = firstEntityValue(entities, "thema")
     if (thema) {
         
@@ -212,7 +213,10 @@ const actions = {
         
           
         delete context.missingThema;
-          
+        
+        console.log("HIIIER DER CONTEXT NACHHHHH BESCHREIBUNG");
+        console.log(context) 
+        
     } else {
       context.missingThema = true;
       delete context.thema;
