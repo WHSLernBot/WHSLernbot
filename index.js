@@ -19,6 +19,7 @@ const express = require('express');
 const fetch = require('node-fetch');
 const request = require('request');
 const http = require('http');
+const messageText = " ";
 let Wit = null;
 let log = null;
 
@@ -138,7 +139,7 @@ const actions = {
             
    
         
-        text =  {"text" : context.thema,
+        text =  {"text" : messageText,
                 "quick_replies" : [
                   {
                     "content_type" : "text",
@@ -207,7 +208,9 @@ const actions = {
           
         context.thema = 'Hier ist deine ' + thema + 
                 '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
-          
+        
+        messageText = "Hier ist deine " + thema + 
+                "-Aufgabe was glaubst du ist die richtige Antwort ???";
         
           
         delete context.missingThema;
