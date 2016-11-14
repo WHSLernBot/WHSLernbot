@@ -138,7 +138,7 @@ const actions = {
             
    
         
-        text =  {"text" : "context.thema",
+        text =  {"text" : context.thema,
                 "quick_replies" : [
                   {
                     "content_type" : "text",
