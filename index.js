@@ -60,28 +60,6 @@ const fbMessage = (id, text) => {
   const body = JSON.stringify({
     recipient: { id },
     message:  { text } ,
-    
-    setting_type : "call_to_actions",
-    thread_state : "existing_thread",
-    call_to_actions: [
-    {
-      type: "postback",
-      title:"Help",
-      payload:"egal"
-    },
-    {
-      type:"postback",
-      title:"Start a New Order",
-      payload:"egal"
-    },
-    {
-      type:"web_url",
-      title:"GOOGLE",
-      url:"www.google.de",
-      webview_height_ratio: "full",
-      messenger_extensions: true
-    }
-  ]
   });
   
   
@@ -239,11 +217,11 @@ const actions = {
           
         
           
-        delete context.missingLocation;
+        delete context.missingThema;
           
     } else {
-      context.missingLocation = true;
-      delete context.forecast;
+      context.missingThema = true;
+      delete context.thema;
     }
     return resolve(context);
   });
