@@ -141,7 +141,7 @@ const actions = {
             
     //if (!context.missingThema)  { 
         
-        text = "text" : "Frage",
+        text = { "text" : "Frage",
                 "quick_replies" : [
                   {
                     "content_type" : "text",
