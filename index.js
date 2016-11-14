@@ -199,7 +199,8 @@ const actions = {
     var thema = firstEntityValue(entities, "thema")
     if (thema) {
         
-          
+        console.log("VOR CONTEXT");
+        console.log(context);
         context.thema = {"text" : "Hallo",
                         "quick_replies" : [
                           {
@@ -215,7 +216,8 @@ const actions = {
                         ]
 
                     }; 
-          
+          console.log("NACH CONTEXT");
+          console.log(context);
         
           
         delete context.missingThema;
