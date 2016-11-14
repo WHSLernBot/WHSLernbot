@@ -154,7 +154,9 @@ const actions = {
                 ]
                 
             };  
-                
+            
+       console.log("NACH TEXT UMWANDLUNG");
+       console.log(text);         
         
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
@@ -209,8 +211,8 @@ const actions = {
         context.thema = 'Hier ist deine ' + thema + 
                 '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
         
-        messageText = "Hier ist deine " + thema + 
-                "-Aufgabe was glaubst du ist die richtige Antwort ???";
+        messageText = 'Hier ist deine ' + thema + 
+                '-Aufgabe was glaubst du ist die richtige Antwort ???';
         
           
         delete context.missingThema;
