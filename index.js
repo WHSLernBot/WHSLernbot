@@ -128,34 +128,27 @@ const actions = {
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
-    console.log("!!!!!!!!! message abspeicherung !!!!!!!!!");
     
     if (recipientId) {
         
-        
-	console.log("VOR TEXT UMWANDLUNG");
-        console.log(text);
-        
             
-    //if (!context.missingThema)  { 
         
-        text = { "text" : "Frage",
-                "quick_replies" : [
-                  {
-                    "content_type" : "text",
-                    "title" : "Red",
-                    "payload" : "empty"
-                  },
-                  {
-                    "content_type":"text",
-                    "title":"Green",
-                    "payload":"empty"
-                  },
-                ]
+//        text =  {"text" : "Frage",
+//                "quick_replies" : [
+//                  {
+//                    "content_type" : "text",
+//                    "title" : "Red",
+//                    "payload" : "empty"
+//                  },
+//                  {
+//                    "content_type":"text",
+//                    "title":"Green",
+//                    "payload":"empty"
+//                  },
+//                ]
+//                
+//            };  
                 
-            };  
-                
-    //    console.log("DANAAAAAAAAAAAAAAAAAAAAACH");
         
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
@@ -207,8 +200,21 @@ const actions = {
     if (thema) {
         
           
-        context.thema = 'Hier ist deine ' + thema + 
-                '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
+        context.thema = {"text" : "Hallo",
+                        "quick_replies" : [
+                          {
+                            "content_type" : "text",
+                            "title" : "Red",
+                            "payload" : "empty"
+                          },
+                          {
+                            "content_type":"text",
+                            "title":"Green",
+                            "payload":"empty"
+                          },
+                        ]
+
+                    }; 
           
         
           
