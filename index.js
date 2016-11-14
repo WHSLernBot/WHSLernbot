@@ -20,6 +20,7 @@ const fetch = require('node-fetch');
 const request = require('request');
 const http = require('http');
 var messageText = " ";
+var istThema = false;
 let Wit = null;
 let log = null;
 
@@ -138,8 +139,9 @@ const actions = {
         console.log(text);
             
    
+        if (istThema) {
         
-        text =  {"text" : sessions[sessionId].context.thema,
+        text =  {"text" : messageText,
                 "quick_replies" : [
                   {
                     "content_type" : "text",
@@ -153,7 +155,11 @@ const actions = {
                   },
                 ]
                 
-            };  
+            }; 
+            
+            istThema = false;
+            messageText = " ";
+        }
             
        console.log("NACH TEXT UMWANDLUNG");
        console.log(text);         
@@ -214,7 +220,7 @@ const actions = {
         messageText = 'Hier ist deine ' + thema + 
                 '-Aufgabe was glaubst du ist die richtige Antwort ???';
         
-          
+        istThema = true;  
         delete context.missingThema;
         
         console.log("HIIIER DER CONTEXT NACHHHHH BESCHREIBUNG");
