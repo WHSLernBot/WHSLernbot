@@ -153,9 +153,9 @@ const actions = {
                     "title":"Green",
                     "payload":"empty"
                   },
-                ];
+                ]
                 
-            }  
+            };  
                 
     //    console.log("DANAAAAAAAAAAAAAAAAAAAAACH");
         
