@@ -61,28 +61,27 @@ const fbMessage = (id, text) => {
     recipient: { id },
     message:  { text } ,
     
-    setting_type : "call_to_actions",
-    thread_state : "existing_thread",
+    setting_type : call_to_actions,
+    thread_state : existing_thread,
     call_to_actions: [
     {
-      type: "postback",
-      title:"Help",
-      payload:"egal"
+      type: postback,
+      title: Help,
+      payload: egal
     },
     {
-      type:"postback",
-      title:"Start a New Order",
-      payload:"egal"
+      type: postback,
+      title: Start a New Order,
+      payload: egal
     },
     {
-      type:"web_url",
-      title:"GOOGLE",
-      url:"www.google.de",
-      webview_height_ratio: "full",
+      type: web_url,
+      title: GOOGLE,
+      url: www.google.de,
+      webview_height_ratio:  full,
       messenger_extensions: true
     }
   ]
-    
   });
   
   
