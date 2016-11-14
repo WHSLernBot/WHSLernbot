@@ -59,7 +59,7 @@ if (!FB_VERIFY_TOKEN) { throw new Error('missing FB_APP_SECRET') }
 const fbMessage = (id, text) => {
   const body = JSON.stringify({
     recipient: { id },
-    message:   text  ,
+    message:  { text },
   });
   
   
@@ -136,24 +136,24 @@ const actions = {
         
 	console.log("VOR TEXT UMWANDLUNG");
         
-        if(context.missingThema) {
+        
             
         
-        text =  { "text": "Pick a color:",
-                "quick_replies":[
+        text = "text" : "Frage",
+                "quick_replies" : [
                   {
-                    "content_type":"text",
-                    "title":"Red",
-                    "payload":"empty"
+                    "content_type" : "text",
+                    "title" : "Red",
+                    "payload" : "empty"
                   },
                   {
                     "content_type":"text",
                     "title":"Green",
                     "payload":"empty"
-                  }
-                ]};
+                  },
+                ];
                 
-        }
+        
                 
         console.log("DANAAAAAAAAAAAAAAAAAAAAACH");
         
