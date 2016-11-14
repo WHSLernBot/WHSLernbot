@@ -128,9 +128,7 @@ const actions = {
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
-    const message = thema;
-    console.log("!!!!!!!!! message abspeicherung !!!!!!!!!")
-    console.log(message);
+    console.log("!!!!!!!!! message abspeicherung !!!!!!!!!");
     
     if (recipientId) {
         
