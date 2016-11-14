@@ -128,26 +128,31 @@ const actions = {
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
+    console.log("!!!!!!!!! message abspeicherung !!!!!!!!!");
     
     if (recipientId) {
         
-            
         
-//        text =  {"text" : "Frage",
-//                "quick_replies" : [
-//                  {
-//                    "content_type" : "text",
-//                    "title" : "Red",
-//                    "payload" : "empty"
-//                  },
-//                  {
-//                    "content_type":"text",
-//                    "title":"Green",
-//                    "payload":"empty"
-//                  },
-//                ]
-//                
-//            };  
+	console.log("VOR TEXT UMWANDLUNG");
+        console.log(text);
+            
+   
+        
+        text =  {"text" : "context.thema",
+                "quick_replies" : [
+                  {
+                    "content_type" : "text",
+                    "title" : "Red",
+                    "payload" : "empty"
+                  },
+                  {
+                    "content_type":"text",
+                    "title":"Green",
+                    "payload":"empty"
+                  },
+                ]
+                
+            };  
                 
         
       // Yay, we found our recipient!
@@ -199,25 +204,10 @@ const actions = {
     var thema = firstEntityValue(entities, "thema")
     if (thema) {
         
-        console.log("VOR CONTEXT");
-        console.log(context);
-        context.thema = {"text" : "Hallo",
-                        "quick_replies" : [
-                          {
-                            "content_type" : "text",
-                            "title" : "Red",
-                            "payload" : "empty"
-                          },
-                          {
-                            "content_type":"text",
-                            "title":"Green",
-                            "payload":"empty"
-                          },
-                        ]
-
-                    }; 
-          console.log("NACH CONTEXT");
-          console.log(context);
+          
+        context.thema = 'Hier ist deine ' + thema + 
+                '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
+          
         
           
         delete context.missingThema;
