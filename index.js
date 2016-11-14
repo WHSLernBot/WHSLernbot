@@ -139,19 +139,19 @@ const actions = {
         
             
         
-        text = "text" : "Frage",
-                "quick_replies" : [
-                  {
-                    "content_type" : "text",
-                    "title" : "Red",
-                    "payload" : "empty"
-                  },
-                  {
-                    "content_type":"text",
-                    "title":"Green",
-                    "payload":"empty"
-                  },
-                ];
+//        text = "text" : "Frage",
+//                "quick_replies" : [
+//                  {
+//                    "content_type" : "text",
+//                    "title" : "Red",
+//                    "payload" : "empty"
+//                  },
+//                  {
+//                    "content_type":"text",
+//                    "title":"Green",
+//                    "payload":"empty"
+//                  },
+//                ];
                 
         
                 
