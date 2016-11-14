@@ -135,7 +135,7 @@ const actions = {
         
         
 	console.log("VOR TEXT UMWANDLUNG");
-        
+        console.log(text);
         
             
         
