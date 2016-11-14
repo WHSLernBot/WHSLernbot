@@ -60,6 +60,29 @@ const fbMessage = (id, text) => {
   const body = JSON.stringify({
     recipient: { id },
     message:  { text } ,
+    
+    setting_type : "call_to_actions",
+    thread_state : "existing_thread",
+    call_to_actions: [
+    {
+      type: "postback",
+      title:"Help",
+      payload:"egal"
+    },
+    {
+      type:"postback",
+      title:"Start a New Order",
+      payload:"egal"
+    },
+    {
+      type:"web_url",
+      title:"GOOGLE",
+      url:"www.google.de",
+      webview_height_ratio: "full",
+      messenger_extensions: true
+    }
+  ]
+    
   });
   
   
@@ -132,37 +155,37 @@ const actions = {
     
     
     if (recipientId) {
-	console.log("VOR TEXT UMWANDLUNG");	
-        text =  {
-                "text":"Pick a color:",
-                    "setting_type": "call_to_actions",
-                     "thread_state" : "existing_thread",
-                    "call_to_actions": [
-                      {
-                        "type":"postback",
-                        "title":"Help",
-                        "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
-                      },
-                      {
-                        "type":"postback",
-                        "title":"Start a New Order",
-                        "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_START_ORDER"
-                      },
-                      {
-                        "type":"web_url",
-                        "title":"Checkout",
-                        "url":"http://petersapparel.parseapp.com/checkout",
-                        "webview_height_ratio": "full",
-                        "messenger_extensions": true
-                      },
-                      {
-                        "type":"web_url",
-                        "title":"View Website",
-                        "url":"http://petersapparel.parseapp.com/"
-                      }
-                                    ]
-            };
-        console.log("DANAAAAAAAAAAAAAAAAAAAAACH");
+//	console.log("VOR TEXT UMWANDLUNG");	
+//        text =  {
+//                "text":"Pick a color:",
+//                    "setting_type": "call_to_actions",
+//                     "thread_state" : "existing_thread",
+//                    "call_to_actions": [
+//                      {
+//                        "type":"postback",
+//                        "title":"Help",
+//                        "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
+//                      },
+//                      {
+//                        "type":"postback",
+//                        "title":"Start a New Order",
+//                        "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_START_ORDER"
+//                      },
+//                      {
+//                        "type":"web_url",
+//                        "title":"Checkout",
+//                        "url":"http://petersapparel.parseapp.com/checkout",
+//                        "webview_height_ratio": "full",
+//                        "messenger_extensions": true
+//                      },
+//                      {
+//                        "type":"web_url",
+//                        "title":"View Website",
+//                        "url":"http://petersapparel.parseapp.com/"
+//                      }
+//                                    ]
+//            };
+//        console.log("DANAAAAAAAAAAAAAAAAAAAAACH");
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
