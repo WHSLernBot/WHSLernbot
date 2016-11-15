@@ -129,41 +129,46 @@ const actions = {
 	  
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
-    const recipientId = sessions[sessionId].fbid;
-    console.log("!!!!!!!!! message abspeicherung !!!!!!!!!");
+    
     
     if (recipientId) {
         
-        
-	console.log("VOR TEXT UMWANDLUNG");
-        console.log(text);
+        text = {text};
             
-            text = {text};
-        //if (istThema) {
-        
-//        text =  {"text" : text,
-//                "quick_replies" : [
-//                  {
-//                    "content_type" : "text",
-//                    "title" : "Red",
-//                    "payload" : "empty"
-//                  },
-//                  {
-//                    "content_type":"text",
-//                    "title":"Green",
-//                    "payload":"empty"
-//                  },
-//                ]
-//                
-//            }; 
             
-            //istThema = false;
-            //messageText = " ";
-        //}
-            
-       console.log("NACH TEXT UMWANDLUNG");
-       console.log(text);         
+        if (istThema) {
         
+            text =  {"text" : text,
+                    "quick_replies" : [
+                      {
+                        "content_type" : "text",
+                        "title" : "CSS",
+                        "payload" : "empty"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"HTML",
+                        "payload":"empty"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"PHP",
+                        "payload":"empty"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"XML",
+                        "payload":"empty"
+                      },
+                    ]
+
+                }; 
+            
+            istThema = false;
+           
+        }
+            
+              
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
@@ -208,24 +213,17 @@ const actions = {
 //Eine Test Funktion
   gibAufgabe({context, entities}) {
   return new Promise(function(resolve, reject) {
-    console.log("HIIIER DER CONTEXT");
-    console.log(context)
+   
     var thema = firstEntityValue(entities, "thema")
+    
     if (thema) {
-        
-          
+         
         context.thema = 'Hier ist deine ' + thema + 
                 '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
         
-        messageText = 'Hier ist deine ' + thema + 
-                '-Aufgabe was glaubst du ist die richtige Antwort ???';
-        
         istThema = true;  
         delete context.missingThema;
-        
-        console.log("HIIIER DER CONTEXT NACHHHHH BESCHREIBUNG");
-        console.log(context) 
-        
+                
     } else {
       context.missingThema = true;
       delete context.thema;
