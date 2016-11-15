@@ -138,24 +138,24 @@ const actions = {
 	console.log("VOR TEXT UMWANDLUNG");
         console.log(text);
             
-   
+            text = {text};
         //if (istThema) {
         
-        text =  {"text" : text,
-                "quick_replies" : [
-                  {
-                    "content_type" : "text",
-                    "title" : "Red",
-                    "payload" : "empty"
-                  },
-                  {
-                    "content_type":"text",
-                    "title":"Green",
-                    "payload":"empty"
-                  },
-                ]
-                
-            }; 
+//        text =  {"text" : text,
+//                "quick_replies" : [
+//                  {
+//                    "content_type" : "text",
+//                    "title" : "Red",
+//                    "payload" : "empty"
+//                  },
+//                  {
+//                    "content_type":"text",
+//                    "title":"Green",
+//                    "payload":"empty"
+//                  },
+//                ]
+//                
+//            }; 
             
             //istThema = false;
             //messageText = " ";
