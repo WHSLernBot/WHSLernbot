@@ -133,7 +133,7 @@ const actions = {
     
     if (recipientId) {
         
-        text = {text};
+        
             
             
         if (istThema) {
@@ -166,6 +166,8 @@ const actions = {
             
             istThema = false;
            
+        } else {
+            text = {text};
         }
             
               
