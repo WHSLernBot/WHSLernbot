@@ -19,8 +19,7 @@ const express = require('express');
 const fetch = require('node-fetch');
 const request = require('request');
 const http = require('http');
-var messageText = " ";
-var istThema = false;
+var keinThema = false;
 let Wit = null;
 let log = null;
 
@@ -136,7 +135,7 @@ const actions = {
         
             
             
-        if (istThema) {
+        if (keinThema) {
         
             text =  {"text" : text,
                     "quick_replies" : [
@@ -223,11 +222,12 @@ const actions = {
         context.thema = 'Hier ist deine ' + thema + 
                 '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
         
-        istThema = true;  
+        
         delete context.missingThema;
                 
     } else {
       context.missingThema = true;
+      keinThema = true;  
       delete context.thema;
     }
     return resolve(context);
