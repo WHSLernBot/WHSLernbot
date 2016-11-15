@@ -129,7 +129,7 @@ const actions = {
 	  
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
-    
+    const recipientId = sessions[sessionId].fbid;
     
     if (recipientId) {
         
@@ -142,22 +142,22 @@ const actions = {
                     "quick_replies" : [
                       {
                         "content_type" : "text",
-                        "title" : "CSS",
+                        "title" : "HTML",
                         "payload" : "empty"
                       },
                       {
                         "content_type":"text",
-                        "title":"HTML",
-                        "payload":"empty"
-                      },
-                      {
-                        "content_type":"text",
-                        "title":"PHP",
+                        "title":"CSS",
                         "payload":"empty"
                       },
                       {
                         "content_type":"text",
                         "title":"XML",
+                        "payload":"empty"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"PHP",
                         "payload":"empty"
                       },
                     ]
