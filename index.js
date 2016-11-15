@@ -139,9 +139,9 @@ const actions = {
         console.log(text);
             
    
-        if (istThema) {
+        //if (istThema) {
         
-        text =  {"text" : messageText,
+        text =  {"text" : text,
                 "quick_replies" : [
                   {
                     "content_type" : "text",
@@ -157,9 +157,9 @@ const actions = {
                 
             }; 
             
-            istThema = false;
-            messageText = " ";
-        }
+            //istThema = false;
+            //messageText = " ";
+        //}
             
        console.log("NACH TEXT UMWANDLUNG");
        console.log(text);         
