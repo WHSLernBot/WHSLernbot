@@ -163,7 +163,7 @@ const actions = {
 
                 }; 
             
-            istThema = false;
+            keinThema = false;
            
         } else {
             text = {text};
