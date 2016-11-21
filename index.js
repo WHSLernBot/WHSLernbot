@@ -220,7 +220,7 @@ const actions = {
             if (!error && response.statusCode === 200) {
                 
                 forecastJSON = body;
-            
+                console.log(body.weather[0].main);
                 switch(body.weather[0].main) {
 
                 case 'Rain':
