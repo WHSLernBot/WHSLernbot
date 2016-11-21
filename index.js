@@ -203,8 +203,7 @@ const actions = {
     
     if (location) {
         
-        var forecastJSON;
-        var forecastText;
+               var forecastText;
         
         var api = 'http://api.openweathermap.org/data/2.5/weather?q=';
         var units = '&units=metric';
@@ -219,37 +218,24 @@ const actions = {
             
             if (!error && response.statusCode === 200) {
                 
-                forecastJSON = body;
-                console.log(body.weather[0].main);
                 switch(body.weather[0].main) {
 
                 case 'Rain':
-                    forecastText = "In " + location + "wird es heute Regnen. Vergiss den Regenschirm nicht! :)";
+                    forecastText = 'Pack den Regenschirm ein, in ' + location + ' wird es heute Regnen. Die Temperaturen liegen bei ' + body.main.temp + '°C.';
                     break;
                 case 'Snow':
-                    forecastText = "Heute soll es in " + location + "schneien, also schön warm anziehen!";
+                    forecastText = 'Heute soll es in ' + location + ' schneien, also schön warm anziehen! Die temperaturen betragen ' + body.main.temp + '°C.';
                     break;
                 case 'Clear':
-                    forecastText = "Keine Wolken weit und breit in " + location;
+                    forecastText = 'Keine Wolken weit und breit in ' + location;
                 default:
-                    forecastText = "Wirklich mysteriös das Wetter in " + location + ", frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)";
+                    forecastText = 'Wirklich mysteriös das Wetter in ' + location + ', frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)';
                 }
                 
                 console.log(forecastText);
             
             }
-        });
-        
-//        if(forecastJSON) {
-//            
-//            console.log("Ja ist was angekommen");
-//            
-//        } else {
-//            
-//            console.log("Nix da nochmalllll");
-//        }
-//        var forecastText = "Sampletext";
-        
+        });   
   
       context.forecast = forecastText;
       delete context.missingLocation;
