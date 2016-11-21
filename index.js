@@ -204,7 +204,7 @@ const actions = {
     if (location) {
         
         var forecastJSON;
-        
+        var forecastText;
         var api = 'http://api.openweathermap.org/data/2.5/weather?q=';
         var units = '&units=metric';
         var appid = '&appid=e718e355b128df4bf18fa5c85510dc06';
