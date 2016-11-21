@@ -205,6 +205,7 @@ const actions = {
         
         var forecastJSON;
         var forecastText;
+        
         var api = 'http://api.openweathermap.org/data/2.5/weather?q=';
         var units = '&units=metric';
         var appid = '&appid=e718e355b128df4bf18fa5c85510dc06';
@@ -217,9 +218,10 @@ const actions = {
         }, function(error, response, body) {
             
             if (!error && response.statusCode === 200) {
+                
                 forecastJSON = body;
             
-                switch(forecastJSON.weather[0].main) {
+                switch(body.weather[0].main) {
 
                 case 'Rain':
                     forecastText = "In " + location + "wird es heute Regnen. Vergiss den Regenschirm nicht! :)";
@@ -231,7 +233,9 @@ const actions = {
                     forecastText = "Keine Wolken weit und breit in " + location;
                 default:
                     forecastText = "Wirklich mysteriös das Wetter in " + location + ", frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)";
-                } 
+                }
+                
+                console.log(forecastText);
             
             }
         });
@@ -246,12 +250,12 @@ const actions = {
 //        }
 //        var forecastText = "Sampletext";
         
-
-        
-        
+  
       context.forecast = forecastText;
       delete context.missingLocation;
+      
     } else {
+        
       context.missingLocation = true;
       delete context.forecast;
     }
