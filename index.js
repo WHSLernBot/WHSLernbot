@@ -217,35 +217,37 @@ const actions = {
         }, function(error, response, body) {
             
             if (!error && response.statusCode === 200) {
-            forecastJSON = body;
-            console.log(forecastJSON);
-        }
+                forecastJSON = body;
             
+                switch(forecastJSON.weather[0].main) {
+
+                case 'Rain':
+                    forecastText = "In " + location + "wird es heute Regnen. Vergiss den Regenschirm nicht! :)";
+                    break;
+                case 'Snow':
+                    forecastText = "Heute soll es in " + location + "schneien, also schön warm anziehen!";
+                    break;
+                case 'Clear':
+                    forecastText = "Keine Wolken weit und breit in " + location;
+                default:
+                    forecastText = "Wirklich mysteriös das Wetter in " + location + ", frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)";
+                } 
+            
+            }
         });
-        if(forecastJSON) {
-            
-            console.log("Ja ist was angekommen");
-            
-        } else {
-            
-            console.log("Nix da nochmalllll");
-        }
-        var forecastText = "Sampletext";
         
-//        switch(forecastJSON.weather[0].main) {
+//        if(forecastJSON) {
 //            
-//        case 'Rain':
-//            forecastText = "In " + location + "wird es heute Regnen. Vergiss den Regenschirm nicht! :)";
-//            break;
-//        case 'Snow':
-//            forecastText = "Heute soll es in " + location + "schneien, also schön warm anziehen!";
-//            break;
-//        case 'Clear':
-//            forecastText = "Keine Wolken weit und breit in " + location;
-//        default:
-//            forecastText = "Wirklich mysteriös das Wetter in " + location + ", frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)";
-//        } 
-//        
+//            console.log("Ja ist was angekommen");
+//            
+//        } else {
+//            
+//            console.log("Nix da nochmalllll");
+//        }
+//        var forecastText = "Sampletext";
+        
+
+        
         
       context.forecast = forecastText;
       delete context.missingLocation;
