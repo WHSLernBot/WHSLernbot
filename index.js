@@ -209,7 +209,7 @@ const actions = {
         var units = '&units=metric';
         var apiid = '&appid=e718e355b128df4bf18fa5c85510dc06';
         
-        var apiUrl = api + location  + apiid + units;
+        var apiUrl = api + location + apiid + units;
         
         request({
             url: apiUrl,
@@ -222,25 +222,32 @@ const actions = {
         }
             
         });
-        
-        var forecastText;
-        
-        switch(forecastJSON.weather[0].main) {
+        if(forecastJSON) {
             
-        case 'Rain':
-            forecastText = "In " + location + "wird es heute Regnen. Vergiss den Regenschirm nicht! :)";
-            break;
-        case 'Snow':
-            forecastText = "Heute soll es in " + location + "schneien, also schön warm anziehen!";
-            break;
-        case 'Clear':
-            forecastText = "Keine Wolken weit und breit in " + location;
-        default:
-            forecastText = "Wirklich mysteriös das Wetter in " + location + ", frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)";
-        } 
+            console.log("Ja ist was angekommen");
+            
+        } else {
+            
+            console.log("Nix da nochmalllll");
+        }
+        var forecastText = "Sampletext";
         
+//        switch(forecastJSON.weather[0].main) {
+//            
+//        case 'Rain':
+//            forecastText = "In " + location + "wird es heute Regnen. Vergiss den Regenschirm nicht! :)";
+//            break;
+//        case 'Snow':
+//            forecastText = "Heute soll es in " + location + "schneien, also schön warm anziehen!";
+//            break;
+//        case 'Clear':
+//            forecastText = "Keine Wolken weit und breit in " + location;
+//        default:
+//            forecastText = "Wirklich mysteriös das Wetter in " + location + ", frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)";
+//        } 
+//        
         
-        context.forecast = forecastText;
+      context.forecast = forecastText;
       delete context.missingLocation;
     } else {
       context.missingLocation = true;
