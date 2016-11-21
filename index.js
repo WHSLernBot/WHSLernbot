@@ -42,14 +42,14 @@ const WIT_TOKEN = process.env.WIT_TOKEN;
 
 // Messenger API parameters
 const FB_PAGE_TOKEN = process.env.FB_PAGE_TOKEN;
-if (!FB_PAGE_TOKEN) { throw new Error('missing FB_PAGE_TOKEN') }
+if (!FB_PAGE_TOKEN) { throw new Error('missing FB_PAGE_TOKEN'); }
 const FB_APP_SECRET = process.env.FB_APP_SECRET;
-if (!FB_APP_SECRET) { throw new Error('missing FB_APP_SECRET') }
+if (!FB_APP_SECRET) { throw new Error('missing FB_APP_SECRET'); }
 
 
 //Diesen Token kann man auch noch generieren lassen
 const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
-if (!FB_VERIFY_TOKEN) { throw new Error('missing FB_APP_SECRET') }
+if (!FB_VERIFY_TOKEN) { throw new Error('missing FB_APP_SECRET'); }
 
 // ----------------------------------------------------------------------------
 // Messenger API specific code
@@ -60,7 +60,7 @@ if (!FB_VERIFY_TOKEN) { throw new Error('missing FB_APP_SECRET') }
 const fbMessage = (id, text) => {
   const body = JSON.stringify({
     recipient: { id },
-    message:   text ,
+    message:   text, 
   });
   
   
@@ -199,9 +199,47 @@ const actions = {
   getForecast({context, entities}) {
   return new Promise(function(resolve, reject) {
 	  
-    var location = firstEntityValue(entities, "location")
+    var location = firstEntityValue(entities, "location");
+    
     if (location) {
-      context.forecast = 'sonnig in ' + location; // we should call a weather API here
+        
+        var data;
+        
+        var api = 'api.openweathermap.org/data/2.5/weather?q=';
+        var units = '&units=metric';
+        var apiid = '&appid=e718e355b128df4bf18fa5c85510dc06';
+        
+        var apiUrl = api + location  + apiid + units;
+        
+        request({
+            url: apiUrl,
+            json: true
+        }, function(error, response, body) {
+            
+            if (!error && response.statusCode === 200) {
+            data = body;
+        }
+            
+        });
+        
+        var forecastText;
+        
+        switch(data.weather[0].main) {
+            
+        case 'Rain':
+            forecastText = "In " + location + "wird es heute Regnen. Vergiss den Regenschirm nicht! :)";
+            break;
+        case 'Snow':
+            forecastText = "Heute soll es in " + location + "schneien, also schön warm anziehen!";
+            break;
+        case 'Clear':
+            forecastText = "Keine Wolken weit und breit in " + location;
+        default:
+            forecastText = "Wirklich mysteriös das Wetter in " + location + ", frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)";
+        } 
+        
+        
+        context.forecast = forecastText;
       delete context.missingLocation;
     } else {
       context.missingLocation = true;
@@ -232,10 +270,8 @@ const actions = {
     }
     return resolve(context);
   });
-},
+}
 
-  
-  
 };
 
 // Setting up our bot
