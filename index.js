@@ -203,7 +203,7 @@ const actions = {
     
     if (location) {
         
-               var forecastText;
+        var forecastText;
         
         var api = 'http://api.openweathermap.org/data/2.5/weather?q=';
         var units = '&units=metric';
@@ -235,17 +235,19 @@ const actions = {
                 console.log(forecastText);
                 context.forecast = forecastText;
                 delete context.missingLocation;
+                return resolve(context);  
+
             }
         });   
-      
       
       
     } else {
         
       context.missingLocation = true;
       delete context.forecast;
+      return resolve(context);
     }
-    return resolve(context);
+    
   });
 },
 
