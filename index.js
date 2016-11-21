@@ -218,7 +218,7 @@ const actions = {
             
             if (!error && response.statusCode === 200) {
             forecastJSON = body;
-            console.log(forecastJSON);
+            console.log(body);
         }
             
         });
