@@ -207,9 +207,9 @@ const actions = {
         
         var api = 'api.openweathermap.org/data/2.5/weather?q=';
         var units = '&units=metric';
-        var apiid = '&apiid=e718e355b128df4bf18fa5c85510dc06';
+        var appid = '&appid=e718e355b128df4bf18fa5c85510dc06';
         
-        var apiUrl = api + location + apiid + units;
+        var apiUrl = api + location + units + appid ;
         
         request({
             url: apiUrl,
