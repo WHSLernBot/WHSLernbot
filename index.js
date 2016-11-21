@@ -233,13 +233,12 @@ const actions = {
                 }
                 
                 console.log(forecastText);
-            
+                context.forecast = forecastText;
+                delete context.missingLocation;
             }
         });   
-      console.log("NACH DEM BLOCK");
-      console.log(forecastText);
-      context.forecast = forecastText;
-      delete context.missingLocation;
+      
+      
       
     } else {
         
