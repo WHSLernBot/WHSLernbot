@@ -203,7 +203,7 @@ const actions = {
     
     if (location) {
         
-        var data;
+        var forecastJSON;
         
         var api = 'api.openweathermap.org/data/2.5/weather?q=';
         var units = '&units=metric';
@@ -217,15 +217,15 @@ const actions = {
         }, function(error, response, body) {
             
             if (!error && response.statusCode === 200) {
-            data = body;
-            console.log(data);
+            forecastJSON = body;
+            console.log(forecastJSON);
         }
             
         });
         
         var forecastText;
         
-        switch(data.weather[0].main) {
+        switch(forecastJSON.weather[0].main) {
             
         case 'Rain':
             forecastText = "In " + location + "wird es heute Regnen. Vergiss den Regenschirm nicht! :)";
