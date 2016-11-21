@@ -218,6 +218,7 @@ const actions = {
             
             if (!error && response.statusCode === 200) {
             data = body;
+            console.log(data);
         }
             
         });
