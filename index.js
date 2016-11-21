@@ -216,6 +216,8 @@ const actions = {
             json: true
         }, function(error, response, body) {
             console.log("YEEEEEEEEEEEEEEEEEEAHHHHH");
+            console.log(error);
+            console.log(response.statusCode);
             if (!error && response.statusCode === 200) {
             forecastJSON = body;
             console.log(body);
