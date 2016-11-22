@@ -207,7 +207,7 @@ const actions = {
         
         var api = 'http://api.openweathermap.org/data/2.5/weather?q=';
         var units = '&units=metric';
-        var appid = '&appid=e718e355b128df4bf18fa5c85510dc06';
+        var appid = '&appid=ad12e27ce5d345364973235d9b6a8588';
         
         var apiUrl = api + location + units + appid ;
         
@@ -228,6 +228,10 @@ const actions = {
                     break;
                 case 'Clear':
                     forecastText = 'Keine Wolken weit und breit in ' + location;
+                    break;
+                case 'Sunny':
+                    forecastText: 'Heute ist es sonnig in ' + location + '. Die jetztigen Temperaturen betragen ' + body.main.temp + '°C.'
+                    break;
                 default:
                     forecastText = 'Wirklich mysteriös das Wetter in ' + location + ', frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)';
                 }
