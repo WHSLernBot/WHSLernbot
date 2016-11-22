@@ -264,10 +264,10 @@ const actions = {
     
     if (thema) {
         
-//        console.log("===============Context: ");
-//        console.log(context);
-        console.log("===============Entities");
-        console.log(entities);
+        console.log("===============Context: ");
+        console.log(context);
+//        console.log("===============Entities");
+//        console.log(entities);
         
         context.thema = 'Hier ist deine ' + thema + 
                 '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
