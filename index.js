@@ -230,7 +230,7 @@ const actions = {
                     forecastText = 'Die Sonne lässt sich ab und zu mal blicken in ' + location + ' und die Temperatur beträgt ' + body.main.temp + '°C.';
                     break;
                 case 'Sunny':
-                    forecastText: 'Heute ist es sonnig in ' + location + '. Die jetztigen Temperaturen betragen ' + body.main.temp + '°C.'
+                    forecastText: 'Heute ist es sonnig in ' + location + '. Die jetztige Temperatur betragen ' + body.main.temp + '°C.'
                     break;
                 default:
                     forecastText = 'Wirklich mysteriös das Wetter in ' + location + ', frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)';
