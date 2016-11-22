@@ -264,8 +264,8 @@ const actions = {
     
     if (thema) {
         
-        console.log("===============Context: ");
-        console.log(context);
+//        console.log("===============Context: ");
+//        console.log(context);
         console.log("===============Entities");
         console.log(entities);
         
