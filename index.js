@@ -227,7 +227,7 @@ const actions = {
                     forecastText = 'Heute soll es in ' + location + ' schneien, also schön warm anziehen! Die temperaturen betragen ' + body.main.temp + '°C.';
                     break;
                 case 'Clear':
-                    forecastText = 'Keine Wolken weit und breit in ' + location + 'und die Temperatur beträgt ' + body.main.temp + '°C.';
+                    forecastText = 'Die Sonne lässt sich ab und zu mal blicken in ' + location + ' und die Temperatur beträgt ' + body.main.temp + '°C.';
                     break;
                 case 'Sunny':
                     forecastText: 'Heute ist es sonnig in ' + location + '. Die jetztigen Temperaturen betragen ' + body.main.temp + '°C.'
