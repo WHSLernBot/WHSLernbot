@@ -252,6 +252,7 @@ const actions = {
       return resolve(context);
     }
     
+    
   });
 },
 
@@ -262,7 +263,12 @@ const actions = {
     var thema = firstEntityValue(entities, "thema")
     
     if (thema) {
-         
+        
+        console.log("===============Context: ");
+        console.log(context);
+        console.log("===============Entities");
+        console.log(entities);
+        
         context.thema = 'Hier ist deine ' + thema + 
                 '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
         
@@ -401,6 +407,13 @@ function verifyRequestSignature(req, res, buf) {
       throw new Error("Couldn't validate the request signature.");
     }
   }
+}
+
+function messageCreator(context, entities) {
+    
+    
+    
+    
 }
 
 app.listen(PORT);
