@@ -252,9 +252,10 @@ const actions = {
         
       context.missingLocation = true;
       delete context.forecast;
-      return resolve(context);
+      
     }
     
+    return resolve(context);
     
   });
 },
