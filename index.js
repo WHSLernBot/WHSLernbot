@@ -221,16 +221,16 @@ const actions = {
                 switch(body.weather[0].main) {
 
                 case 'Rain':
-                    forecastText = 'Pack den Regenschirm ein, in ' + location + ' wird es heute Regnen. Die Temperaturen liegen bei ' + body.main.temp + '°C.';
+                    forecastText = 'Pack den Regenschirm ein, in ' + location + ' wird es heute Regnen. Die Temperatur liegt bei ' + body.main.temp + '°C.';
                     break;
                 case 'Snow':
                     forecastText = 'Heute soll es in ' + location + ' schneien, also schön warm anziehen! Die temperaturen betragen ' + body.main.temp + '°C.';
                     break;
                 case 'Clear':
-                    forecastText = 'Die Sonne lässt sich ab und zu mal blicken in ' + location + ' und die Temperatur beträgt ' + body.main.temp + '°C.';
+                    forecastText = 'Die Sonne lässt sich ab und zu in ' + location + ' blicken dabei beträgt die Temperatur ' + body.main.temp + '°C.';
                     break;
                 case 'Sunny':
-                    forecastText: 'Heute ist es sonnig in ' + location + '. Die jetztige Temperatur betragen ' + body.main.temp + '°C.'
+                    forecastText: 'Heute ist es sonnig in ' + location + '. Die jetztige Temperatur beträgt ' + body.main.temp + '°C.'
                     break;
                 default:
                     forecastText = body.weather[0].main + ' Wirklich mysteriös das Wetter in ' + location + ', frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)';
