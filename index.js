@@ -233,7 +233,7 @@ const actions = {
                     forecastText: 'Heute ist es sonnig in ' + location + '. Die jetztige Temperatur betragen ' + body.main.temp + '°C.'
                     break;
                 default:
-                    forecastText = 'Wirklich mysteriös das Wetter in ' + location + ', frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)';
+                    forecastText = body.weather[0].main + ' Wirklich mysteriös das Wetter in ' + location + ', frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)';
                 }
                 
                 console.log(forecastText);
@@ -264,10 +264,7 @@ const actions = {
     
     if (thema) {
         
-        console.log("===============Context: ");
-        console.log(context);
-//        console.log("===============Entities");
-//        console.log(entities);
+        
         
         context.thema = 'Hier ist deine ' + thema + 
                 '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
