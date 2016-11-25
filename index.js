@@ -232,6 +232,9 @@ const actions = {
                 case 'Sunny':
                     forecastText: 'Heute ist es sonnig in ' + location + '. Die jetztige Temperatur beträgt ' + body.main.temp + '°C.'
                     break;
+                case 'Mist':
+                    forecastText: 'Vorsicht beim Autofahren, in der Gegend von ' + location + ' ist es nebelig! Zurzeit sind es ' + body.main.temp + '°C.';
+                    break;
                 default:
                     forecastText = body.weather[0].main + ' Wirklich mysteriös das Wetter in ' + location + ', frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)';
                 }
