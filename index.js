@@ -201,8 +201,8 @@ const actions = {
 	  
     var location = firstEntityValue(entities, "location");
     
-    
-    
+    console.log("HIER DIE ENTITIES");
+    console.log(entities);
     if (location) {
         
         var forecastText;
@@ -243,8 +243,7 @@ const actions = {
                 default:
                     forecastText = body.weather[0].main + ' Wirklich mysteriös das Wetter in ' + location + ', frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)';
                 }
-                
-                console.log(forecastText);
+             
                 context.forecast = forecastText;
                 delete context.missingLocation;
                 return resolve(context);  
