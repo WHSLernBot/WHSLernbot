@@ -239,6 +239,7 @@ const actions = {
                     break;
                 case 'Clouds':
                     forecastText = 'In ' + location + ' ist es gerade ziemlich bewölkt! Aktuell beträgt die Temperatur ' + body.main.temp + '°C.'; 
+                    break;
                 default:
                     forecastText = body.weather[0].main + ' Wirklich mysteriös das Wetter in ' + location + ', frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)';
                 }
