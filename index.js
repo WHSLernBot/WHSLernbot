@@ -230,11 +230,13 @@ const actions = {
                     forecastText = 'Die Sonne lässt sich ab und zu in ' + location + ' blicken dabei beträgt die Temperatur ' + body.main.temp + '°C.';
                     break;
                 case 'Sunny':
-                    forecastText: 'Heute ist es sonnig in ' + location + '. Die jetztige Temperatur beträgt ' + body.main.temp + '°C.'
+                    forecastText = 'Heute ist es sonnig in ' + location + '. Die jetztige Temperatur beträgt ' + body.main.temp + '°C.'
                     break;
                 case 'Mist':
-                    forecastText: 'Vorsicht beim Autofahren, in der Gegend von ' + location + ' ist es nebelig! Zurzeit sind es ' + body.main.temp + '°C.';
+                    forecastText = 'Vorsicht beim Autofahren, in der Gegend von ' + location + ' ist es nebelig! Zurzeit sind es ' + body.main.temp + '°C.';
                     break;
+                case 'Clouds':
+                    forecastText = 'In ' + location + ' ist es gerade ziemlich bewölkt! Aktuell beträgt die Temperatur ' + body.main.temp + '°C.'; 
                 default:
                     forecastText = body.weather[0].main + ' Wirklich mysteriös das Wetter in ' + location + ', frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)';
                 }
