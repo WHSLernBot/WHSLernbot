@@ -201,6 +201,8 @@ const actions = {
 	  
     var location = firstEntityValue(entities, "location");
     
+    
+    
     if (location) {
         
         var forecastText;
@@ -249,6 +251,8 @@ const actions = {
             }
         });   
       
+          
+        console.log(entities);  
       
     } else {
         
