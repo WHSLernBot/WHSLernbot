@@ -246,6 +246,7 @@ const actions = {
              
                 context.forecast = forecastText;
                 delete context.missingLocation;
+                delete context.wrongLocation;
                 return resolve(context);  
 
             } else {
@@ -268,6 +269,7 @@ const actions = {
         
       context.missingLocation = true;
       delete context.forecast;
+      delete context.wrongLocation;
       
       return resolve(context);
     }
