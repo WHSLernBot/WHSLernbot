@@ -252,7 +252,7 @@ const actions = {
                 
                 if(body.cod = 502) {
                     
-                    context.wrong-location = 'Leider kenne ich _*' + location + '*_ nicht. Hast du dich eventuell verschrieben? Versuch es doch nochmal! \;)';
+                    context.wrong-location = 'Leider kenne ich _*' + location + '*_ nicht. Hast du dich eventuell verschrieben? Versuch es doch nochmal! :)';
                     delete context.location;
                     delete context.missing-location;
                     resolve(context);
