@@ -250,8 +250,13 @@ const actions = {
 
             } else {
                 
-                console.log("WEEEETTTTEEEEER ERRRORRRRR");
-                console.log(body);
+                if(body.cod = 502) {
+                    
+                    context.wrong-location = 'Leider kenne ich _*' + location + '*_ nicht. Hast du dich eventuell verschrieben? Versuch es doch nochmal! ;)'
+                    delete context.location;
+                    delete context.missing-location;
+                    resolve(context);
+                }
                 
             }
         });   
