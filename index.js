@@ -254,7 +254,7 @@ const actions = {
                     
                     context.wrongLocation = 'Leider kenne ich _*' + location + '*_ nicht. Hast du dich eventuell verschrieben? Versuch es doch nochmal! ;)';
                     delete context.location;
-                    delete context.missing-location;
+                    delete context.missingLocation;
                     resolve(context);
                 }
                 
