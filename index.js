@@ -242,6 +242,7 @@ const actions = {
                     break;
                 case 'Fog':
                     forecastText = 'Vorsicht beim Autofahren, in der Gegend von ' + location + ', ist es nebelig. Die Temperatur beträgt ' + body.main.temp + '°C.'; 
+                    break;
                 default:
                     forecastText = body.weather[0].main + ' Wirklich mysteriös das Wetter in ' + location + ', frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)';
                 }
