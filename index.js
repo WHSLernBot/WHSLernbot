@@ -248,6 +248,11 @@ const actions = {
                 delete context.missingLocation;
                 return resolve(context);  
 
+            } else {
+                
+                console.log("WEEEETTTTEEEEER ERRRORRRRR");
+                console.log(body);
+                
             }
         });   
       
