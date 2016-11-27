@@ -60,7 +60,7 @@ if (!FB_VERIFY_TOKEN) { throw new Error('missing FB_APP_SECRET'); }
 const fbMessage = (id, text) => {
   const body = JSON.stringify({
     recipient: { id },
-    message:  { text }, 
+    message:   text , 
   });
   
   
@@ -137,8 +137,7 @@ const actions = {
             
         if (keinThema) {
         
-            text =  JSON.stringify(
-                    "text" : "text",
+            text = {"text" : text,
                     "quick_replies" : [
                       {
                         "content_type" : "text",
@@ -158,11 +157,12 @@ const actions = {
                       
                     ]
 
-                ); 
+            }; 
             
             keinThema = false;
             
-            
+        } else {
+            text = {text};
         }   
             
               
