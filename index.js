@@ -137,10 +137,33 @@ const actions = {
             
         if (keinThema) {
         
-            text =  '"text" : text, "quick_replies" : [{ "content_type" : "text", "title" : "INS", "payload" : "empty" },{"content_type":"text","title":"ASG", "payload":"empty" },{"content_type":"text","title":"OPR","payload":"empty"},]';           
+            text =  JSON.stringify({
+                    "text" : text,
+                    "quick_replies" : [
+                      {
+                        "content_type" : "text",
+                        "title" : "INS",
+                        "payload" : "empty"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"ASG",
+                        "payload":"empty"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"OPR",
+                        "payload":"empty"
+                      },
+                      
+                    ]
+
+                }); 
+            
             keinThema = false;
-           
-        }
+            
+            
+        }   
             
               
       // Yay, we found our recipient!
