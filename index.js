@@ -138,7 +138,7 @@ const actions = {
         if (keinThema) {
         
             text =  JSON.stringify(
-                    "text" : text,
+                    "text" : "text",
                     "quick_replies" : [
                       {
                         "content_type" : "text",
