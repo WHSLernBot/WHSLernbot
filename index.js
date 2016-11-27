@@ -141,24 +141,20 @@ const actions = {
                     "quick_replies" : [
                       {
                         "content_type" : "text",
-                        "title" : "HTML",
+                        "title" : "INS",
                         "payload" : "empty"
                       },
                       {
                         "content_type":"text",
-                        "title":"CSS",
+                        "title":"ASG",
                         "payload":"empty"
                       },
                       {
                         "content_type":"text",
-                        "title":"XML",
+                        "title":"OPR",
                         "payload":"empty"
                       },
-                      {
-                        "content_type":"text",
-                        "title":"PHP",
-                        "payload":"empty"
-                      },
+                      
                     ]
 
                 }; 
@@ -283,22 +279,50 @@ const actions = {
   gibAufgabe({context, entities}) {
   return new Promise(function(resolve, reject) {
    
-    var thema = firstEntityValue(entities, "thema")
+    var thema = firstEntityValue(entities, "thema");
+    var modul = firstEntityValue(entities, "modul");
     
-    if (thema) {
+    if (modul && thema) {
         
-        
-        
-        context.thema = 'Hier ist deine ' + thema + 
-                '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
+        context.modul = modul; 
+        context.thema = thema;
         
         
         delete context.missingThema;
+        delete context.missingModul;
                 
-    } else {
+    } else if (modul) {
+        
+      
+      context.modul = modul;
       context.missingThema = true;
-      keinThema = true;  
+      
       delete context.thema;
+      delete context.missingModul
+      
+      
+    } else if (thema) {
+        
+      
+      context.missingModul = true;
+      context.thema = thema;
+      
+      delete context.modul;
+      delete context.missingThema;
+      
+      keinThema = true;
+        
+        
+    } else {
+        
+        context.missingThema = true;
+        context.missingModul = true;
+        
+        keinThema = true;  
+        
+        delete context.thema;
+        delete context.modul;
+        
     }
     return resolve(context);
   });
