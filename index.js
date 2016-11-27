@@ -60,7 +60,7 @@ if (!FB_VERIFY_TOKEN) { throw new Error('missing FB_APP_SECRET'); }
 const fbMessage = (id, text) => {
   const body = JSON.stringify({
     recipient: { id },
-    message:   text, 
+    message:  { text }, 
   });
   
   
@@ -137,32 +137,9 @@ const actions = {
             
         if (keinThema) {
         
-            text =  {"text" : text,
-                    "quick_replies" : [
-                      {
-                        "content_type" : "text",
-                        "title" : "INS",
-                        "payload" : "empty"
-                      },
-                      {
-                        "content_type":"text",
-                        "title":"ASG",
-                        "payload":"empty"
-                      },
-                      {
-                        "content_type":"text",
-                        "title":"OPR",
-                        "payload":"empty"
-                      },
-                      
-                    ]
-
-                }; 
-            
+            text =  '"text" : text, "quick_replies" : [{ "content_type" : "text", "title" : "INS", "payload" : "empty" },{"content_type":"text","title":"ASG", "payload":"empty" },{"content_type":"text","title":"OPR","payload":"empty"},]';           
             keinThema = false;
            
-        } else {
-            text = {text};
         }
             
               
