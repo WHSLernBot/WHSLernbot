@@ -276,18 +276,6 @@ const actions = {
   });
 },
 
-    clear({context, entities}) {
-
-        return new Promise(function(resolve, reject) {
-            delete context.forecast;
-            delete context.missingLocation;
-            delete context.wrongLocation;
-            delete context.thema;
-            delete context.modul;
-            delete context.missingThema;
-            delete context.missingModul;
-        });
-    },
 
 //Eine Test Funktion
   gibAufgabe({context, entities}) {
