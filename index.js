@@ -294,12 +294,24 @@ const actions = {
                 
     } else if (modul) {
         
+      if (context.thema) {
+          
+            context.modul = modul;
+            
+            delete context.missingThema;
+            delete context.missingModul;
+            
+            
+      } else {
+          
+            context.modul = modul;
+            context.missingThema = true;
+            
+            delete context.thema;
+            delete context.missingModul;
+          
+      }
       
-      context.modul = modul;
-      context.missingThema = true;
-      
-      delete context.thema;
-      delete context.missingModul
       
       
     } else if (thema) {
@@ -410,13 +422,13 @@ app.post('/webhook', (req, res) => {
 
               // Updating the user's current session state
               
-              delete context.forecast;
-              delete context.missingLocation;
-              delete context.wrongLocation;
-              delete context.thema;
-              delete context.modul;
-              delete context.missingThema;
-              delete context.missingModul;
+//              delete context.forecast;
+//              delete context.missingLocation;
+//              delete context.wrongLocation;
+//              delete context.thema;
+//              delete context.modul;
+//              delete context.missingThema;
+//              delete context.missingModul;
               
               sessions[sessionId].context = context;
               
