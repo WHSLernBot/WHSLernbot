@@ -291,7 +291,7 @@ const actions = {
 
         return resolve(context);
       });
-    }
+    },
 
 //Eine Test Funktion
   gibAufgabe({context, entities}) {
