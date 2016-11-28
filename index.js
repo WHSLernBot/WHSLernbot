@@ -423,7 +423,7 @@ app.post('/webhook', (req, res) => {
 
               // Updating the user's current session state
               
-              
+              delete context.modul;
               
               sessions[sessionId].context = context;
               
