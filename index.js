@@ -277,6 +277,22 @@ const actions = {
 },
 
 
+    clear({context, entities}) {
+      return new Promise(function(resolve, reject) {
+
+        delete context.missingThema;
+        delete context.missingModul;
+        delete context.thema;
+        delete context.modul;
+        delete context.forecast;
+        delete context.wrongLocation;
+        delete context.location;
+        delete context.missingLocation;
+
+        return resolve(context);
+      });
+    }
+
 //Eine Test Funktion
   gibAufgabe({context, entities}) {
   return new Promise(function(resolve, reject) {
@@ -423,7 +439,6 @@ app.post('/webhook', (req, res) => {
 
               // Updating the user's current session state
               
-              delete context.modul;
               
               sessions[sessionId].context = context;
               
