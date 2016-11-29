@@ -20,6 +20,7 @@ const fetch = require('node-fetch');
 const request = require('request');
 const http = require('http');
 var keinThema = false;
+var istAntwort = false;
 let Wit = null;
 let log = null;
 
@@ -161,9 +162,37 @@ const actions = {
             
             keinThema = false;
             
+        } else if (istAntwort) {
+            
+            text = {"text" : text,
+                    "quick_replies" : [
+                      {
+                        "content_type" : "text",
+                        "title" : "(A)",
+                        "payload" : "empty"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"(B)",
+                        "payload":"empty"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"(C)",
+                        "payload":"empty"
+                      },
+                      
+                    ]
+
+            }; 
+            
+            istAntwort = false;
+            
         } else {
+            
             text = {text};
-        }   
+            
+        }
             
               
       // Yay, we found our recipient!
@@ -277,18 +306,50 @@ const actions = {
 },
 
 
-    clear({context, entities}) {
+    gibAufgabeDemo({context, entities}) {
       return new Promise(function(resolve, reject) {
 
-        delete context.missingThema;
-        delete context.missingModul;
-        delete context.thema;
-        delete context.modul;
-        delete context.forecast;
-        delete context.wrongLocation;
-        delete context.location;
-        delete context.missingLocation;
+        var modul = firstEntityValue(entities, "modul");
+        
+        if (modul) {
+            context.modul = "Was denkst du ist die richtige Antwort ?";
+            
+            delete context.missingModul;
+            istAntwort = true;
+            
+        } else {
+            
+            context.missingModul = true;
+            
+            delete context.modul;
+            keinThema = true;
+            
+        }
 
+        return resolve(context);
+      });
+    },
+    
+    loese({context, entities}) {
+      return new Promise(function(resolve, reject) {
+
+        var antwort = firstEntityValue(entities, "antwort");
+        
+        if (antwort) {
+            switch(antwort) {
+                
+                case '(B)':
+                    context.antwort = "Falsch, darunter versteht man XMLApplikation.";
+                    break;
+                case '(C)':
+                    context.antwort = "Leider falsch :S";
+                    break;
+                default:
+                    context.antwort = "Richtig :)";
+                
+                
+            }
+            
         return resolve(context);
       });
     },
