@@ -315,7 +315,10 @@ const actions = {
         var modul = firstEntityValue(entities, "modul");
         
         if (modul) {
-            delete context.modul;
+            context.modul = "Hier ist deine INS Aufgabe :) \n  Wasversteht man unter XMLCo Standart ?" +
+                    "(A) : XMLCoStandarts sind XMLbasierteSprache, die ihrer seits dazu verwendet werden weitere Sprachen zu defininieren. \n" +
+                    "(B) : XMLCoStandarts sind Sprachen mit denen man keine Sprachen definiert, sondern vielmehr Dokumente auszeichnet.\n" +
+                    "(C) : XMLCoStandarts, können sowohl für (A) als auch (B) verwendet werden. "
             
             delete context.missingModul;
             istAntwort = true;
