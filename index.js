@@ -350,74 +350,76 @@ const actions = {
                 
             }
             
+          }
+            
         return resolve(context);
       });
     },
 
 //Eine Test Funktion
-  gibAufgabe({context, entities}) {
-  return new Promise(function(resolve, reject) {
-   
-    var thema = firstEntityValue(entities, "thema");
-    var modul = firstEntityValue(entities, "modul");
-    
-    if (modul && thema) {
-        
-        context.modul = modul; 
-        context.thema = thema;
-        
-        
-        delete context.missingThema;
-        delete context.missingModul;
-                
-    } else if (modul) {
-        
-      if (context.thema) {
-          
-            context.modul = modul;
-            
-            delete context.missingThema;
-            delete context.missingModul;
-            
-            
-      } else {
-          
-            context.modul = modul;
-            context.missingThema = true;
-            
-            delete context.thema;
-            delete context.missingModul;
-          
-      }
-      
-      
-      
-    } else if (thema) {
-        
-      
-      context.missingModul = true;
-      context.thema = thema;
-      
-      delete context.modul;
-      delete context.missingThema;
-      
-      keinThema = true;
-        
-        
-    } else {
-        
-        context.missingThema = true;
-        context.missingModul = true;
-        
-        keinThema = true;  
-        
-        delete context.thema;
-        delete context.modul;
-        
-    }
-    return resolve(context);
-  });
-}
+//  gibAufgabe({context, entities}) {
+//  return new Promise(function(resolve, reject) {
+//   
+//    var thema = firstEntityValue(entities, "thema");
+//    var modul = firstEntityValue(entities, "modul");
+//    
+//    if (modul && thema) {
+//        
+//        context.modul = modul; 
+//        context.thema = thema;
+//        
+//        
+//        delete context.missingThema;
+//        delete context.missingModul;
+//                
+//    } else if (modul) {
+//        
+//      if (context.thema) {
+//          
+//            context.modul = modul;
+//            
+//            delete context.missingThema;
+//            delete context.missingModul;
+//            
+//            
+//      } else {
+//          
+//            context.modul = modul;
+//            context.missingThema = true;
+//            
+//            delete context.thema;
+//            delete context.missingModul;
+//          
+//      }
+//      
+//      
+//      
+//    } else if (thema) {
+//        
+//      
+//      context.missingModul = true;
+//      context.thema = thema;
+//      
+//      delete context.modul;
+//      delete context.missingThema;
+//      
+//      keinThema = true;
+//        
+//        
+//    } else {
+//        
+//        context.missingThema = true;
+//        context.missingModul = true;
+//        
+//        keinThema = true;  
+//        
+//        delete context.thema;
+//        delete context.modul;
+//        
+//    }
+//    return resolve(context);
+//  });
+//}
 
 };
 
