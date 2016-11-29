@@ -308,11 +308,14 @@ const actions = {
 
     gibAufgabeDemo({context, entities}) {
       return new Promise(function(resolve, reject) {
+          
+        console.log("IN DER AUFGABENDEMO ANGEKOMMEN");
+        console.log(entities);
 
         var modul = firstEntityValue(entities, "modul");
         
         if (modul) {
-            context.modul = "Was denkst du ist die richtige Antwort ?";
+            delete context.modul;
             
             delete context.missingModul;
             istAntwort = true;
@@ -326,6 +329,9 @@ const actions = {
             
         }
 
+        console.log("RAUS AUS DER AUFGABENDEMO");
+        console.log(entities);
+        
         return resolve(context);
       });
     },
@@ -333,6 +339,9 @@ const actions = {
     loese({context, entities}) {
       return new Promise(function(resolve, reject) {
 
+        console.log("IN FUNKTION LOESE");
+        console.log(entities);
+        
         var antwort = firstEntityValue(entities, "antwort");
         
         if (antwort) {
@@ -351,7 +360,9 @@ const actions = {
             }
             
           }
-            
+        console.log("AUS FUNKTION LOESE");
+        console.log(entities);
+        
         return resolve(context);
       });
     },
