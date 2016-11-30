@@ -315,16 +315,8 @@ const actions = {
         var modul = firstEntityValue(entities, "modul");
         
         if (modul) {
-            
-            send(sessionId, "Hier ist deine INS Aufgabe :)");
-            
-            context.modul = "Hier ist deine INS Aufgabe :) \n  Wasversteht man unter XMLCo Standart ?" 
-//                    "(A) : XMLCoStandarts sind XMLbasierteSprache, die ihrer seits dazu verwendet werden weitere Sprachen zu defininieren. \n" +
-//                    "(B) : XMLCoStandarts sind Sprachen mit denen man keine Sprachen definiert, sondern vielmehr Dokumente auszeichnet.\n" +
-//                    "(C) : XMLCoStandarts, können sowohl für (A) als auch (B) verwendet werden. "
-            
+               
             delete context.missingModul;
-            istAntwort = true;
             
         } else {
             
@@ -374,6 +366,17 @@ const actions = {
           }
         console.log("AUS FUNKTION LOESE");
         console.log(entities);
+        
+        return resolve(context);
+      });
+    },
+    
+    stelleFrage({context, entities}) {
+      return new Promise(function(resolve, reject) {
+        
+        context.modul = "Was denkst du ist die richtige Antwort ? ^^";
+        
+        istAntwort = true;
         
         return resolve(context);
       });
