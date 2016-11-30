@@ -344,7 +344,7 @@ const actions = {
 
         console.log("IN FUNKTION LOESE");
         console.log(entities);
-        
+        delete context.modul;
         var antwort = firstEntityValue(entities, "antwort");
         
         if (antwort) {
