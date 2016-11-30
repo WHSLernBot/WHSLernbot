@@ -315,10 +315,13 @@ const actions = {
         var modul = firstEntityValue(entities, "modul");
         
         if (modul) {
-            context.modul = "Hier ist deine INS Aufgabe :) \n  Wasversteht man unter XMLCo Standart ?" +
-                    "(A) : XMLCoStandarts sind XMLbasierteSprache, die ihrer seits dazu verwendet werden weitere Sprachen zu defininieren. \n" +
-                    "(B) : XMLCoStandarts sind Sprachen mit denen man keine Sprachen definiert, sondern vielmehr Dokumente auszeichnet.\n" +
-                    "(C) : XMLCoStandarts, können sowohl für (A) als auch (B) verwendet werden. "
+            
+            send(sessionId, "Hier ist deine INS Aufgabe :)");
+            
+            context.modul = "Hier ist deine INS Aufgabe :) \n  Wasversteht man unter XMLCo Standart ?" 
+//                    "(A) : XMLCoStandarts sind XMLbasierteSprache, die ihrer seits dazu verwendet werden weitere Sprachen zu defininieren. \n" +
+//                    "(B) : XMLCoStandarts sind Sprachen mit denen man keine Sprachen definiert, sondern vielmehr Dokumente auszeichnet.\n" +
+//                    "(C) : XMLCoStandarts, können sowohl für (A) als auch (B) verwendet werden. "
             
             delete context.missingModul;
             istAntwort = true;
@@ -344,7 +347,13 @@ const actions = {
 
         console.log("IN FUNKTION LOESE");
         console.log(entities);
+        console.log("RESOLVE");
+        console.log(resolve);
+        console.log("REJECT");
+        console.log(reject);
+        
         delete context.modul;
+        
         var antwort = firstEntityValue(entities, "antwort");
         
         if (antwort) {
