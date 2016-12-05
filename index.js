@@ -349,8 +349,14 @@ const actions = {
         console.log("IN DER AUFGABENDEMO ANGEKOMMEN");
         console.log(entities);
         
-        getIntent(text);
+        if(body.entities.intent) {
+        serviceResult.intent = body.entities.intent[0].value;
+        serviceResult.intentConfidence = body.entities.intent[0].confidence;
+      }
+        
         var modul = firstEntityValue(entities, "modul");
+        
+        
         
         if(serviceResult.intentConfidence) {
             console.log("IN DER CONFIDENCE");
