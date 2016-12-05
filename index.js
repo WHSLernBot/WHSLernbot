@@ -122,6 +122,39 @@ const firstEntityValue = (entities, entity) => {
 };
 
 
+//Die Confidence erkennen
+  function getIntent(message) {
+  var serviceResult = {};
+  var url = 'https://api.wit.ai/message?v=20161006&q='+message;
+  var options = {
+    uri: url,
+    qs: {},
+    method: 'POST',
+    headers: {},
+    auth: {'bearer': process.env.WIT_TOKEN},
+    json: true
+  };
+  request(options, function(error, response, body) {
+    if(!error) {
+      serviceResult.result = "success";
+      // Check for entities
+      if(body.entities.contact) {
+        serviceResult.entity = body.entities.contact[0].value;
+        serviceResult.entityConfidence = body.entities.contact[0].confidence;
+      }
+      // Check for intent
+      if(body.entities.intent) {
+        serviceResult.intent = body.entities.intent[0].value;
+        serviceResult.intentConfidence = body.entities.intent[0].confidence;
+      }
+    }
+    else {
+      serviceResult.result = "fail";
+    }
+  });
+};
+
+
 // Innerhalb von Actions müssen unsere Funktionen reingepackt werden
 const actions = {
 	
@@ -220,37 +253,7 @@ const actions = {
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
   
-  //Die Confidence erkennen
-  function getIntent(message) {
-  var serviceResult = {};
-  var url = 'https://api.wit.ai/message?v=20161006&q='+message;
-  var options = {
-    uri: url,
-    qs: {},
-    method: 'POST',
-    headers: {},
-    auth: {'bearer': process.env.WIT_TOKEN},
-    json: true
-  };
-  request(options, function(error, response, body) {
-    if(!error) {
-      serviceResult.result = "success";
-      // Check for entities
-      if(body.entities.contact) {
-        serviceResult.entity = body.entities.contact[0].value;
-        serviceResult.entityConfidence = body.entities.contact[0].confidence;
-      }
-      // Check for intent
-      if(body.entities.intent) {
-        serviceResult.intent = body.entities.intent[0].value;
-        serviceResult.intentConfidence = body.entities.intent[0].confidence;
-      }
-    }
-    else {
-      serviceResult.result = "fail";
-    }
-  });
-}
+  
 
 
   
