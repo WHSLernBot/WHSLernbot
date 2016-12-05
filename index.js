@@ -347,21 +347,11 @@ const actions = {
       return new Promise(function(resolve, reject) {
           
         console.log("IN DER AUFGABENDEMO ANGEKOMMEN");
-        console.log(entities.confidence);
-        
-        if(body.entities.intent) {
-        serviceResult.intent = body.entities.intent[0].value;
-        serviceResult.intentConfidence = body.entities.intent[0].confidence;
-      }
+        console.log(context);
+        console.log(entities.intent);
         
         var modul = firstEntityValue(entities, "modul");
         
-        
-        
-        if(serviceResult.intentConfidence) {
-            console.log("IN DER CONFIDENCE");
-            console.log(serviceResult.intentConfidence);
-        }
         
         if (modul) {
                
