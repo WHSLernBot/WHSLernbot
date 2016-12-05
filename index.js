@@ -349,7 +349,7 @@ const actions = {
         console.log("IN DER AUFGABENDEMO ANGEKOMMEN");
         console.log(entities);
         
-        getIntent(message);
+        getIntent(text);
         var modul = firstEntityValue(entities, "modul");
         
         if(serviceResult.intentConfidence) {
