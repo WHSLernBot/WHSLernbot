@@ -347,7 +347,7 @@ const actions = {
       return new Promise(function(resolve, reject) {
           
         console.log("IN DER AUFGABENDEMO ANGEKOMMEN");
-        console.log(entities);
+        console.log(entities.confidence);
         
         if(body.entities.intent) {
         serviceResult.intent = body.entities.intent[0].value;
