@@ -194,7 +194,7 @@ const actions = {
 
             }; 
             
-            keinThema = false;
+            keinModul = false;
             
         } else if (istAntwort) {
             
@@ -411,6 +411,8 @@ const actions = {
    
     var thema = firstEntityValue(entities, "thema");
     var modul = firstEntityValue(entities, "modul");
+    
+    console.log("BIN iN GIBAUFGABE");
     
     if (modul && thema) {
         
