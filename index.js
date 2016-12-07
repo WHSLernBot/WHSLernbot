@@ -456,7 +456,7 @@ const actions = {
         if(context.modul) {
             
             context.thema = thema;
-
+            
             delete context.missingModul;
             delete context.missingThema;
             istAntwort = true;
