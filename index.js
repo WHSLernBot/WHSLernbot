@@ -473,6 +473,8 @@ const actions = {
         
     } else {
         
+        console.log("BIN HIER WO ICH SOLL");
+        
         context.missingThema = true;
         context.missingModul = true;
         
