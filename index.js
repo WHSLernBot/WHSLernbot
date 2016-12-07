@@ -380,6 +380,9 @@ const actions = {
 
         
         delete context.modul;
+        delete context.thema;
+        delete context.missingThema;
+        delete context.missingModul;
         
         var antwort = firstEntityValue(entities, "antwort");
         
@@ -387,7 +390,7 @@ const actions = {
             switch(antwort) {
                 
                 case '(B)':
-                    context.antwort = "Falsch, darunter versteht man XMLApplikation.";
+                    context.antwort = "Falsch";
                     break;
                 case '(C)':
                     context.antwort = "Leider falsch :S";
@@ -474,7 +477,6 @@ const actions = {
         
     } else {
         
-        console.log("BIN HIER WO ICH SOLL");
         
         context.missingThema = true;
         context.missingModul = true;
