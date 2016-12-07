@@ -416,7 +416,7 @@ const actions = {
     var modul = firstEntityValue(entities, "modul");
     
     
-    if (modul && thema) {
+    if ((modul && thema) || (context.modul && context.thema)) {
         
         context.modul = modul; 
         context.thema = thema;
@@ -432,6 +432,7 @@ const actions = {
       if (context.thema) {
           
             context.modul = modul;
+            
             
             delete context.missingThema;
             delete context.missingModul;
