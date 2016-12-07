@@ -169,7 +169,7 @@ const actions = {
         
             
             
-        if (keinThema) {
+        if (keinModul) {
         
             text = {"text" : text,
                     "quick_replies" : [
@@ -221,10 +221,39 @@ const actions = {
             
             istAntwort = false;
             
+        } else if (keinThema) {
+            
+            text = {"text" : text,
+                    "quick_replies" : [
+                      {
+                        "content_type" : "text",
+                        "title" : "HTML",
+                        "payload" : "empty"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"XML",
+                        "payload":"empty"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"PHP",
+                        "payload":"empty"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"Egal",
+                        "payload":"empty"
+                      },
+                      
+                    ]
+
+            }; 
+            
+            keinThema = false;
+            
         } else {
-            
             text = {text};
-            
         }
             
               
@@ -390,6 +419,8 @@ const actions = {
         
         delete context.missingThema;
         delete context.missingModul;
+        
+        istAntwort = true;
                 
     } else if (modul) {
         
@@ -399,7 +430,7 @@ const actions = {
             
             delete context.missingThema;
             delete context.missingModul;
-            
+            istAntwort = true;
             
       } else {
           
@@ -408,6 +439,7 @@ const actions = {
             
             delete context.thema;
             delete context.missingModul;
+            keinThema = true;
           
       }
       
@@ -415,14 +447,27 @@ const actions = {
       
     } else if (thema) {
         
+        if(context.modul) {
+            
+            context.thema = thema;
+
+            delete context.missingModul;
+            delete context.missingThema;
+
+            
+        } else {
+            
+            context.missingModul = true;
+            context.thema = thema;
+
+            delete context.modul;
+            delete context.missingThema;
+
+            keinModul = true;
+            
+        }
       
-      context.missingModul = true;
-      context.thema = thema;
       
-      delete context.modul;
-      delete context.missingThema;
-      
-      keinThema = true;
         
         
     } else {
@@ -430,7 +475,7 @@ const actions = {
         context.missingThema = true;
         context.missingModul = true;
         
-        keinThema = true;  
+        keinModul = true;  
         
         delete context.thema;
         delete context.modul;
