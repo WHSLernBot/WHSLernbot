@@ -21,6 +21,7 @@ const request = require('request');
 const http = require('http');
 var keinThema = false;
 var istAntwort = false;
+var keinModul = false;
 let Wit = null;
 let log = null;
 
