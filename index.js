@@ -343,45 +343,11 @@ const actions = {
 },
 
 
-    gibAufgabeDemo({context, entities}) {
-      return new Promise(function(resolve, reject) {
-          
-        console.log("IN DER AUFGABENDEMO ANGEKOMMEN");
-        console.log(context);
-        console.log(entities.intent);
-        
-        var modul = firstEntityValue(entities, "modul");
-        
-        
-        if (modul) {
-               
-            delete context.missingModul;
-            
-        } else {
-            
-            context.missingModul = true;
-            
-            delete context.modul;
-            keinThema = true;
-            
-        }
-
-        console.log("RAUS AUS DER AUFGABENDEMO");
-        console.log(entities);
-        
-        return resolve(context);
-      });
-    },
+    
     
     loese({context, entities}) {
       return new Promise(function(resolve, reject) {
 
-        console.log("IN FUNKTION LOESE");
-        console.log(entities);
-        console.log("RESOLVE");
-        console.log(resolve);
-        console.log("REJECT");
-        console.log(reject);
         
         delete context.modul;
         
@@ -403,88 +369,76 @@ const actions = {
             }
             
           }
-        console.log("AUS FUNKTION LOESE");
-        console.log(entities);
+        
         
         return resolve(context);
       });
     },
     
-    stelleFrage({context, entities}) {
-      return new Promise(function(resolve, reject) {
+    
+  gibAufgabe({context, entities}) {
+  return new Promise(function(resolve, reject) {
+   
+    var thema = firstEntityValue(entities, "thema");
+    var modul = firstEntityValue(entities, "modul");
+    
+    if (modul && thema) {
         
-        context.modul = "Was denkst du ist die richtige Antwort ? ^^";
+        context.modul = modul; 
+        context.thema = thema;
         
-        istAntwort = true;
         
-        return resolve(context);
-      });
-    },
-
-//Eine Test Funktion
-//  gibAufgabe({context, entities}) {
-//  return new Promise(function(resolve, reject) {
-//   
-//    var thema = firstEntityValue(entities, "thema");
-//    var modul = firstEntityValue(entities, "modul");
-//    
-//    if (modul && thema) {
-//        
-//        context.modul = modul; 
-//        context.thema = thema;
-//        
-//        
-//        delete context.missingThema;
-//        delete context.missingModul;
-//                
-//    } else if (modul) {
-//        
-//      if (context.thema) {
-//          
-//            context.modul = modul;
-//            
-//            delete context.missingThema;
-//            delete context.missingModul;
-//            
-//            
-//      } else {
-//          
-//            context.modul = modul;
-//            context.missingThema = true;
-//            
-//            delete context.thema;
-//            delete context.missingModul;
-//          
-//      }
-//      
-//      
-//      
-//    } else if (thema) {
-//        
-//      
-//      context.missingModul = true;
-//      context.thema = thema;
-//      
-//      delete context.modul;
-//      delete context.missingThema;
-//      
-//      keinThema = true;
-//        
-//        
-//    } else {
-//        
-//        context.missingThema = true;
-//        context.missingModul = true;
-//        
-//        keinThema = true;  
-//        
-//        delete context.thema;
-//        delete context.modul;
-//        
-//    }
-//    return resolve(context);
-//  });
-//}
+        delete context.missingThema;
+        delete context.missingModul;
+                
+    } else if (modul) {
+        
+      if (context.thema) {
+          
+            context.modul = modul;
+            
+            delete context.missingThema;
+            delete context.missingModul;
+            
+            
+      } else {
+          
+            context.modul = modul;
+            context.missingThema = true;
+            
+            delete context.thema;
+            delete context.missingModul;
+          
+      }
+      
+      
+      
+    } else if (thema) {
+        
+      
+      context.missingModul = true;
+      context.thema = thema;
+      
+      delete context.modul;
+      delete context.missingThema;
+      
+      keinThema = true;
+        
+        
+    } else {
+        
+        context.missingThema = true;
+        context.missingModul = true;
+        
+        keinThema = true;  
+        
+        delete context.thema;
+        delete context.modul;
+        
+    }
+    return resolve(context);
+  });
+}
 
 };
 
