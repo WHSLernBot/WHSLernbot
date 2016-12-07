@@ -412,7 +412,6 @@ const actions = {
     var thema = firstEntityValue(entities, "thema");
     var modul = firstEntityValue(entities, "modul");
     
-    console.log("BIN iN GIBAUFGABE");
     
     if (modul && thema) {
         
@@ -456,7 +455,7 @@ const actions = {
 
             delete context.missingModul;
             delete context.missingThema;
-
+            istAntwort = true;
             
         } else {
             
