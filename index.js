@@ -444,7 +444,7 @@ const actions = {
             context.modul = modul;
             context.missingThema = true;
             
-            delete context.thema;
+            
             delete context.missingModul;
             keinThema = true;
           
@@ -467,7 +467,7 @@ const actions = {
             context.missingModul = true;
             context.thema = thema;
 
-            delete context.modul;
+            
             delete context.missingThema;
 
             keinModul = true;
