@@ -491,7 +491,143 @@ const actions = {
     }
     return resolve(context);
   });
-}
+},
+
+
+setzeName({context, entities}) {
+      return new Promise(function(resolve, reject) {
+        
+        var name = firstEntityValue(entities, "contact");
+        
+        context.name = "Ok ab jetzt nenne ich dich " + name;
+            
+        return resolve(context);
+      });
+    },
+    
+    
+    setzeNote({context, entities}) {
+      return new Promise(function(resolve, reject) {
+        
+        var note = firstEntityValue(entities, "number");
+        var modul = firstEntityValue(entities, "modul");
+        
+        context.note = note;
+        context.modul = modul;
+            
+        return resolve(context);
+      });
+    },
+    
+    gibInfo({context, entities}) {
+      return new Promise(function(resolve, reject) {
+        
+        var modul = firstEntityValue(entities, "modul");
+        
+        if (modul) {
+            context.modul = "Hier sind deine " + modul + "-Daten.";
+            delete context.missingModul;
+        } else {
+            context.missingModul = "Hier sind deine Statistiken";
+            delete context.modul;
+        }
+                    
+        return resolve(context);
+      });
+    },
+    
+    
+    setzeUni({context, entities}) {
+      return new Promise(function(resolve, reject) {
+        
+        var uni = firstEntityValue(entities, "uni");
+        var ort = firstEntityValue(entities, "location");
+        
+        context.uni = "Ok deine Uni ist also die " + uni;
+                    
+        return resolve(context);
+      });
+    },
+    
+    setzeKlausur({context, entities}) {
+      return new Promise(function(resolve, reject) {
+        
+        var time = firstEntityValue(entities, "datetime");
+        var modul = firstEntityValue(entities, "modul");
+        
+        if (time && modul) {
+            
+            context.time = time;
+            context.modul = modul;
+            
+            delete context.missingModul;
+            delete context.missingTime;
+            
+        } else if (context.time && context.modul) {
+            
+            delete context.missingModul;
+            delete context.missingTime;
+            
+        } else if (modul) {
+            if(context.time) {
+                
+                context.modul = modul;
+                
+                delete context.missingModul;
+                
+            } else {
+                context.missingTime = true;
+                context.modul = modul;
+                
+                delete context.missingModul;
+            }
+        } else if (time) {
+            
+            if(context.modul) {
+                
+                context.time = time;
+                
+                delete context.missingTime;
+                
+            } else {
+                kein Modul = true;
+                context.missingModul = true;
+                context.time = time;
+                
+                delete context.missingTime;
+            }
+            
+        } else {
+            keinModul = true;
+            context.missingModul = true;
+        }
+                    
+        return resolve(context);
+      });
+    },
+    
+    
+    gibKlausurInfos({context, entities}) {
+      return new Promise(function(resolve, reject) {
+        
+        var modul = firstEntityValue(entities, "modul");
+        
+        context.infos = "Ok hier sind die Infos zur " + modul + " Klausur !!!";
+                    
+        return resolve(context);
+      });
+    },
+    
+    bewerteAufgabe({context, entities}) {
+      return new Promise(function(resolve, reject) {
+        
+        var wert = firstEntityValue(entities, "bewertung");
+        
+        context.bewertung = "Ok also findest du die Aufgabe " + wert;
+                    
+        return resolve(context);
+      });
+    },
 
 };
 
