@@ -590,7 +590,7 @@ setzeName({context, entities}) {
                 delete context.missingTime;
                 
             } else {
-                kein Modul = true;
+                keinModul = true;
                 context.missingModul = true;
                 context.time = time;
                 
