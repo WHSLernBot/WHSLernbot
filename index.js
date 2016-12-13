@@ -195,6 +195,8 @@ const actions = {
             }; 
             
             keinModul = false;
+            console.log("KEIN MODUUUUUL");
+            console.log(text);
             
         } else if (istAntwort) {
             
@@ -221,6 +223,8 @@ const actions = {
             }; 
             
             istAntwort = false;
+            console.log("ISt ANTWOOORT");
+            console.log(text);
             
         } else if (keinThema) {
             
@@ -252,9 +256,13 @@ const actions = {
             }; 
             
             keinThema = false;
+            console.log("KEIN THEEEMA");
+            console.log(text);
             
         } else {
             text = {text};
+            console.log("NIIIIIIIIIIIX");
+            console.log(text);
         }
             
               
@@ -293,8 +301,7 @@ const actions = {
 	  
     var location = firstEntityValue(entities, "location");
     
-    console.log("HIER DIE ENTITIES");
-    console.log(entities);
+    
     
     if (location) {
         
@@ -417,7 +424,7 @@ const actions = {
     
     
     if ((modul && thema) || (context.modul && context.thema)) {
-        console.log("BEIDE CONTEXTE DA !!!!!!!!!!!");
+        
         context.modul = modul; 
         context.thema = thema;
         
@@ -432,7 +439,7 @@ const actions = {
       if (context.thema) {
           
             context.modul = modul;
-            console.log("JETZT MODUL GAB BEREITS THEMA");
+            
             
             delete context.missingThema;
             delete context.missingModul;
@@ -440,7 +447,7 @@ const actions = {
             
       } else {
           
-            console.log("JETZT NUR MODUL");
+           
             context.modul = modul;
             context.missingThema = true;
             
@@ -455,7 +462,7 @@ const actions = {
     } else if (thema) {
         
         if(context.modul) {
-            console.log("JETZT THEMA GAB BEREITS MODUL");
+            
             context.thema = thema;
             
             delete context.missingModul;
@@ -463,7 +470,7 @@ const actions = {
             istAntwort = true;
             
         } else {
-            console.log("JETZT NUR THEMA !!!");
+            
             context.missingModul = true;
             context.thema = thema;
 
@@ -487,7 +494,6 @@ const actions = {
         
         delete context.thema;
         delete context.modul;
-        console.log("NIX DAAAAAAAAAAAAAAAAAAAAAAAA !!!!!!!!!");
     }
     return resolve(context);
   });
