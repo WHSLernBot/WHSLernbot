@@ -166,7 +166,8 @@ const actions = {
             
         } else if (istAntwort) {
             
-            text = {"text" : text,
+                     
+            text = {"text" : "Hier ist deine Aufgabe",
                     "quick_replies" : [
                       {
                         "content_type" : "text",
