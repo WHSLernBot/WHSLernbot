@@ -288,19 +288,83 @@ const actions = {
     if (thema) {
         
         
+        var api = 'https://immense-journey-49192.herokuapp.com/';
+        var route = 'messageBot';
         
-        context.thema = 'Hier ist deine ' + thema + 
-                '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
+        var apiUrl = api + route;
         
+        request({
+            url: apiUrl,
+            json: {
+                    "id": sessions[sessionId].fbid,
+                    "plattform":0,
+                    "thema": context.thema
+                };
+        }, function(error, response, body) {
+            
+            if (!error && response.statusCode === 200) {
+                
+                switch(body.weather[0].main) {
+
+                case 'Rain':
+                    forecastText = 'Pack den Regenschirm ein, in ' + location + ' wird es heute Regnen. Die Temperatur liegt bei ' + body.main.temp + '°C.';
+                    break;
+                case 'Snow':
+                    forecastText = 'Heute soll es in ' + location + ' schneien, also schön warm anziehen! Die temperaturen betragen ' + body.main.temp + '°C.';
+                    break;
+                case 'Clear':
+                    forecastText = 'Die Sonne lässt sich ab und zu in ' + location + ' blicken dabei beträgt die Temperatur ' + body.main.temp + '°C.';
+                    break;
+                case 'Sunny':
+                    forecastText = 'Heute ist es sonnig in ' + location + '. Die jetztige Temperatur beträgt ' + body.main.temp + '°C.'
+                    break;
+                case 'Mist':
+                    forecastText = 'In der Gegend von ' + location + ' ist es etwas diesig! Zurzeit sind es ' + body.main.temp + '°C.';
+                    break;
+                case 'Clouds':
+                    forecastText = 'In ' + location + ' ist es gerade ziemlich bewölkt! Aktuell beträgt die Temperatur ' + body.main.temp + '°C.'; 
+                    break;
+                case 'Fog':
+                    forecastText = 'Vorsicht beim Autofahren, in der Gegend von ' + location + ', ist es nebelig. Die Temperatur beträgt ' + body.main.temp + '°C.'; 
+                    break;
+                default:
+                    forecastText = body.weather[0].main + ' Wirklich mysteriös das Wetter in ' + location + ', frag mich am besten nochmal und ich gucke nochmal genauer nach! ;)';
+                }
+             
+                context.forecast = forecastText;
+                delete context.missingLocation;
+                delete context.wrongLocation;
+                return resolve(context);  
+
+            } else {
+                
+                if(body.cod = 502) {
+                    
+                    context.wrongLocation = 'Leider kenne ich ' + location + ' nicht. Hast du dich eventuell verschrieben? Versuch es doch nochmal! ;)';
+                    delete context.location;
+                    delete context.missingLocation;
+                    resolve(context);
+                }
+                
+            }
+        });
+        
+        
+//        context.thema = 'Hier ist deine ' + thema + 
+//                '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
+//        
         
         delete context.missingThema;
-                
+        return resolve(context);
+        
     } else {
-      context.missingThema = true;
-      keinThema = true;  
-      delete context.thema;
+        
+        context.missingThema = true;
+        keinThema = true;  
+        delete context.thema;
+        return resolve(context);
     }
-    return resolve(context);
+    
   });
 }
 
