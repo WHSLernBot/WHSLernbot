@@ -20,6 +20,8 @@ const fetch = require('node-fetch');
 const request = require('request');
 const http = require('http');
 var keinThema = false;
+var istAntwort = false;
+var keinModul = false;
 let Wit = null;
 let log = null;
 
@@ -60,7 +62,7 @@ if (!FB_VERIFY_TOKEN) { throw new Error('missing FB_APP_SECRET'); }
 const fbMessage = (id, text) => {
   const body = JSON.stringify({
     recipient: { id },
-    message:   text, 
+    message:   text , 
   });
   
   
@@ -135,19 +137,70 @@ const actions = {
         
             
             
-        if (keinThema) {
+        if (keinModul) {
         
-            text =  {"text" : text,
+            text = {"text" : "Welches Modul ?",
+                    "quick_replies" : [
+                      {
+                        "content_type" : "text",
+                        "title" : "INS",
+                        "payload" : "empty"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"ASG",
+                        "payload":"empty"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"OPR",
+                        "payload":"empty"
+                      },
+                      
+                    ]
+
+            }; 
+            
+            keinModul = false;
+            
+            
+        } else if (istAntwort) {
+            
+                     
+            text = {"text" : "Hier ist deine Aufgabe",
+                    "quick_replies" : [
+                      {
+                        "content_type" : "text",
+                        "title" : "(A)",
+                        "payload" : "empty"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"(B)",
+                        "payload":"empty"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"(C)",
+                        "payload":"empty"
+                      },
+                      
+                    ]
+
+            }; 
+            
+            istAntwort = false;
+            console.log("ISt ANTWOOORT");
+            console.log(text);
+            
+        } else if (keinThema) {
+            
+            text = {"text" : "Hast du ein bevorzugtes Thema ?",
                     "quick_replies" : [
                       {
                         "content_type" : "text",
                         "title" : "HTML",
                         "payload" : "empty"
-                      },
-                      {
-                        "content_type":"text",
-                        "title":"CSS",
-                        "payload":"empty"
                       },
                       {
                         "content_type":"text",
@@ -159,12 +212,18 @@ const actions = {
                         "title":"PHP",
                         "payload":"empty"
                       },
+                      {
+                        "content_type":"text",
+                        "title":"Egal",
+                        "payload":"empty"
+                      },
+                      
                     ]
 
-                }; 
+            }; 
             
             keinThema = false;
-           
+            
         } else {
             text = {text};
         }
@@ -195,14 +254,18 @@ const actions = {
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
   
+  
+
+
+  
   //Eine Test Funktion
   getForecast({context, entities}) {
   return new Promise(function(resolve, reject) {
 	  
     var location = firstEntityValue(entities, "location");
     
-    console.log("HIER DIE ENTITIES");
-    console.log(entities);
+    
+    
     if (location) {
         
         var forecastText;
@@ -279,13 +342,51 @@ const actions = {
   });
 },
 
-//Eine Test Funktion
+
+    
+    
+    loese({context, entities}) {
+      return new Promise(function(resolve, reject) {
+
+        
+        delete context.modul;
+        delete context.thema;
+        delete context.missingThema;
+        delete context.missingModul;
+        
+        var antwort = firstEntityValue(entities, "antwort");
+        
+        if (antwort) {
+            switch(antwort) {
+                
+                case '(B)':
+                    context.antwort = "Falsch";
+                    break;
+                case '(C)':
+                    context.antwort = "Leider falsch :S";
+                    break;
+                default:
+                    context.antwort = "Richtig :)";
+                
+                
+            }
+            
+          }
+        
+        
+        return resolve(context);
+      });
+    },
+    
+    
   gibAufgabe({context, entities}) {
   return new Promise(function(resolve, reject) {
    
-    var thema = firstEntityValue(entities, "thema")
+    var thema = firstEntityValue(entities, "thema");
+    var modul = firstEntityValue(entities, "modul");
     
-    if (thema) {
+    
+    if ((modul && thema) || (context.modul && context.thema)) {
         
         
         var api = 'https://immense-journey-49192.herokuapp.com/';
@@ -366,7 +467,143 @@ const actions = {
     }
     
   });
-}
+},
+
+
+setzeName({context, entities}) {
+      return new Promise(function(resolve, reject) {
+        
+        var name = firstEntityValue(entities, "contact");
+        
+        context.name = "Ok ab jetzt nenne ich dich " + name;
+            
+        return resolve(context);
+      });
+    },
+    
+    
+    setzeNote({context, entities}) {
+      return new Promise(function(resolve, reject) {
+        
+        var note = firstEntityValue(entities, "number");
+        var modul = firstEntityValue(entities, "modul");
+        
+        context.note = note;
+        context.modul = modul;
+            
+        return resolve(context);
+      });
+    },
+    
+    gibInfo({context, entities}) {
+      return new Promise(function(resolve, reject) {
+        
+        var modul = firstEntityValue(entities, "modul");
+        
+        if (modul) {
+            context.modul = "Hier sind deine " + modul + "-Daten.";
+            delete context.missingModul;
+        } else {
+            context.missingModul = "Hier sind deine Statistiken";
+            delete context.modul;
+        }
+                    
+        return resolve(context);
+      });
+    },
+    
+    
+    setzeUni({context, entities}) {
+      return new Promise(function(resolve, reject) {
+        
+        var uni = firstEntityValue(entities, "uni");
+        var ort = firstEntityValue(entities, "location");
+        
+        context.uni = "Ok deine Uni ist also die " + uni;
+                    
+        return resolve(context);
+      });
+    },
+    
+    setzeKlausur({context, entities}) {
+      return new Promise(function(resolve, reject) {
+        
+        var time = firstEntityValue(entities, "datetime");
+        var modul = firstEntityValue(entities, "modul");
+        
+        if (time && modul) {
+            
+            context.time = time;
+            context.modul = modul;
+            
+            delete context.missingModul;
+            delete context.missingTime;
+            
+        } else if (context.time && context.modul) {
+            
+            delete context.missingModul;
+            delete context.missingTime;
+            
+        } else if (modul) {
+            if(context.time) {
+                
+                context.modul = modul;
+                
+                delete context.missingModul;
+                
+            } else {
+                context.missingTime = true;
+                context.modul = modul;
+                
+                delete context.missingModul;
+            }
+        } else if (time) {
+            
+            if(context.modul) {
+                
+                context.time = time;
+                
+                delete context.missingTime;
+                
+            } else {
+                keinModul = true;
+                context.missingModul = true;
+                context.time = time;
+                
+                delete context.missingTime;
+            }
+            
+        } else {
+            keinModul = true;
+            context.missingModul = true;
+        }
+                    
+        return resolve(context);
+      });
+    },
+    
+    
+    gibKlausurInfos({context, entities}) {
+      return new Promise(function(resolve, reject) {
+        
+        var modul = firstEntityValue(entities, "modul");
+        
+        context.infos = "Ok hier sind die Infos zur " + modul + " Klausur !!!";
+                    
+        return resolve(context);
+      });
+    },
+    
+    bewerteAufgabe({context, entities}) {
+      return new Promise(function(resolve, reject) {
+        
+        var wert = firstEntityValue(entities, "bewertung");
+        
+        context.bewertung = "Ok also findest du die Aufgabe " + wert;
+                    
+        return resolve(context);
+      });
+    },
 
 };
 
@@ -448,7 +685,10 @@ app.post('/webhook', (req, res) => {
               // }
 
               // Updating the user's current session state
+              
+              
               sessions[sessionId].context = context;
+              
             })
             .catch((err) => {
               console.error('Oops! Got an error from Wit: ', err.stack || err);
