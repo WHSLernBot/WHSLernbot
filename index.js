@@ -58,7 +58,7 @@ const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 const fbMessage = (id, text) = > {
 const body = JSON.stringify({
 recipient: { id },
-        message:   { text },
+        message:    text ,
 });
         const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
         return fetch('https://graph.facebook.com/me/messages?' + qs, {
@@ -232,34 +232,7 @@ return typeof val === 'object' ? val.value : val;
                 // You should implement your custom actions here
                 // See https://wit.ai/docs/quickstart
 
-
-
-                //Mini Test für facebook nachricht ohne Wit.ai
-                test({context, entities}) {
-                return new Promise(function(resolve, reject) {
-
-                var text = {"Leck mich Pascal"};
-                var recipientId = sessions[sessionId].fbid;
-                System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-                System.out.println(recipientId);        
-//                return fbMessage(recipientId, text)
-//                .then(() = > null)
-//                .catch((err) = > {
-//                console.error(
-//                        'Oops! An error occurred while forwarding the response to',
-//                        recipientId,
-//                        ':',
-//                        err.stack || err
-//                            );
-//                        });
-                        return resolve(context);
-                    });
-                },
-        
-        
-        
-        
-        
+    
                 //Eine Test Funktion
                 getForecast({context, entities}) {
         return new Promise(function(resolve, reject) {
@@ -426,6 +399,7 @@ return typeof val === 'object' ? val.value : val;
 
                 }
         });
+        
 //        context.thema = 'Hier ist deine ' + thema + 
 //                '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
 //        
