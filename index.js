@@ -55,7 +55,7 @@ const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 // See the Send API reference
 // https://developers.facebook.com/docs/messenger-platform/send-api-reference
 
-const fbMessage = (id, text) = > {
+const fbMessage = (id, text) => {
 const body = JSON.stringify({
 recipient: { id },
         message:    text ,
@@ -66,8 +66,8 @@ recipient: { id },
                 headers: {'Content-Type': 'application/json'},
                 body,
         })
-        .then(rsp = > rsp.json())
-        .then(json = > {
+        .then(rsp => rsp.json())
+        .then(json => {
         if (json.error && json.error.message) {
         throw new Error(json.error.message);
         }
@@ -83,10 +83,10 @@ recipient: { id },
 // sessionId -> {fbid: facebookUserId, context: sessionState}
 
         const sessions = {};
-        const findOrCreateSession = (fbid) = > {
+        const findOrCreateSession = (fbid) => {
 let sessionId;
         // Let's see if we already have a session for the user fbid
-        Object.keys(sessions).forEach(k = > {
+        Object.keys(sessions).forEach(k => {
 if (sessions[k].fbid === fbid) {
 // Yep, got it!
 sessionId = k;
@@ -99,7 +99,7 @@ sessionId = new Date().toISOString();
 }
 return sessionId;
         };
-        const firstEntityValue = (entities, entity) = > {
+        const firstEntityValue = (entities, entity) => {
 const val = entities && entities[entity] &&
         Array.isArray(entities[entity]) &&
         entities[entity].length > 0 &&
@@ -211,8 +211,8 @@ return typeof val === 'object' ? val.value : val;
 
 
         return fbMessage(recipientId, text)
-                .then(() = > null)
-                .catch((err) = > {
+                .then(() => null)
+                .catch((err) => {
                 console.error(
                         'Oops! An error occurred while forwarding the response to',
                         recipientId,
@@ -531,15 +531,15 @@ return typeof val === 'object' ? val.value : val;
                 });
 // Starting our webserver and putting it all together
         const app = express();
-        app.use(({method, url}, rsp, next) = > {
-        rsp.on('finish', () = > {
+        app.use(({method, url}, rsp, next) => {
+        rsp.on('finish', () => {
         console.log(`${rsp.statusCode} ${method} ${url}`);
         });
                 next();
                 });
         app.use(bodyParser.json({ verify: verifyRequestSignature }));
 // Webhook setup
-        app.get('/webhook', (req, res) = > {
+        app.get('/webhook', (req, res) => {
         if (req.query['hub.mode'] === 'subscribe' &&
                 req.query['hub.verify_token'] === FB_VERIFY_TOKEN) {
         res.send(req.query['hub.challenge']);
@@ -548,14 +548,14 @@ return typeof val === 'object' ? val.value : val;
         }
         });
 // Message handler
-        app.post('/webhook', (req, res) = > {
+        app.post('/webhook', (req, res) => {
         // Parse the Messenger payload
         // See the Webhook reference
         // https://developers.facebook.com/docs/messenger-platform/webhook-reference
         const data = req.body;
                 if (data.object === 'page') {
-        data.entry.forEach(entry = > {
-        entry.messaging.forEach(event = > {
+        data.entry.forEach(entry => {
+        entry.messaging.forEach(event => {
         if (event.message) {
 
         // Yay! We got a new message!
@@ -581,7 +581,7 @@ return typeof val === 'object' ? val.value : val;
                 sessionId, // the user's current session
                 text, // the user's message
                 sessions[sessionId].context // the user's current session state
-                ).then((context) = > {
+                ).then((context) => {
         // Our bot did everything it has to do.
         // Now it's waiting for further messages to proceed.
         console.log('Waiting for next user messages');
@@ -597,7 +597,7 @@ return typeof val === 'object' ? val.value : val;
 
                 sessions[sessionId].context = context;
         })
-                .catch((err) = > {
+                .catch((err) => {
                 console.error('Oops! Got an error from Wit: ', err.stack || err);
                 })
         }
