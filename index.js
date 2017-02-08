@@ -58,7 +58,7 @@ const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 const fbMessage = (id, text) = > {
 const body = JSON.stringify({
 recipient: { id },
-        message:   text,
+        message:   { text },
 });
         const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
         return fetch('https://graph.facebook.com/me/messages?' + qs, {
