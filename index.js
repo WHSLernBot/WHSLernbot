@@ -240,17 +240,19 @@ return typeof val === 'object' ? val.value : val;
 
                 var text = {"Leck mich Pascal"};
                 var recipientId = sessions[sessionId].fbid;
-                        
-                return fbMessage(recipientId, text)
-                .then(() = > null)
-                .catch((err) = > {
-                console.error(
-                        'Oops! An error occurred while forwarding the response to',
-                        recipientId,
-                        ':',
-                        err.stack || err
-                        );
-                });
+                System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+                System.out.println(recipientId);        
+//                return fbMessage(recipientId, text)
+//                .then(() = > null)
+//                .catch((err) = > {
+//                console.error(
+//                        'Oops! An error occurred while forwarding the response to',
+//                        recipientId,
+//                        ':',
+//                        err.stack || err
+//                            );
+//                        });
+                        return resolve(context);
                     });
                 },
         
