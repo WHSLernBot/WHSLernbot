@@ -351,7 +351,7 @@ return typeof val === 'object' ? val.value : val;
                         "id": sessions[sessionId].fbid,
                                 "plattform":0,
                                 "thema": context.thema
-                        };
+                        }
                 }, function(error, response, body) {
 
                 if (!error && response.statusCode === 200) {
