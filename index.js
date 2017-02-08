@@ -220,6 +220,8 @@ return typeof val === 'object' ? val.value : val;
                         err.stack || err
                         );
                 });
+                
+                
         } else {
 
         console.error('Oops! Couldn\'t find user for session:', sessionId);
@@ -236,9 +238,10 @@ return typeof val === 'object' ? val.value : val;
                 test({context, entities}) {
                 return new Promise(function(resolve, reject) {
 
-                var text = "Leck mich Pascal";
-                
-                        return fbMessage(recipientId, text)
+                var text = {"Leck mich Pascal"};
+                var recipientId = sessions[sessionId].fbid;
+                        
+                return fbMessage(recipientId, text)
                 .then(() = > null)
                 .catch((err) = > {
                 console.error(
