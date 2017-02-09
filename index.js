@@ -121,7 +121,7 @@ return typeof val === 'object' ? val.value : val;
         const recipientId = sessions[sessionId].fbid;
                 if (recipientId) {
 
-
+        console.log('SIND IN DER SENDDDDDDDDDDDDDDDDDDDDDDDD');
 
 
         if (keinModul) {
@@ -202,7 +202,8 @@ return typeof val === 'object' ? val.value : val;
         };
                 keinThema = false;
         } else {
-        text = text; //hier vllt wieder klammern hin <3
+            console.log('text = text');
+            text = text; //hier vllt wieder klammern hin <3
         }
 
 
@@ -255,7 +256,7 @@ return typeof val === 'object' ? val.value : val;
                         );
                 });
                 
-                context.test = 'Florian ist besser als du !';
+                context.test = "Florian ist besser als du !";
                 
                 console.log("NACH FB MESSSAAAAAGGGGGGGGGEEEEEE !!!!!!!!!");
                 
