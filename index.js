@@ -333,7 +333,7 @@ const actions = {
             } else {
 
                 context.missingLocation = true;
-                delete context.forecast;
+                delete context.location;
                 delete context.wrongLocation;
 
                 return resolve(context);
