@@ -320,7 +320,10 @@ const actions = {
                         return resolve(context);
 
                     } else {
-
+                        
+                        console.dir("IN MISSINGLOCATION FALL");
+                        console.dir(body);
+                        
                         if (response.statusCode === 502) {
 
                             context.wrongLocation = 'Leider kenne ich ' + locations + ' nicht. Hast du dich eventuell verschrieben? Versuch es doch nochmal! ;)';
