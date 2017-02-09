@@ -325,7 +325,7 @@ const actions = {
 
                             context.wrongLocation = 'Leider kenne ich ' + locations + ' nicht. Hast du dich eventuell verschrieben? Versuch es doch nochmal! ;)';
                             delete context.missingLocation;
-                            delete context.location;
+                            delete context.forecast;
                             resolve(context);
                         }
 
