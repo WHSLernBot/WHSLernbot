@@ -240,21 +240,20 @@ return typeof val === 'object' ? val.value : val;
 
                 var text = 'Stinkender Pascal !';
                 var recipientId = sessions[sessionId].fbid;
-                var test = firstEntityValue(entities, "test");
                 
                 console.log('HAAAAHAHHAHAHAHAHAHHHHHHHHHHHHHHHHHH');
                 console.log(recipientId);
                 
-//                fbMessage(recipientId, text)
-//                .then(() => null)
-//                .catch((err) => {
-//                console.error(
-//                        'Oops! An error occurred while forwarding the response to',
-//                        recipientId,
-//                        ':',
-//                        err.stack || err
-//                        );
-//                });
+                fbMessage(recipientId, text)
+                .then(() => null)
+                .catch((err) => {
+                console.error(
+                        'Oops! An error occurred while forwarding the response to',
+                        recipientId,
+                        ':',
+                        err.stack || err
+                        );
+                });
                 
                 context.test = "Florian ist besser als du !";
                 
