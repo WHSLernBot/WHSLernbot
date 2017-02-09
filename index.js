@@ -202,7 +202,7 @@ return typeof val === 'object' ? val.value : val;
         };
                 keinThema = false;
         } else {
-        text = {text};
+        text = text; //hier vllt wieder klammern hin <3
         }
 
 
@@ -234,7 +234,7 @@ return typeof val === 'object' ? val.value : val;
                 // See https://wit.ai/docs/quickstart
 
 
-        test({context, entities}) {
+        test({context, entities, sessionId}) {
                 return new Promise(function(resolve, reject) {
 
                 var text = 'Stinkender Pascal !';
