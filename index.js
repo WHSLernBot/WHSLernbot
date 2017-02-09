@@ -890,16 +890,29 @@ app.post('/webhook', (req, res) => {
 
                                 case '!kazoo':
 
-                                    text = { "attachment": {
-                                                "type": "video",
-                                                "payload": {
-                                                    "url": "https://goo.gl/f4sgPo"
-                                                }
+                                    text = 'Gute Wahl! Video kommt sofort ;)'
+
+                                    fbMessage(sender, text)
+                                            .then(() => null)
+                                            .catch((err) => {
+                                                console.error(
+                                                        'Oops! An error occurred while forwarding the response to',
+                                                        sender,
+                                                        ':',
+                                                        err.stack || err
+                                                        );
+                                            });
+
+                                    text = {"attachment": {
+                                            "type": "video",
+                                            "payload": {
+                                                "url": "https://goo.gl/f4sgPo"
                                             }
                                         }
-                                    
-                                    
-                                    
+                                    }
+
+
+
                                     fbMessage(sender, text)
                                             .then(() => null)
                                             .catch((err) => {
