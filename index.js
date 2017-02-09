@@ -871,7 +871,7 @@ app.post('/webhook', (req, res) => {
                     const sessionId = findOrCreateSession(sender);
 
                     // We retrieve the message content
-                    const {text, attachments} = event.message;
+                    var {text, attachments} = event.message;
 
                     if (attachments) {
 
@@ -886,12 +886,10 @@ app.post('/webhook', (req, res) => {
 
                         if (text.charAt(0) === '!') {
 
-                            var antwort;
-
                             switch (text) {
 
                                 case '!kazoo':
-                                    antwort = "https://www.youtube.com/watch?v=g-sgw9bPV4A";
+                                    text = "https://www.youtube.com/watch?v=g-sgw9bPV4A";
                                     antwort = {antwort};
                                     fbMessage(sessions[sessionId].fid, antwort)
                                             .then(() => null)
@@ -906,7 +904,7 @@ app.post('/webhook', (req, res) => {
                                     break;
 
                                 default:
-                                    antwort = 'YOLO geiles Ausrufezeichen!';
+                                    text = 'YOLO geiles Ausrufezeichen!';
                                     antwort = {antwort};
                                     fbMessage(sessions[sessionId].fid, antwort)
                                             .then(() => null)
