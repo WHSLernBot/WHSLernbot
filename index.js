@@ -287,7 +287,9 @@ const actions = {
                     console.dir(body);
 
                     if (!error && response.statusCode === 200) {
-
+                        console.dir("IM LOCATION FALL MIT GEFUNDENER STADT: " + locations);
+                        console.dir(body);
+                        
                         switch (body.weather[0].main) {
 
                             case 'Rain':
@@ -327,7 +329,7 @@ const actions = {
                         
                         
                         console.dir("IN FALL WRONGLOCATION STADT : " + locations);
-                        consolse.dir(body);
+                        console.dir(body);
                         
                         if (response.statusCode === 502) {
 
