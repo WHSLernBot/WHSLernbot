@@ -891,6 +891,7 @@ app.post('/webhook', (req, res) => {
                                 case '!kazoo':
 
                                     text = 'Gute Wahl! Video kommt sofort ;)'
+                                    text = { text };
 
                                     fbMessage(sender, text)
                                             .then(() => null)
