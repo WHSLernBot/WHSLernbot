@@ -891,14 +891,14 @@ app.post('/webhook', (req, res) => {
                             switch (text) {
 
                                 case '!kazoo':
-                                    antwort = 'https://www.youtube.com/watch?v=g-sgw9bPV4A';
+                                    antwort = "https://www.youtube.com/watch?v=g-sgw9bPV4A";
                                     antwort = {antwort};
                                     fbMessage(sessions[sessionId].fid, antwort)
                                             .then(() => null)
                                             .catch((err) => {
                                                 console.error(
                                                         'Oops! An error occurred while forwarding the response to',
-                                                        recipientId,
+                                                        sessions[sessionId].fid,
                                                         ':',
                                                         err.stack || err
                                                         );
@@ -913,7 +913,7 @@ app.post('/webhook', (req, res) => {
                                             .catch((err) => {
                                                 console.error(
                                                         'Oops! An error occurred while forwarding the response to',
-                                                        recipientId,
+                                                        sessions[sessionId].fid,
                                                         ':',
                                                         err.stack || err
                                                         );
