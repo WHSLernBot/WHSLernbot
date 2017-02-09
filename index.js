@@ -234,7 +234,7 @@ return typeof val === 'object' ? val.value : val;
                 // See https://wit.ai/docs/quickstart
 
 
-        setzeName({context, entities}) {
+        test({context, entities}) {
                 return new Promise(function(resolve, reject) {
 
                 var text = 'Stinkender Pascal !';
