@@ -882,7 +882,7 @@ app.post('/webhook', (req, res) => {
                     } else if (text) {
                         // We received a text message
 
-
+                        console.dir(text);
 
                         if (text.charAt(0) === '!') {
 
