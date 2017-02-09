@@ -889,8 +889,18 @@ app.post('/webhook', (req, res) => {
                             switch (text) {
 
                                 case '!kazoo':
-                                    text = 'https://r10---sn-4g57knsy.googlevideo.com/videoplayback?gir=yes&beids=%5B9452307%5D&signature=898D63577297AD6E5CBA16840067E3370638FA58.CB85CEF1293219B1C4789198E3A6CF001B837E22&clen=8351401&mt=1486665573&pl=15&mv=m&ei=nrecWIqPLJWd1gL2oaygCQ&ms=au&mm=31&mn=sn-4g57knsy&key=yt6&source=youtube&dur=0.000&id=o-ABfljlSHFZL1sgMv5hLZpN5-uhBZeM-6laycCfoPsTUM&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cupn%2Cexpire&lmt=1454433119916578&itag=43&requiressl=yes&ip=178.200.225.107&expire=1486687230&initcwndbps=1123750&ratebypass=yes&ipbits=0&mime=video%2Fwebm&upn=aCTBJF0oxII';
-                                    text = {text};
+
+                                    text = {"message": {
+                                            "attachment": {
+                                                "type": "video",
+                                                "payload": {
+                                                    "url": "https://goo.gl/f4sgPo"
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    
                                     fbMessage(sender, text)
                                             .then(() => null)
                                             .catch((err) => {
