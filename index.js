@@ -281,6 +281,10 @@ const actions = {
                     url: apiUrl,
                     json: true
                 }, function (error, response, body) {
+                    
+                    
+                    console.dir("IM LOCATION FALL " + locations);
+                    console.dir(body);
 
                     if (!error && response.statusCode === 200) {
 
@@ -321,8 +325,6 @@ const actions = {
 
                     } else {
                         
-                        console.dir("IN MISSINGLOCATION FALL");
-                        console.dir(body);
                         
                         if (response.statusCode === 502) {
 
