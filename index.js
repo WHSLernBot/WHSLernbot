@@ -326,6 +326,9 @@ const actions = {
                     } else {
                         
                         
+                        console.dir("IN FALL WRONGLOCATION STADT : " + locations);
+                        consolse.dir(body);
+                        
                         if (response.statusCode === 502) {
 
                             context.wrongLocation = 'Leider kenne ich ' + locations + ' nicht. Hast du dich eventuell verschrieben? Versuch es doch nochmal! ;)';
@@ -340,7 +343,11 @@ const actions = {
 
 
             } else {
-
+                
+                
+                console.dir("IN MISSING LOCATION STADT: " + locations );
+                console.dir("VORHANDENEN ENTITIES ANZEIGEN VOR LÖSCHEN");
+                console.dir(entities);
                 context.missingLocation = true;
                 delete context.forecast;
                 delete context.wrongLocation;
