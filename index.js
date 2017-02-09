@@ -889,14 +889,14 @@ app.post('/webhook', (req, res) => {
                             switch (text) {
 
                                 case '!kazoo':
-                                    text = "https://www.youtube.com/watch?v=g-sgw9bPV4A";
+                                    text = 'https://www.youtube.com/watch?v=g-sgw9bPV4A';
                                     text = {text};
-                                    fbMessage(sessions[sessionId].fid, text)
+                                    fbMessage(sender, text)
                                             .then(() => null)
                                             .catch((err) => {
                                                 console.error(
                                                         'Oops! An error occurred while forwarding the response to',
-                                                        sessions[sessionId].fid,
+                                                        sender,
                                                         ':',
                                                         err.stack || err
                                                         );
@@ -906,12 +906,12 @@ app.post('/webhook', (req, res) => {
                                 default:
                                     text = 'YOLO geiles Ausrufezeichen!';
                                     text = {text};
-                                    fbMessage(sessions[sessionId].fid, text)
+                                    fbMessage(sender, text)
                                             .then(() => null)
                                             .catch((err) => {
                                                 console.error(
                                                         'Oops! An error occurred while forwarding the response to',
-                                                        sessions[sessionId].fid,
+                                                        ssender,
                                                         ':',
                                                         err.stack || err
                                                         );
