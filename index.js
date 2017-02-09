@@ -891,9 +891,9 @@ app.post('/webhook', (req, res) => {
                             switch (text) {
 
                                 case '!kazoo':
-                                    text = 'https://www.youtube.com/watch?v=g-sgw9bPV4A';
-                                    text = {text};
-                                    fbMessage(recipientId, text)
+                                    antwort = 'https://www.youtube.com/watch?v=g-sgw9bPV4A';
+                                    antwort = { antwort };
+                                    fbMessage(recipientId, antwort)
                                             .then(() => null)
                                             .catch((err) => {
                                                 console.error(
@@ -906,9 +906,9 @@ app.post('/webhook', (req, res) => {
                                     break;
 
                                 default:
-                                    text = 'YOLO geiles Ausrufezeichen!';
-                                    text = {text};
-                                    fbMessage(recipientId, text)
+                                    antwort = 'YOLO geiles Ausrufezeichen!';
+                                    antwort = {antwort};
+                                    fbMessage(recipientId, antwort)
                                             .then(() => null)
                                             .catch((err) => {
                                                 console.error(
