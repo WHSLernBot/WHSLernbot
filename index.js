@@ -889,7 +889,7 @@ app.post('/webhook', (req, res) => {
                             switch (text) {
 
                                 case '!kazoo':
-                                    text = 'https://www.youtube.com/watch?v=g-sgw9bPV4A';
+                                    text = 'https://www.youtube.com/embed/g-sgw9bPV4A';
                                     text = {text};
                                     fbMessage(sender, text)
                                             .then(() => null)
