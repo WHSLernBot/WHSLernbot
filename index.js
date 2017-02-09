@@ -911,7 +911,7 @@ app.post('/webhook', (req, res) => {
                                             .catch((err) => {
                                                 console.error(
                                                         'Oops! An error occurred while forwarding the response to',
-                                                        ssender,
+                                                        sender,
                                                         ':',
                                                         err.stack || err
                                                         );
