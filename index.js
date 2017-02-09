@@ -76,7 +76,7 @@ const fbMessage = (id, text) => {
     return fetch('https://graph.facebook.com/me/messages?' + qs, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body,
+        body
     })
             .then(rsp => rsp.json())
             .then(json => {
@@ -314,6 +314,7 @@ const actions = {
                         context.forecast = forecastText;
                         delete context.missingLocation;
                         delete context.wrongLocation;
+                        delete context.location;
                         return resolve(context);
 
                     } else {
@@ -323,6 +324,7 @@ const actions = {
                             context.wrongLocation = 'Leider kenne ich ' + locations + ' nicht. Hast du dich eventuell verschrieben? Versuch es doch nochmal! ;)';
                             delete context.forecast;
                             delete context.missingLocation;
+                            delete context.location;
                             resolve(context);
                         }
 
