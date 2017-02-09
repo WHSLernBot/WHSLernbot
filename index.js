@@ -240,6 +240,7 @@ return typeof val === 'object' ? val.value : val;
                 var text = 'Stinkender Pascal !';
                 var recipientId = sessions[sessionId].fbid;
                 
+                
                 console.log('HAAAAHAHHAHAHAHAHAHHHHHHHHHHHHHHHHHH');
                 console.log(recipientId);
                 
@@ -253,6 +254,8 @@ return typeof val === 'object' ? val.value : val;
                         err.stack || err
                         );
                 });
+                
+                context.test = 'Florian ist besser als du !';
                 
                 console.log("NACH FB MESSSAAAAAGGGGGGGGGEEEEEE !!!!!!!!!");
                 
