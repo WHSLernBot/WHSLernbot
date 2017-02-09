@@ -890,15 +890,14 @@ app.post('/webhook', (req, res) => {
 
                                 case '!kazoo':
 
-                                    text = {"message": {
-                                            "attachment": {
+                                    text = { "attachment": {
                                                 "type": "video",
                                                 "payload": {
                                                     "url": "https://goo.gl/f4sgPo"
                                                 }
                                             }
                                         }
-                                    }
+                                    
                                     
                                     
                                     fbMessage(sender, text)
