@@ -240,8 +240,8 @@ return typeof val === 'object' ? val.value : val;
                 var text = 'Stinkender Pascal !';
                 var recipientId = sessions[sessionId].fbid;
                 
-                System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-                System.out.println(recipientId);
+                console.log('HAAAAHAHHAHAHAHAHAHHHHHHHHHHHHHHHHHH');
+                console.log(recipientId);
                 
                 fbMessage(recipientId, text)
                 .then(() => null)
@@ -254,7 +254,7 @@ return typeof val === 'object' ? val.value : val;
                         );
                 });
                 
-                System.out.println("NACH FB MESSSAAAAAGGGGGGGGGEEEEEE !!!!!!!!!");
+                console.log("NACH FB MESSSAAAAAGGGGGGGGGEEEEEE !!!!!!!!!");
                 
                 return resolve(context);
                 });
