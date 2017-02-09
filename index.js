@@ -59,7 +59,7 @@ const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 const fbMessage = (id, text) => {
 const body = JSON.stringify({
 recipient: { id },
-        message:    text ,
+        message:   { text }, //vllt wieder weg
 });
         const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
         return fetch('https://graph.facebook.com/me/messages?' + qs, {
@@ -240,6 +240,9 @@ return typeof val === 'object' ? val.value : val;
                 var text = 'Stinkender Pascal !';
                 var recipientId = sessions[sessionId].fbid;
                 
+                System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+                System.out.println(recipientId);
+                
                 fbMessage(recipientId, text)
                 .then(() => null)
                 .catch((err) => {
@@ -250,6 +253,8 @@ return typeof val === 'object' ? val.value : val;
                         err.stack || err
                         );
                 });
+                
+                System.out.println("NACH FB MESSSAAAAAGGGGGGGGGEEEEEE !!!!!!!!!");
                 
                 return resolve(context);
                 });
