@@ -312,6 +312,8 @@ const actions = {
                         }
 
                         context.forecast = forecastText;
+                        
+                         
                         delete context.missingLocation;
                         delete context.wrongLocation;
                         delete context.location;
@@ -322,7 +324,6 @@ const actions = {
                         if (body.cod === 502) {
 
                             context.wrongLocation = 'Leider kenne ich ' + locations + ' nicht. Hast du dich eventuell verschrieben? Versuch es doch nochmal! ;)';
-                            delete context.forecast;
                             delete context.missingLocation;
                             delete context.location;
                             resolve(context);
@@ -335,7 +336,7 @@ const actions = {
             } else {
 
                 context.missingLocation = true;
-                delete context.location;
+                delete context.forecast;
                 delete context.wrongLocation;
 
                 return resolve(context);
