@@ -321,11 +321,12 @@ const actions = {
 
                     } else {
 
-                        if (body.cod === 502) {
+                        if (response.statusCode === 502) {
 
                             context.wrongLocation = 'Leider kenne ich ' + locations + ' nicht. Hast du dich eventuell verschrieben? Versuch es doch nochmal! ;)';
                             delete context.missingLocation;
                             delete context.forecast;
+                            delete context.location;
                             resolve(context);
                         }
 
