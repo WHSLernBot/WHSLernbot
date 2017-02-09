@@ -227,7 +227,7 @@ const actions = {
                 keinThema = false;
 
             } else {
-                text = { text };
+                text = {text};
             }
 
 
@@ -281,15 +281,11 @@ const actions = {
                     url: apiUrl,
                     json: true
                 }, function (error, response, body) {
-                    
-                    
-                    console.dir("IM LOCATION FALL " + locations);
-                    console.dir(body);
+
 
                     if (!error && response.statusCode === 200) {
-                        console.dir("IM LOCATION FALL MIT GEFUNDENER STADT: " + locations);
-                        console.dir(body);
-                        
+
+
                         switch (body.weather[0].main) {
 
                             case 'Rain':
@@ -318,19 +314,15 @@ const actions = {
                         }
 
                         context.forecast = forecastText;
-                        
-                         
+
+
                         delete context.missingLocation;
                         delete context.wrongLocation;
                         delete context.location;
                         return resolve(context);
 
                     } else {
-                        
-                        
-                        console.dir("IN FALL WRONGLOCATION STADT : " + locations);
-                        console.dir(body);
-                        
+
                         if (response.statusCode === 502) {
 
                             context.wrongLocation = 'Leider kenne ich ' + locations + ' nicht. Hast du dich eventuell verschrieben? Versuch es doch nochmal! ;)';
@@ -339,17 +331,18 @@ const actions = {
                             delete context.location;
                             resolve(context);
                         }
+                        
+                        delete context.missingLocation;
+                        delete context.forecast;
+                        delete context.location;
+                        resolve(context);
 
                     }
                 });
 
 
             } else {
-                
-                
-                console.dir("IN MISSING LOCATION STADT: " + locations );
-                console.dir("VORHANDENEN ENTITIES ANZEIGEN VOR LÖSCHEN");
-                console.dir(entities);
+
                 context.missingLocation = true;
                 delete context.forecast;
                 delete context.wrongLocation;
@@ -362,7 +355,7 @@ const actions = {
         });
     },
 
-    loese( {context, entities, sessionId} ) {
+    loese( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
 
@@ -395,7 +388,7 @@ const actions = {
         });
     },
 
-    gibAufgabe( {context, entities, sessionId} ) {
+    gibAufgabe( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
             var thema = firstEntityValue(entities, "thema");
