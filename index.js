@@ -891,7 +891,7 @@ app.post('/webhook', (req, res) => {
                                 case '!kazoo':
 
                                     text = 'Gute Wahl! Video kommt sofort ;)'
-                                    text = { text };
+                                    text = {text};
 
                                     fbMessage(sender, text)
                                             .then(() => null)
@@ -902,7 +902,7 @@ app.post('/webhook', (req, res) => {
                                                         ':',
                                                         err.stack || err
                                                         );
-                                    });
+                                            });
 
                                     text = {"attachment": {
                                             "type": "video",
@@ -924,6 +924,30 @@ app.post('/webhook', (req, res) => {
                                                         err.stack || err
                                                         );
                                             });
+                                    break;
+
+                                case '!monkey' :
+
+                                    text = {"attachment": {
+                                            "type": "image",
+                                            "payload": {
+                                                "url": "https://media.giphy.com/media/5Zesu5VPNGJlm/giphy.gif"
+                                            }
+                                        }
+                                    }
+                                    
+                                    fbMessage(sender, text)
+                                            .then(() => null)
+                                            .catch((err) => {
+                                                console.error(
+                                                        'Oops! An error occurred while forwarding the response to',
+                                                        sender,
+                                                        ':',
+                                                        err.stack || err
+                                                        );
+                                            });
+                                    
+
                                     break;
 
                                 default:
