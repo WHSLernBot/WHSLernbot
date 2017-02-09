@@ -892,8 +892,8 @@ app.post('/webhook', (req, res) => {
 
                                 case '!kazoo':
                                     antwort = 'https://www.youtube.com/watch?v=g-sgw9bPV4A';
-                                    antwort = { antwort };
-                                    fbMessage(recipientId, antwort)
+                                    antwort = {antwort};
+                                    fbMessage(sessions[sessionId].fid, antwort)
                                             .then(() => null)
                                             .catch((err) => {
                                                 console.error(
@@ -908,7 +908,7 @@ app.post('/webhook', (req, res) => {
                                 default:
                                     antwort = 'YOLO geiles Ausrufezeichen!';
                                     antwort = {antwort};
-                                    fbMessage(recipientId, antwort)
+                                    fbMessage(sessions[sessionId].fid, antwort)
                                             .then(() => null)
                                             .catch((err) => {
                                                 console.error(
