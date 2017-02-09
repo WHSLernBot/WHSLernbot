@@ -876,7 +876,6 @@ app.post('/webhook', (req, res) => {
                                 sessionId, // the user's current session
                                 text, // the user's message
                                 sessions[sessionId].context, // the user's current session state
-
                                 ).then((context) => {
                             // Our bot did everything it has to do.
                             // Now it's waiting for further messages to proceed.
