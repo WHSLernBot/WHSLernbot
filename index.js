@@ -331,7 +331,7 @@ const actions = {
                             delete context.location;
                             resolve(context);
                         }
-                        
+
                         delete context.missingLocation;
                         delete context.forecast;
                         delete context.location;
@@ -881,35 +881,76 @@ app.post('/webhook', (req, res) => {
                                 .catch(console.error);
                     } else if (text) {
                         // We received a text message
-                        
-                        console.dir(text);
-                        // Let's forward the message to the Wit.ai Bot Engine
-                        // This will run all actions until our bot has nothing left to do
-                        wit.runActions(
-                                sessionId, // the user's current session
-                                text, // the user's message
-                                sessions[sessionId].context // the user's current session state
-                                ).then((context) => {
-                            // Our bot did everything it has to do.
-                            // Now it's waiting for further messages to proceed.
-                            console.log('Waiting for next user messages');
-
-                            // Based on the session state, you might want to reset the session.
-                            // This depends heavily on the business logic of your bot.
-                            // Example:
-                            // if (context['done']) {
-                            //   delete sessions[sessionId];
-                            // }
-
-                            // Updating the user's current session state
 
 
-                            sessions[sessionId].context = context;
 
-                        })
-                                .catch((err) => {
-                                    console.error('Oops! Got an error from Wit: ', err.stack || err);
-                                })
+                        if (text.charAt(0) === '!') {
+
+                            var antwort;
+
+                            switch (text) {
+
+                                case '!kazoo':
+                                    text = 'https://www.youtube.com/watch?v=g-sgw9bPV4A';
+                                    text = {text};
+                                    fbMessage(recipientId, text)
+                                            .then(() => null)
+                                            .catch((err) => {
+                                                console.error(
+                                                        'Oops! An error occurred while forwarding the response to',
+                                                        recipientId,
+                                                        ':',
+                                                        err.stack || err
+                                                        );
+                                            });
+                                    break;
+
+                                default:
+                                    text = 'YOLO geiles Ausrufezeichen!';
+                                    text = {text};
+                                    fbMessage(recipientId, text)
+                                            .then(() => null)
+                                            .catch((err) => {
+                                                console.error(
+                                                        'Oops! An error occurred while forwarding the response to',
+                                                        recipientId,
+                                                        ':',
+                                                        err.stack || err
+                                                        );
+                                            });
+                                    break;
+
+                            }
+
+                        } else {
+                            // Let's forward the message to the Wit.ai Bot Engine
+                            // This will run all actions until our bot has nothing left to do
+                            wit.runActions(
+                                    sessionId, // the user's current session
+                                    text, // the user's message
+                                    sessions[sessionId].context // the user's current session state
+                                    ).then((context) => {
+                                // Our bot did everything it has to do.
+                                // Now it's waiting for further messages to proceed.
+                                console.log('Waiting for next user messages');
+
+                                // Based on the session state, you might want to reset the session.
+                                // This depends heavily on the business logic of your bot.
+                                // Example:
+                                // if (context['done']) {
+                                //   delete sessions[sessionId];
+                                // }
+
+                                // Updating the user's current session state
+
+
+                                sessions[sessionId].context = context;
+
+                            })
+                                    .catch((err) => {
+                                        console.error('Oops! Got an error from Wit: ', err.stack || err);
+                                    })
+                        }
                     }
                 } else {
                     console.log('received event', JSON.stringify(event));
