@@ -250,7 +250,7 @@ const actions = {
 
             console.error('Oops! Couldn\'t find user for session:', sessionId);
             // Giving the wheel back to our bot
-            return Promise.resolve()
+            return Promise.resolve();
     }
     },
     // You should implement your custom actions here
@@ -869,8 +869,9 @@ app.post('/webhook', (req, res) => {
                 // This is needed for our bot to figure out the conversation history
                 const sessionId = findOrCreateSession(sender);
 
-
-
+                console.dir('Aktuelles Event');
+                console.dir(event);
+                console.dir(' ');
                 if (event.message) {
 
 
