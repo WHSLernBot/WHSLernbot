@@ -871,8 +871,8 @@ app.post('/webhook', (req, res) => {
                     const sessionId = findOrCreateSession(sender);
 
                     // We retrieve the message content
-                    var {text, attachments, payload} = event.message;
-                    console.dir(event);
+                    var {text, attachments} = event.message;
+
                     if (attachments) {
 
                         // We received an attachment
@@ -881,8 +881,6 @@ app.post('/webhook', (req, res) => {
                                 .catch(console.error);
                     } else if (text) {
                         // We received a text message
-
-                        console.dir(text);
 
                         if (text.charAt(0) === '!') {
 
@@ -951,7 +949,7 @@ app.post('/webhook', (req, res) => {
                                                 "url": "https://media.giphy.com/media/5Zesu5VPNGJlm/giphy.gif"
                                             }
                                         }
-                                    }
+                                    };
 
                                     fbMessage(sender, text)
                                             .then(() => null)
@@ -1013,49 +1011,50 @@ app.post('/webhook', (req, res) => {
                             })
                                     .catch((err) => {
                                         console.error('Oops! Got an error from Wit: ', err.stack || err);
-                                    })
+                                    });
                         }
-                    } else if (payload) {
+                    }
+                } else if (event.postback) {
 
-                        console.dir(payload);
+                    const {payload} = event.postback;
+                    var text = payload;
 
-                        if (text.charAt(0) === '!') {
+                    if (payload.charAt(0) === '!') {
 
-                            switch (text) {
+                        switch (text) {
 
-                                case '!hilfe':
-                                    text = 'Dies ist ein Lernbot der WHS Gelsenkirchen, schreib mir Sachen wie "Gib mir eine Aufgabe" oder "Melde mich bei der Prüfung XY am Datum an. Du kannst mich auch nach dem Wetter fragen ;)"';
-                                    text = {text}
+                            case '!hilfe':
+                                text = 'Dies ist ein Lernbot der WHS Gelsenkirchen, schreib mir Sachen wie "Gib mir eine Aufgabe" oder "Melde mich bei der Prüfung XY am Datum an. Du kannst mich auch nach dem Wetter fragen ;)"';
+                                text = {text};
 
-                                    fbMessage(sender, text)
-                                            .then(() => null)
-                                            .catch((err) => {
-                                                console.error(
-                                                        'Oops! An error occurred while forwarding the response to',
-                                                        sender,
-                                                        ':',
-                                                        err.stack || err
-                                                        );
-                                            });
+                                fbMessage(sender, text)
+                                        .then(() => null)
+                                        .catch((err) => {
+                                            console.error(
+                                                    'Oops! An error occurred while forwarding the response to',
+                                                    sender,
+                                                    ':',
+                                                    err.stack || err
+                                                    );
+                                        });
 
-                                    break;
+                                break;
 
-                                default:
-                                    text = 'YOLO geiles Ausrufezeichen!';
-                                    text = {text};
-                                    fbMessage(sender, text)
-                                            .then(() => null)
-                                            .catch((err) => {
-                                                console.error(
-                                                        'Oops! An error occurred while forwarding the response to',
-                                                        sender,
-                                                        ':',
-                                                        err.stack || err
-                                                        );
-                                            });
-                                    break;
+                            default:
+                                text = 'YOLO geiles Ausrufezeichen!';
+                                text = {text};
+                                fbMessage(sender, text)
+                                        .then(() => null)
+                                        .catch((err) => {
+                                            console.error(
+                                                    'Oops! An error occurred while forwarding the response to',
+                                                    sender,
+                                                    ':',
+                                                    err.stack || err
+                                                    );
+                                        });
+                                break;
 
-                            }
                         }
                     }
                 } else {
