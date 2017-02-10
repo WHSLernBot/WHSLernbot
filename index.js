@@ -1015,47 +1015,47 @@ app.post('/webhook', (req, res) => {
                                         console.error('Oops! Got an error from Wit: ', err.stack || err);
                                     })
                         }
-                    }
-                } else if (payload) {
+                    } else if (payload) {
 
-                    console.dir(payload);
+                        console.dir(payload);
 
-                    if (text.charAt(0) === '!') {
+                        if (text.charAt(0) === '!') {
 
-                        switch (text) {
+                            switch (text) {
 
-                            case '!hilfe':
-                                text = 'Dies ist ein Lernbot der WHS Gelsenkirchen, schreib mir Sachen wie "Gib mir eine Aufgabe" oder "Melde mich bei der Prüfung XY am Datum an. Du kannst mich auch nach dem Wetter fragen ;)"';
-                                text = {text}
+                                case '!hilfe':
+                                    text = 'Dies ist ein Lernbot der WHS Gelsenkirchen, schreib mir Sachen wie "Gib mir eine Aufgabe" oder "Melde mich bei der Prüfung XY am Datum an. Du kannst mich auch nach dem Wetter fragen ;)"';
+                                    text = {text}
 
-                                fbMessage(sender, text)
-                                        .then(() => null)
-                                        .catch((err) => {
-                                            console.error(
-                                                    'Oops! An error occurred while forwarding the response to',
-                                                    sender,
-                                                    ':',
-                                                    err.stack || err
-                                                    );
-                                        });
+                                    fbMessage(sender, text)
+                                            .then(() => null)
+                                            .catch((err) => {
+                                                console.error(
+                                                        'Oops! An error occurred while forwarding the response to',
+                                                        sender,
+                                                        ':',
+                                                        err.stack || err
+                                                        );
+                                            });
 
-                                break;
+                                    break;
 
-                            default:
-                                text = 'YOLO geiles Ausrufezeichen!';
-                                text = {text};
-                                fbMessage(sender, text)
-                                        .then(() => null)
-                                        .catch((err) => {
-                                            console.error(
-                                                    'Oops! An error occurred while forwarding the response to',
-                                                    sender,
-                                                    ':',
-                                                    err.stack || err
-                                                    );
-                                        });
-                                break;
+                                default:
+                                    text = 'YOLO geiles Ausrufezeichen!';
+                                    text = {text};
+                                    fbMessage(sender, text)
+                                            .then(() => null)
+                                            .catch((err) => {
+                                                console.error(
+                                                        'Oops! An error occurred while forwarding the response to',
+                                                        sender,
+                                                        ':',
+                                                        err.stack || err
+                                                        );
+                                            });
+                                    break;
 
+                            }
                         }
                     }
                 } else {
