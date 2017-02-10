@@ -872,7 +872,7 @@ app.post('/webhook', (req, res) => {
 
                     // We retrieve the message content
                     var {text, attachments, payload} = event.message;
-
+                    console.dir(event.message);
                     if (attachments) {
 
                         // We received an attachment
