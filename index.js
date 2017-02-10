@@ -890,23 +890,6 @@ app.post('/webhook', (req, res) => {
 
                             switch (text) {
 
-                                case '!hilfe':
-                                    text = 'Dies ist ein Lernbot der WHS Gelsenkirchen, schreib mir Sachen wie "Gib mir eine Aufgabe" oder "Melde mich bei der Prüfung XY am Datum an." Du kannst mich auch nach dem Wetter fragen ;)';
-                                    text = {text};
-
-                                    fbMessage(sender, text)
-                                            .then(() => null)
-                                            .catch((err) => {
-                                                console.error(
-                                                        'Oops! An error occurred while forwarding the response to',
-                                                        sender,
-                                                        ':',
-                                                        err.stack || err
-                                                        );
-                                            });
-
-                                    break;
-
                                 case '!kazoo':
 
                                     text = 'Gute Wahl! Video kommt sofort ;)'
@@ -1028,7 +1011,7 @@ app.post('/webhook', (req, res) => {
                         switch (text) {
 
                             case '!hilfe':
-                                text = 'Dies ist ein Lernbot der WHS Gelsenkirchen, schreib mir Sachen wie "Gib mir eine Aufgabe" oder "Melde mich bei der Prüfung XY am Datum an. Du kannst mich auch nach dem Wetter fragen ;)"';
+                                text = 'Dies ist ein Lernbot der WHS Gelsenkirchen, schreib mir Sachen wie "Gib mir eine Aufgabe" oder "Melde mich bei der Prüfung XY am Datum an." Du kannst mich auch nach dem Wetter fragen ;)';
                                 text = {text};
 
                                 fbMessage(sender, text)
