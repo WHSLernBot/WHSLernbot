@@ -892,7 +892,7 @@ app.post('/webhook', (req, res) => {
 
                                 case '!hilfe':
                                     text = 'Dies ist ein Lernbot der WHS Gelsenkirchen, schreib mir Sachen wie "Gib mir eine Aufgabe" oder "Melde mich bei der Prüfung XY am Datum an." Du kannst mich auch nach dem Wetter fragen ;)';
-                                    text = {text}
+                                    text = {text};
 
                                     fbMessage(sender, text)
                                             .then(() => null)
