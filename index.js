@@ -871,7 +871,7 @@ app.post('/webhook', (req, res) => {
                     const sessionId = findOrCreateSession(sender);
 
                     // We retrieve the message content
-                    var {text, attachments} = event.message;
+                    var {text, attachments, payload} = event.message;
 
                     if (attachments) {
 
@@ -891,7 +891,7 @@ app.post('/webhook', (req, res) => {
                                 case '!hilfe':
                                     text = 'Dies ist ein Lernbot der WHS Gelsenkirchen, schreib mir Sachen wie "Gib mir eine Aufgabe" oder "Melde mich bei der Prüfung XY am Datum an. Du kannst mich auch nach dem Wetter fragen ;)"';
                                     text = {text}
-                                    
+
                                     fbMessage(sender, text)
                                             .then(() => null)
                                             .catch((err) => {
@@ -902,7 +902,7 @@ app.post('/webhook', (req, res) => {
                                                         err.stack || err
                                                         );
                                             });
-                                    
+
                                     break;
 
                                 case '!kazoo':
@@ -1014,6 +1014,48 @@ app.post('/webhook', (req, res) => {
                                     .catch((err) => {
                                         console.error('Oops! Got an error from Wit: ', err.stack || err);
                                     })
+                        }
+                    }
+                } else if (payload) {
+
+                    console.dir(payload);
+
+                    if (text.charAt(0) === '!') {
+
+                        switch (text) {
+
+                            case '!hilfe':
+                                text = 'Dies ist ein Lernbot der WHS Gelsenkirchen, schreib mir Sachen wie "Gib mir eine Aufgabe" oder "Melde mich bei der Prüfung XY am Datum an. Du kannst mich auch nach dem Wetter fragen ;)"';
+                                text = {text}
+
+                                fbMessage(sender, text)
+                                        .then(() => null)
+                                        .catch((err) => {
+                                            console.error(
+                                                    'Oops! An error occurred while forwarding the response to',
+                                                    sender,
+                                                    ':',
+                                                    err.stack || err
+                                                    );
+                                        });
+
+                                break;
+
+                            default:
+                                text = 'YOLO geiles Ausrufezeichen!';
+                                text = {text};
+                                fbMessage(sender, text)
+                                        .then(() => null)
+                                        .catch((err) => {
+                                            console.error(
+                                                    'Oops! An error occurred while forwarding the response to',
+                                                    sender,
+                                                    ':',
+                                                    err.stack || err
+                                                    );
+                                        });
+                                break;
+
                         }
                     }
                 } else {
