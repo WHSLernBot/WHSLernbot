@@ -203,7 +203,7 @@ const actions = {
                         {
                             "content_type": "text",
                             "title": "HTML",
-                            "payload": "empty"
+                            "payload": "!thema"
                         },
                         {
                             "content_type": "text",
@@ -1040,7 +1040,7 @@ app.post('/webhook', (req, res) => {
 
                         } else {
 
-                            if (payload === '!modul') {
+                            if (payload === '!thema') {
 
                                 var context = sessions[sessionId].context;
 
