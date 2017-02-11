@@ -936,7 +936,10 @@ app.post('/webhook', (req, res) => {
 
                     // We retrieve the message content
                     var {text, attachments, quick_reply} = event.message;
-                    var payload = quick_reply.payload;
+                    if(quick_reply) {
+                        
+                        var payload = quick_reply.payload;
+                    }
 
                     console.dir(payload);
 
