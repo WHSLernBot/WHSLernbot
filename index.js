@@ -150,7 +150,7 @@ const actions = {
                         {
                             "content_type": "text",
                             "title": "INS",
-                            "payload": "empty"
+                            "payload": "!modul"
                         },
                         {
                             "content_type": "text",
@@ -388,6 +388,51 @@ const actions = {
         });
     },
 
+    gibSelektoren( {context, entities, sessionId}) {
+        return new Promise(function (resolve, reject) {
+
+
+            var name = firstEntityValue(entities, "contact");
+
+            var api = 'https://immense-journey-49192.herokuapp.com/';
+            var route = 'messageBot';
+
+            var apiUrl = api + route;
+
+            if (name) {
+
+                request({
+                    url: apiUrl,
+                    json: {
+                        "user": {
+                            "userID": sessions[sessionId].fid,
+                            "plattformID": 1
+
+                        },
+                        "methode": "setzeName",
+                        "username": context.contact
+                    }
+                }, function (error, response, body) {
+
+                    if (!error && response.statusCode === 200) {
+
+
+                        context.name = "Ok ab jetzt nenne ich dich " + name;
+
+                    } else {
+
+
+
+                    }
+                });
+
+            }
+
+
+            return resolve(context);
+        });
+    },
+
     gibAufgabe( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
@@ -398,53 +443,66 @@ const actions = {
             if ((modul && thema) || (context.modul && context.thema)) {
 
 
-                var api = 'https://immense-journey-49192.herokuapp.com/';
-                var route = 'messageBot';
+//                var api = 'https://immense-journey-49192.herokuapp.com/';
+//                var route = 'messageBot';
+//
+//                var apiUrl = api + route;
+//
+//                request({
+//                    url: apiUrl,
+//                    json: {
+//                        "user": {
+//
+//                            "userID": sessions[sessionId].fbid,
+//                            "plattform": 1
+//
+//                        },
+//                        "methode": "gibAufgabe",
+//                        "modul": context.modul,
+//                        "thema": {
+//                            "id": context.thema,
+//                            "token": context.token
+//                        }
+//                    }
+//                }, function (error, response, body) {
+//
+//                    if (!error && response.statusCode === 200) {
+//
+//                        context.aufgabeText = body.aufgabe.frage;
+//                        context.verweis = body.aufgabe.verweis;
+//                        context.hinweis = body.aufgabe.hinweis;
+//                        context.bewerten = body.aufgabe.bewerten;
+//                        context.antwort1 = body.antwort[0];
+//
+//                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
+//                        //gesendet werden
+//
+//
+//
+//                    } else {
+//
+//                        
+//
+//                    }
+                var text = 'Florian ist ein kleiner Stinkerboy';
+                var recipientId = sessions[sessionId].fbid;
 
-                var apiUrl = api + route;
-
-                request({
-                    url: apiUrl,
-                    json: {
-                        "user": {
-
-                            "userID": sessions[sessionId].fbid,
-                            "plattform": 1
-
-                        },
-                        "methode": "gibAufgabe",
-                        "modul": context.modul,
-                        "thema": {
-                            "id": context.thema,
-                            "token": context.token
-                        }
-                    }
-                }, function (error, response, body) {
-
-                    if (!error && response.statusCode === 200) {
-
-                        context.aufgabeText = body.aufgabe.frage;
-                        context.verweis = body.aufgabe.verweis;
-                        context.hinweis = body.aufgabe.hinweis;
-                        context.bewerten = body.aufgabe.bewerten;
-                        context.antwort1 = body.antwort[0];
-
-                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
-                        //gesendet werden
+                fbMessage(recipientId, text)
+                        .then(() => null)
+                        .catch((err) => {
+                            console.error(
+                                    'Oops! An error occurred while forwarding the response to',
+                                    recipientId,
+                                    ':',
+                                    err.stack || err
+                                    );
+                        });
 
 
 
-                    } else {
-
-                        //Für den Error Fall
-
-                    }
-                });
 
 
-//        context.thema = 'Hier ist deine ' + thema + 
-//                '-Aufgabe was glaubst du ist die richtige Antwort ???'; 
-//        
+
 
                 delete context.missingThema;
                 return resolve(context);
@@ -872,11 +930,16 @@ app.post('/webhook', (req, res) => {
                 console.dir('Aktuelles Event');
                 console.dir(event);
                 console.dir(' ');
+
                 if (event.message) {
 
 
                     // We retrieve the message content
-                    var {text, attachments} = event.message;
+                    var {text, attachments, quick_reply} = event.message;
+                    var payload = quick_reply.payload;
+
+                    console.dir(payload);
+
 
                     if (attachments) {
 
@@ -973,6 +1036,16 @@ app.post('/webhook', (req, res) => {
                             }
 
                         } else {
+
+                            if (payload === '!modul') {
+
+                                var context = sessions[sessionId].context;
+
+                                console.dir(context);
+
+                                context.modul = text;
+
+                            }
                             // Let's forward the message to the Wit.ai Bot Engine
                             // This will run all actions until our bot has nothing left to do
                             wit.runActions(
