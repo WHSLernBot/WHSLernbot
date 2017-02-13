@@ -445,33 +445,34 @@ const actions = {
             //wenn modul drin ist
             if (modul) {
                 //es ist ein modul gegeben
-                console.log("Wir haben ein modul ! ->" + modul);
-                var aufgabe = "Das ist die Aufgabe über " + modul;
-                var a = "Das ist Aussage A";
-                var b = "Das ist Aussage B";
-                var c = "Das ist Aussage C";
-                var frage = {
-                              "message" :{
-                              "text":"Welche Antwort meinst du ist richtig?",
-                              "quick_replies":[
-                                {
-                                  "content_type":"text",
-                                  "title":"A",
-                                  "payload":"richtig"
-                                },
-                                {
-                                  "content_type":"text",
-                                  "title":"B",
-                                  "payload":"falsch"
-                                },
-                                {
-                                  "content_type":"text",
-                                  "title":"C",
-                                  "payload":"falsch"
-                                }
-                              ]
-                          }
-                      };
+                console.log("Wir haben ein modul ! ->" + modul);  
+                
+                var aufgabe = {"text": "Das ist die Aufgabe über " + modul};
+                var a = {"text": "Das ist Aussage A"};
+                var b = {"text": "Das ist Aussage B"};
+                var c = {"text": "Das ist Aussage C"};
+//                var frage = {
+//                              "message" :{
+//                              "text":"Welche Antwort meinst du ist richtig?",
+//                              "quick_replies":[
+//                                {
+//                                  "content_type":"text",
+//                                  "title":"A",
+//                                  "payload":"richtig"
+//                                },
+//                                {
+//                                  "content_type":"text",
+//                                  "title":"B",
+//                                  "payload":"falsch"
+//                                },
+//                                {
+//                                  "content_type":"text",
+//                                  "title":"C",
+//                                  "payload":"falsch"
+//                                }
+//                              ]
+//                          }
+//                      };
                             
                           
                           
@@ -522,18 +523,18 @@ const actions = {
                     });
                     
                 
-                fbMessage(sender, frage)
-                    .then(() => null)
-                    .catch((err) => {
-                        console.error(
-                                'Oops! An error occurred while forwarding the response to',
-                                sender,
-                                ':',
-                                err.stack || err
-                                );
-                    });
+//                fbMessage(sender, frage)
+//                    .then(() => null)
+//                    .catch((err) => {
+//                        console.error(
+//                                'Oops! An error occurred while forwarding the response to',
+//                                sender,
+//                                ':',
+//                                err.stack || err
+//                                );
+//                    });
                 
-                context.modul = "miiep";
+                context.modul = modul;
                 delete context.missingModul;
                 delete context.antwort;
                 
