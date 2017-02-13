@@ -354,6 +354,8 @@ const actions = {
 
         });
     },
+    
+    
 
     loese( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
@@ -438,9 +440,125 @@ const actions = {
 
             var thema = firstEntityValue(entities, "thema");
             var modul = firstEntityValue(entities, "modul");
-
-
-            if ((modul && thema) || (context.modul && context.thema)) {
+            var antwort = firstEntityValue(entities, "antwort");
+            
+            //wenn modul drin ist
+            if (modul) {
+                //es ist ein modul gegeben
+                console.log("Wir haben ein modul ! ->" + modul);
+                var aufgabe = "Das ist die Aufgabe über " + modul;
+                var a = "Das ist Aussage A";
+                var b = "Das ist Aussage B";
+                var c = "Das ist Aussage C";
+                var frage = {
+                            "recipient" :{
+                              "id":"USER_ID"
+                            },
+                            "message" :{
+                              "text":"Welche Antwort meinst du ist richtig?",
+                              "quick_replies":[
+                                {
+                                  "content_type":"text",
+                                  "title":"A",
+                                  "payload":"richtig"
+                                },
+                                {
+                                  "content_type":"text",
+                                  "title":"B",
+                                  "payload":"falsch"
+                                },
+                                {
+                                  "content_type":"text",
+                                  "title":"C",
+                                  "payload":"falsch"
+                                }
+                              ]
+                          }
+                      };
+                            
+                          
+                          
+                var sender = sessions[sessionId].fbid;
+                
+                fbMessage(sender, aufgabe)
+                    .then(() => null)
+                    .catch((err) => {
+                        console.error(
+                                'Oops! An error occurred while forwarding the response to',
+                                sender,
+                                ':',
+                                err.stack || err
+                                );
+                    });
+                
+                fbMessage(sender, a)
+                    .then(() => null)
+                    .catch((err) => {
+                        console.error(
+                                'Oops! An error occurred while forwarding the response to',
+                                sender,
+                                ':',
+                                err.stack || err
+                                );
+                    });
+                    
+                fbMessage(sender, b)
+                    .then(() => null)
+                    .catch((err) => {
+                        console.error(
+                                'Oops! An error occurred while forwarding the response to',
+                                sender,
+                                ':',
+                                err.stack || err
+                                );
+                    });
+                    
+                fbMessage(sender, c)
+                    .then(() => null)
+                    .catch((err) => {
+                        console.error(
+                                'Oops! An error occurred while forwarding the response to',
+                                sender,
+                                ':',
+                                err.stack || err
+                                );
+                    });
+                    
+                
+                fbMessage(sender, frage)
+                    .then(() => null)
+                    .catch((err) => {
+                        console.error(
+                                'Oops! An error occurred while forwarding the response to',
+                                sender,
+                                ':',
+                                err.stack || err
+                                );
+                    });
+                
+                delete context.modul;
+                delete context.missingModul;
+                delete context.antwort;
+                
+            } else if (antwort) { 
+                //wenn A, B oder C gedrückt wurde
+                console.log("Du hast eine Antwort geklickt !!!");
+                context.antwort = 'Du hast erfolgreich ' + antwort + ' gedrückt !';
+                
+                delete context.modul;
+                delete context.thema;
+                delete context.missingModul;
+                
+            } else { 
+                //wenn modul fehlt
+                console.log("ES ist kein Modul oder Antwort gegeben !!!");
+                context.missingModul = true;
+                
+                delete context.modul;
+                delete context.antwort;
+                delete context.thema;
+                
+            }
 
 
 //                var api = 'https://immense-journey-49192.herokuapp.com/';
@@ -484,38 +602,11 @@ const actions = {
 //                        
 //
 //                    }
-                var text = 'Florian ist ein kleiner Stinkerboy';
-                var recipientId = sessions[sessionId].fbid;
-
-                fbMessage(recipientId, text)
-                        .then(() => null)
-                        .catch((err) => {
-                            console.error(
-                                    'Oops! An error occurred while forwarding the response to',
-                                    recipientId,
-                                    ':',
-                                    err.stack || err
-                                    );
-                        });
-
-
-
-
-
-
-
-                delete context.missingThema;
+                
                 return resolve(context);
+            });
 
-            } else {
-
-                context.missingThema = true;
-                keinThema = true;
-                delete context.thema;
-                return resolve(context);
-            }
-
-        });
+        
     },
 
     setzeName( {context, entities, sessionId}) {
