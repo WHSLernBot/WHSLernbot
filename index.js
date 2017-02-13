@@ -445,12 +445,17 @@ const actions = {
             //wenn modul drin ist
             if (modul) {
                 //es ist ein modul gegeben
-                console.log("Wir haben ein modul ! ->" + modul);  
+                console.log("Wir haben ein modul ! ->" + modul);
                 
-                var aufgabe = {"text": "Das ist die Aufgabe über " + modul};
-                var a = {"text": "Das ist Aussage A"};
-                var b = {"text": "Das ist Aussage B"};
-                var c = {"text": "Das ist Aussage C"};
+                context.Aufgabe = "Hier ist deine " + modul + " Aufgabe !";
+                context.A = "Aussage A";
+                context.B = "Aussage B";
+                context.C = "Aussage C";
+                
+//                var aufgabe = {"text": "Das ist die Aufgabe über " + modul};
+//                var a = {"text": "Das ist Aussage A"};
+//                var b = {"text": "Das ist Aussage B"};
+//                var c = {"text": "Das ist Aussage C"};
 //                var frage = {
 //                              "message" :{
 //                              "text":"Welche Antwort meinst du ist richtig?",
@@ -476,51 +481,53 @@ const actions = {
                             
                           
                           
-                var sender = sessions[sessionId].fbid;
+//                var sender = sessions[sessionId].fbid;
                 
-                fbMessage(sender, aufgabe)
-                    .then(() => null)
-                    .catch((err) => {
-                        console.error(
-                                'Oops! An error occurred while forwarding the response to',
-                                sender,
-                                ':',
-                                err.stack || err
-                                );
-                    });
-                
-                fbMessage(sender, a)
-                    .then(() => null)
-                    .catch((err) => {
-                        console.error(
-                                'Oops! An error occurred while forwarding the response to',
-                                sender,
-                                ':',
-                                err.stack || err
-                                );
-                    });
-                    
-                fbMessage(sender, b)
-                    .then(() => null)
-                    .catch((err) => {
-                        console.error(
-                                'Oops! An error occurred while forwarding the response to',
-                                sender,
-                                ':',
-                                err.stack || err
-                                );
-                    });
-                    
-                fbMessage(sender, c)
-                    .then(() => null)
-                    .catch((err) => {
-                        console.error(
-                                'Oops! An error occurred while forwarding the response to',
-                                sender,
-                                ':',
-                                err.stack || err
-                                );
-                    });
+//                fbMessage(sender, aufgabe)
+//                    .then(() => null)
+//                    .catch((err) => {
+//                        console.error(
+//                                'Oops! An error occurred while forwarding the response to',
+//                                sender,
+//                                ':',
+//                                err.stack || err
+//                                );
+//                    });
+//                    
+//                
+//                
+//                fbMessage(sender, a)
+//                    .then(() => null)
+//                    .catch((err) => {
+//                        console.error(
+//                                'Oops! An error occurred while forwarding the response to',
+//                                sender,
+//                                ':',
+//                                err.stack || err
+//                                );
+//                    });
+//                    
+//                fbMessage(sender, b)
+//                    .then(() => null)
+//                    .catch((err) => {
+//                        console.error(
+//                                'Oops! An error occurred while forwarding the response to',
+//                                sender,
+//                                ':',
+//                                err.stack || err
+//                                );
+//                    });
+//                    
+//                fbMessage(sender, c)
+//                    .then(() => null)
+//                    .catch((err) => {
+//                        console.error(
+//                                'Oops! An error occurred while forwarding the response to',
+//                                sender,
+//                                ':',
+//                                err.stack || err
+//                                );
+//                    });
                     
                 
 //                fbMessage(sender, frage)
