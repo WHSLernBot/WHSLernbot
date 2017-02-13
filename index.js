@@ -359,7 +359,7 @@ const actions = {
 
     replies( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
-            
+            console.log(" BIN IN DER REPLIES !!!!");
             var sender = sessions[sessionId].fbid;
 
             var frage = {
@@ -383,6 +383,7 @@ const actions = {
                       ]
               };
 
+            console.log("FRAGE VARIABLE ERSTELLT");
             fbMessage(sender, frage)
                     .then(() => null)
                     .catch((err) => {
@@ -395,6 +396,7 @@ const actions = {
                     });
 
 
+            console.log("MESSAGE GESENDET !!!!");
             return resolve(context);
         });
     },
@@ -943,9 +945,7 @@ app.post('/webhook', (req, res) => {
                 // This is needed for our bot to figure out the conversation history
                 const sessionId = findOrCreateSession(sender);
 
-                console.dir('Aktuelles Event');
-                console.dir(event);
-                console.dir(' ');
+                
 
                 if (event.message) {
 
@@ -957,7 +957,7 @@ app.post('/webhook', (req, res) => {
                         var payload = quick_reply.payload;
                     }
 
-                    console.dir(payload);
+                    
 
 
                     if (attachments) {
