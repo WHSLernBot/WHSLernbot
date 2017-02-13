@@ -257,9 +257,6 @@ const actions = {
     // See https://wit.ai/docs/quickstart
 
 
-
-
-
     //Funktion zum Abrufen von Wetter Daten auf openweathermap.
     //Aktuell nur das aktuelle Wetter
     getForecast( {context, entities, sessionId}) {
@@ -355,9 +352,10 @@ const actions = {
         });
     },
 
-    replies( {context, entities, sessionId}) {
+    replies({context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
-            console.log(" BIN IN DER REPLIES !!!!");
+            
+            
             var sender = sessions[sessionId].fbid;
 
             var frage = {
@@ -381,7 +379,7 @@ const actions = {
                 ]
             };
 
-            console.log("FRAGE VARIABLE ERSTELLT");
+            
             fbMessage(sender, frage)
                     .then(() => null)
                     .catch((err) => {
@@ -394,7 +392,7 @@ const actions = {
                     });
 
 
-            console.log("MESSAGE GESENDET !!!!");
+            
             return resolve(context);
         });
     },
@@ -432,7 +430,7 @@ const actions = {
 
                     } else {
 
-
+                            //ERROR NACHRICHT
 
                     }
                 });
@@ -455,24 +453,21 @@ const actions = {
             if (modul) {
                 //es ist ein modul gegeben
                 console.log("Wir haben ein modul ! ->" + modul);
+                
+                //Aufrufen gibAufgabe der Datenbank
 
                 context.Aufgabe = "Hier ist deine " + modul + " Aufgabe !";
+                
                 context.A = "Aussage A";
                 context.B = "Aussage B";
                 context.C = "Aussage C";
+                
+                
+                //Abspeichern der Richtig und Falschen Antwort
 
-                context.modul = modul;
+                
                 delete context.missingModul;
                 delete context.antwort;
-
-            } else if (antwort) {
-                //wenn A, B oder C gedrückt wurde
-                console.log("Du hast eine Antwort geklickt !!!");
-                context.antwort = 'Du hast erfolgreich ' + antwort + ' gedrückt !';
-
-                delete context.modul;
-                delete context.thema;
-                delete context.missingModul;
 
             } else {
                 //wenn modul fehlt
@@ -955,11 +950,6 @@ app.post('/webhook', (req, res) => {
                         var payload = quick_reply.payload;
                     }
 
-
-                    console.dir(payload);
-
-
-
                     if (attachments) {
 
                         // We received an attachment
@@ -1057,6 +1047,9 @@ app.post('/webhook', (req, res) => {
                         } else {
 
                             if (payload === 'richtig') {
+                                
+                                
+                                //Aufrufen SpeichereAntwort
 
                                 var text = {"text": "Die Antwort war richtig!"};
 
@@ -1071,8 +1064,30 @@ app.post('/webhook', (req, res) => {
                                                     );
                                         });
 
-
+                            } else if(payload === 'falsch') {
+                                
+                                
+                                //Aufrufen Speichere Antwort
+                                
+                                var text = {"text": "Die Antwort war leider falsch du AFFENJUNGEN NOOB!!! Wichser...HUSO ersterklasse"};
+                                
+                                fbMessage(sender, text)
+                                        .then(() => null)
+                                        .catch((err) => {
+                                            console.error(
+                                                    'Oops! An error occurred while forwarding the response to',
+                                                    sender,
+                                                    ':',
+                                                    err.stack || err
+                                                    );
+                                        });
+                                
+                                
+                                
                             }
+                            
+                            
+                            
                             // Let's forward the message to the Wit.ai Bot Engine
                             // This will run all actions until our bot has nothing left to do
                             wit.runActions(
