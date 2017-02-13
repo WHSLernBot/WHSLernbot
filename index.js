@@ -145,26 +145,26 @@ const actions = {
 
             if (keinModul) {
 
-                text = {"text": "Welches Modul ?",
-                    "quick_replies": [
-                        {
-                            "content_type": "text",
-                            "title": "INS",
-                            "payload": "!modul"
-                        },
-                        {
-                            "content_type": "text",
-                            "title": "ASG",
-                            "payload": "empty"
-                        },
-                        {
-                            "content_type": "text",
-                            "title": "OPR",
-                            "payload": "empty"
-                        },
-                    ]
-
-                };
+//                text = {"text": "Welches Modul ?",
+//                    "quick_replies": [
+//                        {
+//                            "content_type": "text",
+//                            "title": "INS",
+//                            "payload": "!modul"
+//                        },
+//                        {
+//                            "content_type": "text",
+//                            "title": "ASG",
+//                            "payload": "empty"
+//                        },
+//                        {
+//                            "content_type": "text",
+//                            "title": "OPR",
+//                            "payload": "empty"
+//                        },
+//                    ]
+//
+//                };
 
                 keinModul = false;
 
@@ -172,57 +172,57 @@ const actions = {
             } else if (istAntwort) {
 
 
-                text = {"text": "Hier ist deine Aufgabe",
-                    "quick_replies": [
-                        {
-                            "content_type": "text",
-                            "title": "(A)",
-                            "payload": "empty"
-                        },
-                        {
-                            "content_type": "text",
-                            "title": "(B)",
-                            "payload": "empty"
-                        },
-                        {
-                            "content_type": "text",
-                            "title": "(C)",
-                            "payload": "empty"
-                        },
-                    ]
-
-                };
+//                text = {"text": "Hier ist deine Aufgabe",
+//                    "quick_replies": [
+//                        {
+//                            "content_type": "text",
+//                            "title": "(A)",
+//                            "payload": "empty"
+//                        },
+//                        {
+//                            "content_type": "text",
+//                            "title": "(B)",
+//                            "payload": "empty"
+//                        },
+//                        {
+//                            "content_type": "text",
+//                            "title": "(C)",
+//                            "payload": "empty"
+//                        },
+//                    ]
+//
+//                };
 
                 istAntwort = false;
 
 
             } else if (keinThema) {
 
-                text = {"text": "Hast du ein bevorzugtes Thema ?",
-                    "quick_replies": [
-                        {
-                            "content_type": "text",
-                            "title": "HTML",
-                            "payload": "!thema"
-                        },
-                        {
-                            "content_type": "text",
-                            "title": "XML",
-                            "payload": "empty"
-                        },
-                        {
-                            "content_type": "text",
-                            "title": "PHP",
-                            "payload": "empty"
-                        },
-                        {
-                            "content_type": "text",
-                            "title": "Egal",
-                            "payload": "empty"
-                        },
-                    ]
-
-                };
+//                text = {"text": "Hast du ein bevorzugtes Thema ?",
+//                    "quick_replies": [
+//                        {
+//                            "content_type": "text",
+//                            "title": "HTML",
+//                            "payload": "!thema"
+//                        },
+//                        {
+//                            "content_type": "text",
+//                            "title": "XML",
+//                            "payload": "empty"
+//                        },
+//                        {
+//                            "content_type": "text",
+//                            "title": "PHP",
+//                            "payload": "empty"
+//                        },
+//                        {
+//                            "content_type": "text",
+//                            "title": "Egal",
+//                            "payload": "empty"
+//                        },
+//                    ]
+//
+//                };
 
                 keinThema = false;
 
@@ -451,10 +451,7 @@ const actions = {
                 var b = "Das ist Aussage B";
                 var c = "Das ist Aussage C";
                 var frage = {
-                            "recipient" :{
-                              "id":"USER_ID"
-                            },
-                            "message" :{
+                              "message" :{
                               "text":"Welche Antwort meinst du ist richtig?",
                               "quick_replies":[
                                 {
@@ -536,7 +533,7 @@ const actions = {
                                 );
                     });
                 
-                delete context.modul;
+                context.modul = "miiep";
                 delete context.missingModul;
                 delete context.antwort;
                 
