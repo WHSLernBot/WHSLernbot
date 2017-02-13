@@ -354,8 +354,6 @@ const actions = {
 
         });
     },
-    
-    
 
     replies( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
@@ -363,25 +361,25 @@ const actions = {
             var sender = sessions[sessionId].fbid;
 
             var frage = {
-                        "text":"Welche Antwort meinst du ist richtig?",
-                        "quick_replies":[
-                        {
-                          "content_type":"text",
-                          "title":"A",
-                          "payload":"richtig"
-                        },
-                        {
-                          "content_type":"text",
-                          "title":"B",
-                          "payload":"falsch"
-                        },
-                        {
-                          "content_type":"text",
-                          "title":"C",
-                          "payload":"falsch"
-                        }
-                      ]
-              };
+                "text": "Welche Antwort meinst du ist richtig?",
+                "quick_replies": [
+                    {
+                        "content_type": "text",
+                        "title": "A",
+                        "payload": "richtig"
+                    },
+                    {
+                        "content_type": "text",
+                        "title": "B",
+                        "payload": "falsch"
+                    },
+                    {
+                        "content_type": "text",
+                        "title": "C",
+                        "payload": "falsch"
+                    }
+                ]
+            };
 
             console.log("FRAGE VARIABLE ERSTELLT");
             fbMessage(sender, frage)
@@ -452,39 +450,39 @@ const actions = {
             var thema = firstEntityValue(entities, "thema");
             var modul = firstEntityValue(entities, "modul");
             var antwort = firstEntityValue(entities, "antwort");
-            
+
             //wenn modul drin ist
             if (modul) {
                 //es ist ein modul gegeben
                 console.log("Wir haben ein modul ! ->" + modul);
-                
+
                 context.Aufgabe = "Hier ist deine " + modul + " Aufgabe !";
                 context.A = "Aussage A";
                 context.B = "Aussage B";
                 context.C = "Aussage C";
-                
+
                 context.modul = modul;
                 delete context.missingModul;
                 delete context.antwort;
-                
-            } else if (antwort) { 
+
+            } else if (antwort) {
                 //wenn A, B oder C gedrückt wurde
                 console.log("Du hast eine Antwort geklickt !!!");
                 context.antwort = 'Du hast erfolgreich ' + antwort + ' gedrückt !';
-                
+
                 delete context.modul;
                 delete context.thema;
                 delete context.missingModul;
-                
-            } else { 
+
+            } else {
                 //wenn modul fehlt
                 console.log("ES ist kein Modul oder Antwort gegeben !!!");
                 context.missingModul = true;
-                
+
                 delete context.modul;
                 delete context.antwort;
                 delete context.thema;
-                
+
             }
 
 
@@ -529,11 +527,11 @@ const actions = {
 //                        
 //
 //                    }
-                
-                return resolve(context);
-            });
 
-        
+            return resolve(context);
+        });
+
+
     },
 
     setzeName( {context, entities, sessionId}) {
@@ -945,19 +943,21 @@ app.post('/webhook', (req, res) => {
                 // This is needed for our bot to figure out the conversation history
                 const sessionId = findOrCreateSession(sender);
 
-                
+
 
                 if (event.message) {
 
 
                     // We retrieve the message content
                     var {text, attachments, quick_reply} = event.message;
-                    if(quick_reply) {
-                        
+                    if (quick_reply) {
+
                         var payload = quick_reply.payload;
                     }
 
-                    
+
+                    console.dir(payload);
+
 
 
                     if (attachments) {
@@ -1056,13 +1056,21 @@ app.post('/webhook', (req, res) => {
 
                         } else {
 
-                            if (payload === '!thema') {
+                            if (payload === 'richtig') {
 
-                                var context = sessions[sessionId].context;
+                                var text = {"text": "Die Antwort war richtig!"};
 
-                                console.dir(context);
+                                fbMessage(sender, text)
+                                        .then(() => null)
+                                        .catch((err) => {
+                                            console.error(
+                                                    'Oops! An error occurred while forwarding the response to',
+                                                    sender,
+                                                    ':',
+                                                    err.stack || err
+                                                    );
+                                        });
 
-                                context.modul = text;
 
                             }
                             // Let's forward the message to the Wit.ai Bot Engine
