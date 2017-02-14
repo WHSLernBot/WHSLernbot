@@ -70,7 +70,9 @@ const fbMessage = (id, text) => {
         recipient: {id},
         message: text
     });
-
+    
+    
+    console.dir(body);
 
     const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
     return fetch('https://graph.facebook.com/me/messages?' + qs, {
@@ -492,9 +494,7 @@ const actions = {
 
             var item = {};
             item["text"] = "Welches Modul meinst du?"
-
-            
-            
+          
             console.dir(item);
             
             var body = JSON.stringify(item);
