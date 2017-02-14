@@ -278,7 +278,8 @@ const actions = {
                     url: apiUrl,
                     json: true
                 }, function (error, response, body) {
-
+                    
+                    console.dir(response);
 
                     if (!error && response.statusCode === 200) {
 
@@ -495,9 +496,6 @@ const actions = {
 
     createJson( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
-
-
-            
 
             var text = {};
             text["text"] = "Welches Modul meinst du?"
@@ -1014,13 +1012,12 @@ app.get('/webhook', (req, res) => {
 
 // Message handler
 app.post('/webhook', (req, res) => {
+    
     // Parse the Messenger payload
     // See the Webhook reference
     // https://developers.facebook.com/docs/messenger-platform/webhook-reference
     const data = req.body;
     
-    console.dir(req);
-
     if (data.object === 'page') {
         data.entry.forEach(entry => {
             entry.messaging.forEach(event => {
