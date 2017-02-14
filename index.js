@@ -279,7 +279,7 @@ const actions = {
                     json: true
                 }, function (error, response, body) {
                     
-                    console.dir(response);
+                    console.dir(error);
 
                     if (!error && response.statusCode === 200) {
 
@@ -293,7 +293,7 @@ const actions = {
                                 forecastText = 'Heute soll es in ' + locations + ' schneien, also schön warm anziehen! Die temperaturen betragen ' + body.main.temp + '°C.';
                                 break;
                             case 'Clear':
-                                forecastText = 'Die Sonne lässt sich ab und zu in ' + locations + ' blicken dabei beträgt die Temperatur ' + body.main.temp + '°C.';
+                                forecastText = 'Die Sonne lässt sich ab und zu in ' + locations + ' blicken, dabei beträgt die Temperatur ' + body.main.temp + '°C.';
                                 break;
                             case 'Sunny':
                                 forecastText = 'Heute ist es sonnig in ' + locations + '. Die jetztige Temperatur beträgt ' + body.main.temp + '°C.'
