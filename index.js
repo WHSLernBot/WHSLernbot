@@ -83,7 +83,7 @@ const fbMessage = (id, text) => {
                 if (json.error && json.error.message) {
                     throw new Error(json.error.message);
                 }
-
+                console.dir(json);
                 return json;
             });
 };
@@ -402,15 +402,10 @@ const actions = {
     gibSelektoren( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
-
-            var name = firstEntityValue(entities, "contact");
-
             var api = 'https://immense-journey-49192.herokuapp.com/';
             var route = 'messageBot';
 
             var apiUrl = api + route;
-
-
 
             request({
                 url: apiUrl,
@@ -418,7 +413,6 @@ const actions = {
                     "user": {
                         "userID": sessions[sessionId].fid,
                         "plattformID": 1
-
                     },
                     "methode": "gibSelektoren"
                 }
@@ -428,45 +422,60 @@ const actions = {
 
                     if (context.thema) {
 
-
-
+                        var text = {};
+                        text["text"] = "Zu welchem Modul möchtest du dieses Thema?";
+                        var quick_replies= [];
                         for (var i = 0; body.module.length; i++) {
-                            var obj = body.module[i].kuerzel;
+                            var kuerzel = body.module[i].kuerzel;
+                            
+                           
+                            var item = {};
+                            item["content_type"] = "text";
+                            item["title"] = kuerzel;
+                            item["payload"] = "!modul";
+                            
+                            quick_replies.push(item);
+                            
 
 
                         }
+                        
+                        text["quick_replies"] = quick_replies;
 
+
+                    } else {
+                        
+                        var text = {};
+                        text["text"] = "Was für ein Thema möchtest du bearbeiten?";
+                        var quick_replies= [];
+                        for (var i = 0; body.module; i++) {
+                            var kuerzel = body.module[i].kuerzel;
+                            
+                           
+                            var item = {};
+                            item["content_type"] = "text";
+                            item["title"] = kuerzel;
+                            item["payload"] = "!modul";
+                            
+                            quick_replies.push(item);
+                            
+
+
+                        }
+                        
+                        text["quick_replies"] = quick_replies;
 
                     }
 
-                    var text = {
-                        "text": "Welches Modul möchtest du?",
-                        "quick_replies": [
-                            {
-                                "content_type": "text",
-                                "title": "A",
-                                "payload": "richtig"
-                            },
-                            {
-                                "content_type": "text",
-                                "title": "B",
-                                "payload": "falsch"
-                            },
-                            {
-                                "content_type": "text",
-                                "title": "C",
-                                "payload": "falsch"
-                            }
-                        ]
-                    };
+                    
 
 
-                    fbMessage(sender, text)
+                    fbMessage(sessions[sessionId].fid, text)
                             .then(() => null)
                             .catch((err) => {
                                 console.error(
                                         'Oops! An error occurred while forwarding the response to',
-                                        sender,
+                                        sessions[sessionId].fid,
                                         ':',
                                         err.stack || err
                                         );
@@ -1009,6 +1018,8 @@ app.post('/webhook', (req, res) => {
     // See the Webhook reference
     // https://developers.facebook.com/docs/messenger-platform/webhook-reference
     const data = req.body;
+    
+    console.dir(req);
 
     if (data.object === 'page') {
         data.entry.forEach(entry => {
