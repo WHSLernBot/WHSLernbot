@@ -72,8 +72,6 @@ const fbMessage = (id, text) => {
     });
     
     
-    console.dir(body);
-
     const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
     return fetch('https://graph.facebook.com/me/messages?' + qs, {
         method: 'POST',
@@ -490,14 +488,30 @@ const actions = {
         return new Promise(function (resolve, reject) {
 
 
-            var jsonObj = {};
-
-            var item = {};
-            item["text"] = "Welches Modul meinst du?"
-          
-            console.dir(item);
             
-            var body = JSON.stringify(item);
+
+            var text = {};
+            text["text"] = "Welches Modul meinst du?"
+            
+            var quick = [];
+            
+            var item = {};
+            item["name"] = "Pascal";
+            item["alter"] = 12;
+            
+            quick.push(item);
+            
+            var item = {};
+            item["name"] = "Peter";
+            item["alter"] = 115;
+            
+            quick.push(item);
+            
+            text["quick_replies"] = quick;
+          
+            console.dir(text);
+            
+            var body = JSON.stringify(text);
             console.dir(body);
             
             context.done = "Es wurde ein Json erstellt Check logs!";
