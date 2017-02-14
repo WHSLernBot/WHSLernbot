@@ -458,13 +458,13 @@ const actions = {
             var modul = firstEntityValue(entities, "modul");
 
             //wenn modul drin ist
-            if (modul) {
-                //es ist ein modul gegeben
-                console.dir("Sind in Modul");
+            if (modul && thema) {
+                //es ist ein modul und thema gegeben
+                console.dir("Sind in Modul und Thema");
                 console.dir(modul);
                 //Aufrufen gibAufgabe der Datenbank
 
-                context.Aufgabe = "Hier ist deine " + modul + " Aufgabe !";
+                context.Aufgabe = "Hier ist deine " + modul + " Aufgabe mit dem Thema " + thema +  "!";
 
                 context.A = "Aussage A";
                 context.B = "Aussage B";
@@ -476,9 +476,30 @@ const actions = {
                 delete context.missingModul;
 
 
+            } else if(modul) {
+                
+                //es ist ein modul und thema gegeben
+                console.dir("Sind in Modul");
+                console.dir(modul);
+                //Aufrufen gibAufgabe der Datenbank
+
+                context.Aufgabe = "Hier ist deine " + modul + "!";
+
+                context.A = "Aussage A";
+                context.B = "Aussage B";
+                context.C = "Aussage C";
+
+
+                //Abspeichern der Richtig und Falschen Antwort
+
+                delete context.missingModul;
+                
             } else {
+                
                 //wenn modul fehlt
                 context.missingModul = true;
+                
+                
             }
 
 
