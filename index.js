@@ -70,8 +70,8 @@ const fbMessage = (id, text) => {
         recipient: {id},
         message: text
     });
-    
-    
+
+
     const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
     return fetch('https://graph.facebook.com/me/messages?' + qs, {
         method: 'POST',
@@ -142,94 +142,8 @@ const actions = {
 
 
             //Noch stark zu bearbeiten!!    
-
-            if (keinModul) {
-
-//                text = {"text": "Welches Modul ?",
-//                    "quick_replies": [
-//                        {
-//                            "content_type": "text",
-//                            "title": "INS",
-//                            "payload": "!modul"
-//                        },
-//                        {
-//                            "content_type": "text",
-//                            "title": "ASG",
-//                            "payload": "empty"
-//                        },
-//                        {
-//                            "content_type": "text",
-//                            "title": "OPR",
-//                            "payload": "empty"
-//                        },
-//                    ]
-//
-//                };
-
-                keinModul = false;
-
-
-            } else if (istAntwort) {
-
-
-//                text = {"text": "Hier ist deine Aufgabe",
-//                    "quick_replies": [
-//                        {
-//                            "content_type": "text",
-//                            "title": "(A)",
-//                            "payload": "empty"
-//                        },
-//                        {
-//                            "content_type": "text",
-//                            "title": "(B)",
-//                            "payload": "empty"
-//                        },
-//                        {
-//                            "content_type": "text",
-//                            "title": "(C)",
-//                            "payload": "empty"
-//                        },
-//                    ]
-//
-//                };
-
-                istAntwort = false;
-
-
-            } else if (keinThema) {
-
-//                text = {"text": "Hast du ein bevorzugtes Thema ?",
-//                    "quick_replies": [
-//                        {
-//                            "content_type": "text",
-//                            "title": "HTML",
-//                            "payload": "!thema"
-//                        },
-//                        {
-//                            "content_type": "text",
-//                            "title": "XML",
-//                            "payload": "empty"
-//                        },
-//                        {
-//                            "content_type": "text",
-//                            "title": "PHP",
-//                            "payload": "empty"
-//                        },
-//                        {
-//                            "content_type": "text",
-//                            "title": "Egal",
-//                            "payload": "empty"
-//                        },
-//                    ]
-//
-//                };
-
-                keinThema = false;
-
-            } else {
-                text = {text};
-            }
-
+           
+            text = {text};
 
             // Yay, we found our recipient!
             // Let's forward our bot response to her.
@@ -278,8 +192,6 @@ const actions = {
                     url: apiUrl,
                     json: true
                 }, function (error, response, body) {
-                    
-                    console.dir(error);
 
                     if (!error && response.statusCode === 200) {
 
@@ -425,51 +337,63 @@ const actions = {
 
                         var text = {};
                         text["text"] = "Zu welchem Modul möchtest du dieses Thema?";
-                        var quick_replies= [];
+                        var quick_replies = [];
                         for (var i = 0; body.module.length; i++) {
                             var kuerzel = body.module[i].kuerzel;
-                            
-                           
+
+
                             var item = {};
                             item["content_type"] = "text";
                             item["title"] = kuerzel;
                             item["payload"] = "!modul";
-                            
+
                             quick_replies.push(item);
-                            
+
 
 
                         }
-                        
+
                         text["quick_replies"] = quick_replies;
 
 
                     } else {
-                        
-                        var text = {};
-                        text["text"] = "Was für ein Thema möchtest du bearbeiten?";
-                        var quick_replies= [];
-                        for (var i = 0; body.module; i++) {
-                            var kuerzel = body.module[i].kuerzel;
-                            
-                           
-                            var item = {};
-                            item["content_type"] = "text";
-                            item["title"] = kuerzel;
-                            item["payload"] = "!modul";
-                            
-                            quick_replies.push(item);
-                            
+
+                        if (context.modul) {
+
+                            var matched = false;
+                            for (var obj in body.module) {
+                                if (obj.kuerzel === context.modul) {
+                                    matched = true;
+                                }
+                            }
+                            if (matched) {
+
+                                var text = {};
+                                text["text"] = "Was für ein Thema möchtest du bearbeiten?";
+                                var quick_replies = [];
+                                for (var i = 0; body.module; i++) {
+                                    var kuerzel = body.module[i].kuerzel;
 
 
+                                    var item = {};
+                                    item["content_type"] = "text";
+                                    item["title"] = kuerzel;
+                                    item["payload"] = "!modul";
+
+                                    quick_replies.push(item);
+
+
+
+                                }
+
+                                text["quick_replies"] = quick_replies;
+
+                            }else{
+                                text["text"] = "Für dieses Modul hast du dich noch nicht angemeldet! Das solltest du so schnell wie möglich machen! :)";
+                            }
                         }
-                        
-                        text["quick_replies"] = quick_replies;
-
+  
                     }
-
-                    
-
 
                     fbMessage(sessions[sessionId].fid, text)
                             .then(() => null)
@@ -499,30 +423,30 @@ const actions = {
 
             var text = {};
             text["text"] = "Welches Modul meinst du?"
-            
+
             var quick = [];
-            
+
             var item = {};
             item["name"] = "Pascal";
             item["alter"] = 12;
-            
+
             quick.push(item);
-            
+
             var item = {};
             item["name"] = "Peter";
             item["alter"] = 115;
-            
+
             quick.push(item);
-            
+
             text["quick_replies"] = quick;
-          
+
             console.dir(text);
-            
+
             var body = JSON.stringify(text);
             console.dir(body);
-            
+
             context.done = "Es wurde ein Json erstellt Check logs!";
-            
+
             return resolve(context);
 
         });
@@ -1012,12 +936,14 @@ app.get('/webhook', (req, res) => {
 
 // Message handler
 app.post('/webhook', (req, res) => {
-    
+
     // Parse the Messenger payload
     // See the Webhook reference
     // https://developers.facebook.com/docs/messenger-platform/webhook-reference
     const data = req.body;
     
+    
+
     if (data.object === 'page') {
         data.entry.forEach(entry => {
             entry.messaging.forEach(event => {
@@ -1030,7 +956,7 @@ app.post('/webhook', (req, res) => {
                 // This is needed for our bot to figure out the conversation history
                 const sessionId = findOrCreateSession(sender);
 
-
+                console.dir(sessions[sessionId].context);
 
                 if (event.message) {
 
