@@ -459,7 +459,7 @@ const actions = {
 
             var thema = firstEntityValue(entities, "thema");
             var modul = firstEntityValue(entities, "modul");
-            var antwort = firstEntityValue(entities, "antwort");
+            
 
             //wenn modul drin ist
             if (modul) {
@@ -476,6 +476,7 @@ const actions = {
 
 
                 //Abspeichern der Richtig und Falschen Antwort
+                context.AntwortA = "hallo;"
 
 
                 delete context.missingModul;
