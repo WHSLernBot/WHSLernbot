@@ -497,7 +497,7 @@ const actions = {
             
             console.dir(jsonObj);
 
-
+            context.done = "Es wurde ein Json erstellt Check logs!";
 
             return resolve(context);
 
