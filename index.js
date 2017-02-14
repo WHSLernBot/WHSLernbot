@@ -1145,7 +1145,7 @@ app.post('/webhook', (req, res) => {
                             text = 'Willkommen beim WHSLernBot. Damit du mit dem lernen anfangen kannst wähle bitte zuerst eine Hochschule.';
 
                             default:
-                                text = 'YOLO geiles Ausrufezeichen!';
+                                text = 'YOLO geiles Ausrufezeicheeeeeeeeeeeen!';
                                 text = {text};
                                 fbMessage(sender, text)
                                         .then(() => null)
