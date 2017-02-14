@@ -496,9 +496,12 @@ const actions = {
             
             
             console.dir(item);
-
+            
+            var body = JSON.stringify(item);
+            console.dir(body);
+            
             context.done = "Es wurde ein Json erstellt Check logs!";
-
+            
             return resolve(context);
 
         });
