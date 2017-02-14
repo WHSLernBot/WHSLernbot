@@ -352,10 +352,11 @@ const actions = {
         });
     },
 
-    replies({context, entities, sessionId}) {
+    //Erstellt die Quickreplies für die Fragen
+    replies( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
-            
-            
+
+
             var sender = sessions[sessionId].fbid;
 
             var frage = {
@@ -379,7 +380,7 @@ const actions = {
                 ]
             };
 
-            
+
             fbMessage(sender, frage)
                     .then(() => null)
                     .catch((err) => {
@@ -392,11 +393,12 @@ const actions = {
                     });
 
 
-            
+
             return resolve(context);
         });
     },
 
+    //Ermittelt die angemeldeten Module und Themen für den Benutzer
     gibSelektoren( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
@@ -408,40 +410,105 @@ const actions = {
 
             var apiUrl = api + route;
 
-            if (name) {
 
-                request({
-                    url: apiUrl,
-                    json: {
-                        "user": {
-                            "userID": sessions[sessionId].fid,
-                            "plattformID": 1
 
-                        },
-                        "methode": "setzeName",
-                        "username": context.contact
+            request({
+                url: apiUrl,
+                json: {
+                    "user": {
+                        "userID": sessions[sessionId].fid,
+                        "plattformID": 1
+
+                    },
+                    "methode": "gibSelektoren"
+                }
+            }, function (error, response, body) {
+
+                if (!error && response.statusCode === 200) {
+
+                    if (context.thema) {
+
+
+
+                        for (var i = 0; body.module.length; i++) {
+                            var obj = body.module[i].kuerzel;
+
+
+                        }
+
+
                     }
-                }, function (error, response, body) {
 
-                    if (!error && response.statusCode === 200) {
+                    var text = {
+                        "text": "Welches Modul möchtest du?",
+                        "quick_replies": [
+                            {
+                                "content_type": "text",
+                                "title": "A",
+                                "payload": "richtig"
+                            },
+                            {
+                                "content_type": "text",
+                                "title": "B",
+                                "payload": "falsch"
+                            },
+                            {
+                                "content_type": "text",
+                                "title": "C",
+                                "payload": "falsch"
+                            }
+                        ]
+                    };
 
 
-                        context.name = "Ok ab jetzt nenne ich dich " + name;
+                    fbMessage(sender, text)
+                            .then(() => null)
+                            .catch((err) => {
+                                console.error(
+                                        'Oops! An error occurred while forwarding the response to',
+                                        sender,
+                                        ':',
+                                        err.stack || err
+                                        );
+                            });
 
-                    } else {
 
-                            //ERROR NACHRICHT
+                } else {
 
-                    }
-                });
+                    //ERROR NACHRICHT
 
-            }
-
+                }
+            });
 
             return resolve(context);
         });
     },
 
+    createJson( {context, entities, sessionId}) {
+        return new Promise(function (resolve, reject) {
+
+
+            var jsonObj = {};
+
+            var item = {};
+            item["text"] = "Welches Modul meinst du?"
+
+            jsonObj.push(item);
+            
+            console.dir(jsonObj);
+
+
+
+            return resolve(context);
+
+        });
+
+
+
+
+    },
+
+    //Ermittelt eine Aufgabe für den Benutzer.
     gibAufgabe( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
@@ -453,19 +520,19 @@ const actions = {
             if (modul) {
                 //es ist ein modul gegeben
                 console.log("Wir haben ein modul ! ->" + modul);
-                
+
                 //Aufrufen gibAufgabe der Datenbank
 
                 context.Aufgabe = "Hier ist deine " + modul + " Aufgabe !";
-                
+
                 context.A = "Aussage A";
                 context.B = "Aussage B";
                 context.C = "Aussage C";
-                
-                
+
+
                 //Abspeichern der Richtig und Falschen Antwort
 
-                
+
                 delete context.missingModul;
                 delete context.antwort;
 
@@ -1047,8 +1114,8 @@ app.post('/webhook', (req, res) => {
                         } else {
 
                             if (payload === 'richtig') {
-                                
-                                
+
+
                                 //Aufrufen SpeichereAntwort
 
                                 var text = {"text": "Die Antwort war richtig!"};
@@ -1064,13 +1131,13 @@ app.post('/webhook', (req, res) => {
                                                     );
                                         });
 
-                            } else if(payload === 'falsch') {
-                                
-                                
+                            } else if (payload === 'falsch') {
+
+
                                 //Aufrufen Speichere Antwort
-                                
+
                                 var text = {"text": "Die Antwort war leider falsch du AFFENJUNGEN NOOB!!! Wichser...HUSO ersterklasse"};
-                                
+
                                 fbMessage(sender, text)
                                         .then(() => null)
                                         .catch((err) => {
@@ -1081,13 +1148,13 @@ app.post('/webhook', (req, res) => {
                                                     err.stack || err
                                                     );
                                         });
-                                
-                                
-                                
+
+
+
                             }
-                            
-                            
-                            
+
+
+
                             // Let's forward the message to the Wit.ai Bot Engine
                             // This will run all actions until our bot has nothing left to do
                             wit.runActions(
