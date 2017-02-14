@@ -440,10 +440,7 @@ const actions = {
 
             text["quick_replies"] = quick;
 
-            console.dir(text);
-
             var body = JSON.stringify(text);
-            console.dir(body);
 
             context.done = "Es wurde ein Json erstellt Check logs!";
 
@@ -467,7 +464,7 @@ const actions = {
             //wenn modul drin ist
             if (modul) {
                 //es ist ein modul gegeben
-                console.log("Wir haben ein modul ! ->" + modul);
+               
 
                 //Aufrufen gibAufgabe der Datenbank
 
@@ -486,7 +483,7 @@ const actions = {
 
             } else {
                 //wenn modul fehlt
-                console.log("ES ist kein Modul oder Antwort gegeben !!!");
+                
                 context.missingModul = true;
 
                 delete context.modul;
@@ -955,7 +952,7 @@ app.post('/webhook', (req, res) => {
                 // We retrieve the user's current session, or create one if it doesn't exist
                 // This is needed for our bot to figure out the conversation history
                 const sessionId = findOrCreateSession(sender);
-
+                console.dir("Der Aktuelle Context");
                 console.dir(sessions[sessionId].context);
 
                 if (event.message) {
