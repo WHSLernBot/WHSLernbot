@@ -142,7 +142,7 @@ const actions = {
 
 
             //Noch stark zu bearbeiten!!    
-           
+
             text = {text};
 
             // Yay, we found our recipient!
@@ -388,11 +388,11 @@ const actions = {
 
                                 text["quick_replies"] = quick_replies;
 
-                            }else{
+                            } else {
                                 text["text"] = "Für dieses Modul hast du dich noch nicht angemeldet! Das solltest du so schnell wie möglich machen! :)";
                             }
                         }
-  
+
                     }
 
                     fbMessage(sessions[sessionId].fid, text)
@@ -460,12 +460,14 @@ const actions = {
             var thema = firstEntityValue(entities, "thema");
             var modul = firstEntityValue(entities, "modul");
             
+            console.dir("Sind in Modul");
+            console.dir(modul);
 
             //wenn modul drin ist
             if (modul) {
                 //es ist ein modul gegeben
-               
-
+                console.dir("Sind in Modul");
+                console.dir(modul);
                 //Aufrufen gibAufgabe der Datenbank
 
                 context.Aufgabe = "Hier ist deine " + modul + " Aufgabe !";
@@ -476,7 +478,7 @@ const actions = {
 
 
                 //Abspeichern der Richtig und Falschen Antwort
-                context.AntwortA = "hallo;"
+                
 
 
                 delete context.missingModul;
@@ -484,7 +486,7 @@ const actions = {
 
             } else {
                 //wenn modul fehlt
-                
+
                 context.missingModul = true;
 
                 delete context.modul;
@@ -939,8 +941,8 @@ app.post('/webhook', (req, res) => {
     // See the Webhook reference
     // https://developers.facebook.com/docs/messenger-platform/webhook-reference
     const data = req.body;
-    
-    
+
+
 
     if (data.object === 'page') {
         data.entry.forEach(entry => {
@@ -953,8 +955,7 @@ app.post('/webhook', (req, res) => {
                 // We retrieve the user's current session, or create one if it doesn't exist
                 // This is needed for our bot to figure out the conversation history
                 const sessionId = findOrCreateSession(sender);
-                console.dir("Der Aktuelle Context");
-                console.dir(sessions[sessionId].context);
+
 
                 if (event.message) {
 
@@ -974,6 +975,9 @@ app.post('/webhook', (req, res) => {
                                 .catch(console.error);
                     } else if (text) {
                         // We received a text message
+
+                        console.dir("Der Aktuelle Context");
+                        console.dir(sessions[sessionId].context);
 
                         if (text.charAt(0) === '!') {
 
