@@ -268,8 +268,6 @@ const actions = {
     //Erstellt die Quickreplies für die Fragen
     replies( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
-
-
             var sender = sessions[sessionId].fbid;
 
             var frage = {
@@ -292,7 +290,12 @@ const actions = {
                     }
                 ]
             };
-
+            
+            delete context.A;
+            delete context.B;
+            delete context.C;
+            delete context.missingModul;
+            delete context.thema;
 
             fbMessage(sender, frage)
                     .then(() => null)
