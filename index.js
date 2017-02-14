@@ -939,7 +939,7 @@ app.post('/webhook', (req, res) => {
                 // We retrieve the user's current session, or create one if it doesn't exist
                 // This is needed for our bot to figure out the conversation history
                 const sessionId = findOrCreateSession(sender);
-
+                console.dir(event);
                 if (event.message) {
 
                     // We retrieve the message content
@@ -1143,6 +1143,17 @@ app.post('/webhook', (req, res) => {
                                 
                         case '!gettingStarted':
                             text = 'Willkommen beim WHSLernBot. Damit du mit dem lernen anfangen kannst wähle bitte zuerst eine Hochschule.';
+                            fbMessage(sender, text)
+                                        .then(() => null)
+                                        .catch((err) => {
+                                            console.error(
+                                                    'Oops! An error occurred while forwarding the response to',
+                                                    sender,
+                                                    ':',
+                                                    err.stack || err
+                                                    );
+                                        });
+                            break;
 
                             default:
                                 text = 'YOLO geiles Ausrufezeicheeeeeeeeeeeen!';
