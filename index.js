@@ -493,9 +493,9 @@ const actions = {
             var item = {};
             item["text"] = "Welches Modul meinst du?"
 
-            jsonObj.push(item);
             
-            console.dir(jsonObj);
+            
+            console.dir(item);
 
             context.done = "Es wurde ein Json erstellt Check logs!";
 
