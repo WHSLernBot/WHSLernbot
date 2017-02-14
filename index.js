@@ -482,17 +482,11 @@ const actions = {
 
 
                 delete context.missingModul;
-                delete context.antwort;
+                
 
             } else {
                 //wenn modul fehlt
-
                 context.missingModul = true;
-
-                delete context.modul;
-                delete context.antwort;
-                delete context.thema;
-
             }
 
 
@@ -962,6 +956,7 @@ app.post('/webhook', (req, res) => {
 
                     // We retrieve the message content
                     var {text, attachments, quick_reply} = event.message;
+                    
                     if (quick_reply) {
 
                         var payload = quick_reply.payload;
@@ -969,12 +964,14 @@ app.post('/webhook', (req, res) => {
 
                     if (attachments) {
 
-                        // We received an attachment
-                        // Let's reply with an automatic message
+                        // Der Benutzer hat ein Anhang (Bild,Video etc) gesendet
+                        // Kann noch nicht bearbeitet werden.
                         fbMessage(sender, 'Zurzeit kann ich leider noch keine Anhänge bearbeiten!')
                                 .catch(console.error);
+                        
+                        
                     } else if (text) {
-                        // We received a text message
+                        // Der Benutzer hat eine Textnachricht gesendet
 
                         console.dir("Der Aktuelle Context");
                         console.dir(sessions[sessionId].context);
