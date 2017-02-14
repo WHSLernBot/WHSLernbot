@@ -171,7 +171,7 @@ const actions = {
     // See https://wit.ai/docs/quickstart
 
 
-    //Funktion zum Abrufen von Wetter Daten auf openweathermap.
+    //Funktion zum Abrufen von Wetter Daten auf openweathermap.org.
     //Aktuell nur das aktuelle Wetter
     getForecast( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
@@ -194,7 +194,6 @@ const actions = {
                 }, function (error, response, body) {
 
                     if (!error && response.statusCode === 200) {
-
 
                         switch (body.weather[0].main) {
 
@@ -225,10 +224,10 @@ const actions = {
 
                         context.forecast = forecastText;
 
-
                         delete context.missingLocation;
                         delete context.wrongLocation;
                         delete context.location;
+
                         return resolve(context);
 
                     } else {
@@ -290,12 +289,7 @@ const actions = {
                     }
                 ]
             };
-            
-            delete context.A;
-            delete context.B;
-            delete context.C;
-            delete context.missingModul;
-            delete context.thema;
+
 
             fbMessage(sender, frage)
                     .then(() => null)
@@ -462,9 +456,6 @@ const actions = {
 
             var thema = firstEntityValue(entities, "thema");
             var modul = firstEntityValue(entities, "modul");
-            
-            console.dir("Sind in Modul");
-            console.dir(modul);
 
             //wenn modul drin ist
             if (modul) {
@@ -481,11 +472,9 @@ const actions = {
 
 
                 //Abspeichern der Richtig und Falschen Antwort
-                
-
 
                 delete context.missingModul;
-                
+
 
             } else {
                 //wenn modul fehlt
@@ -939,8 +928,6 @@ app.post('/webhook', (req, res) => {
     // https://developers.facebook.com/docs/messenger-platform/webhook-reference
     const data = req.body;
 
-
-
     if (data.object === 'page') {
         data.entry.forEach(entry => {
             entry.messaging.forEach(event => {
@@ -953,13 +940,11 @@ app.post('/webhook', (req, res) => {
                 // This is needed for our bot to figure out the conversation history
                 const sessionId = findOrCreateSession(sender);
 
-
                 if (event.message) {
-
 
                     // We retrieve the message content
                     var {text, attachments, quick_reply} = event.message;
-                    
+
                     if (quick_reply) {
 
                         var payload = quick_reply.payload;
@@ -971,8 +956,8 @@ app.post('/webhook', (req, res) => {
                         // Kann noch nicht bearbeitet werden.
                         fbMessage(sender, 'Zurzeit kann ich leider noch keine Anhänge bearbeiten!')
                                 .catch(console.error);
-                        
-                        
+
+
                     } else if (text) {
                         // Der Benutzer hat eine Textnachricht gesendet
 
@@ -1006,8 +991,6 @@ app.post('/webhook', (req, res) => {
                                             }
                                         }
                                     }
-
-
 
                                     fbMessage(sender, text)
                                             .then(() => null)
@@ -1045,8 +1028,6 @@ app.post('/webhook', (req, res) => {
 
                                     break;
 
-
-
                                 default:
                                     text = 'YOLO geiles Ausrufezeichen!';
                                     text = {text};
@@ -1061,7 +1042,6 @@ app.post('/webhook', (req, res) => {
                                                         );
                                             });
                                     break;
-
                             }
 
                         } else {
@@ -1106,8 +1086,6 @@ app.post('/webhook', (req, res) => {
 
                             }
 
-
-
                             // Let's forward the message to the Wit.ai Bot Engine
                             // This will run all actions until our bot has nothing left to do
                             wit.runActions(
@@ -1121,7 +1099,7 @@ app.post('/webhook', (req, res) => {
 
                                 // Based on the session state, you might want to reset the session.
                                 // This depends heavily on the business logic of your bot.
-                                // Example:
+                                // Example: 
                                 // if (context['done']) {
                                 //   delete sessions[sessionId];
                                 // }
@@ -1162,6 +1140,9 @@ app.post('/webhook', (req, res) => {
                                         });
 
                                 break;
+                                
+                        case '!gettingStarted':
+                            text = 'Willkommen beim WHSLernBot. Damit du mit dem lernen anfangen kannst wähle bitte zuerst eine Hochschule.';
 
                             default:
                                 text = 'YOLO geiles Ausrufezeichen!';
