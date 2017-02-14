@@ -1143,6 +1143,7 @@ app.post('/webhook', (req, res) => {
                                 
                         case '!gettingStarted':
                             text = 'Willkommen beim WHSLernBot. Damit du mit dem lernen anfangen kannst wähle bitte zuerst eine Hochschule.';
+                            text = {text};
                             fbMessage(sender, text)
                                         .then(() => null)
                                         .catch((err) => {
