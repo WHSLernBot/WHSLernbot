@@ -943,7 +943,7 @@ app.post('/webhook', (req, res) => {
                 if (event.message) {
 
                     // We retrieve the message content
-                    var {text, attachments, quick_reply} = event.message;
+                    var {text, attachments, quick_reply, is_echo} = event.message;
 
                     if (quick_reply) {
 
@@ -958,7 +958,7 @@ app.post('/webhook', (req, res) => {
                                 .catch(console.error);
 
 
-                    } else if (text) {
+                    } else if (text && !is_echo) {
                         // Der Benutzer hat eine Textnachricht gesendet
 
                         console.dir("Der Aktuelle Context");
