@@ -312,14 +312,15 @@ const actions = {
     loesche( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
             
-            delete context.missingThema;
-            delete context.missingModul;
-            delete context.modul;
-            delete context.thema;
-            delete context.A;
-            delete context.B;
-            delete context.C;
-            delete context.Aufgabe;
+//            delete context.missingThema;
+//            delete context.missingModul;
+//            delete context.modul;
+//            delete context.thema;
+//            delete context.A;
+//            delete context.B;
+//            delete context.C;
+//            delete context.Aufgabe;
+            delete sessions[sessionId];
 
             return resolve(context);
         });
