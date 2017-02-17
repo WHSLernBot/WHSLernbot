@@ -307,6 +307,23 @@ const actions = {
             return resolve(context);
         });
     },
+    
+    //löscht die Contexte aus gibAufgabe
+    loesche( {context, entities, sessionId}) {
+        return new Promise(function (resolve, reject) {
+            
+            delete context.missingThema;
+            delete context.missingModul;
+            delete context.modul;
+            delete context.thema;
+            delete context.A;
+            delete context.B;
+            delete context.C;
+            delete context.Aufgabe;
+
+            return resolve(context);
+        });
+    },
 
     //Ermittelt die angemeldeten Module und Themen für den Benutzer
     gibSelektoren( {context, entities, sessionId}) {
