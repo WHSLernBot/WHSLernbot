@@ -638,6 +638,10 @@ const actions = {
                 
                 delete context.missingThema;
                 
+            } else {
+                context.missingModul = true;
+                
+               
             }
 
 
