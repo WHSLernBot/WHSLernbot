@@ -321,6 +321,8 @@ const actions = {
 //            delete context.C;
 //            delete context.Aufgabe;
             delete sessions[sessionId];
+            console.dir(context.modul);
+            console.dir(context.thema);
 
             return resolve(context);
         });
