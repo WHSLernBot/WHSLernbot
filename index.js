@@ -452,10 +452,36 @@ const actions = {
     gibAufgabe( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
-            var thema = firstEntityValue(entities, "thema");
-            var modul = firstEntityValue(entities, "modul");
+            var thema;
+            var modul;
+            
+            //er überschreibt die variable nur wenn Sie auch in der Nachricht vorhanden ist.
+            //sonst ist die variable die alte schonmal genutzte variable im Context
+            if(firstEntityValue(entities, "thema")) {
+                thema = firstEntityValue(entities, "thema");
+                console.log("thema in der Nachricht ");
+                console.log(thema);
+            } else {
+                thema = context.thema;
+                console.log("Alter Context wir benutzt");
+                console.log(thema);
+            }
+            
+            //er überschreibt die variable nur wenn Sie auch in der Nachricht vorhanden ist.
+            //sonst ist die variable die alte schonmal genutzte variable im Context
+            if(firstEntityValue(entities, "modul")) {
+                modul = firstEntityValue(entities, "modul");
+                console.log("modul in der Nachricht ");
+                console.log(modul);
+            } else {
+                modul = context.modul;
+                console.log("Alter Context wir benutzt");
+                console.log(modul);
+            }
+            
+            
 
-            //wenn modul drin ist
+            //wenn modul und thema drin ist
             if (modul && thema) {
                 //es ist ein modul und thema gegeben
                 console.dir("Sind in Modul und Thema");
@@ -518,6 +544,7 @@ const actions = {
                 //Abspeichern der Richtig und Falschen Antwort
 
                 delete context.missingModul;
+                delete context.missingThema;
 
 
             } else if(modul) {
@@ -527,65 +554,65 @@ const actions = {
                 console.dir(modul);
                 //Aufrufen gibAufgabe der Datenbank
                 
-                var api = 'https://immense-journey-49192.herokuapp.com/';
-                var route = 'messageBot';
+                context.missingThema = true; 
+                
+//                var api = 'https://immense-journey-49192.herokuapp.com/';
+//                var route = 'messageBot';
+//
+//                var apiUrl = api + route;
+//
+//                request({
+//                    url: apiUrl,
+//                    json: {
+//                        "user": {
+//
+//                            "userID": sessions[sessionId].fbid,
+//                            "plattform": 1
+//                        },
+//                        "methode": "gibAufgabe",
+//                        "modul": context.modul,
+//                        "thema": {
+//                            "id": context.thema
+//                        }
+//                    }
+//                }, function (error, response, body) {
+//
+//                    if (!error && response.statusCode === 200) {
+//
+//                        context.Aufgabe = body.aufgabe.frage;
+//                        context.verweis = body.aufgabe.verweis;
+//                        context.hinweis = body.aufgabe.hinweis;
+//                        context.bewerten = body.aufgabe.bewerten;
+//                        context.antwort1 = body.antwort[0];
+//
+//                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
+//                        //gesendet werden
+//
+//
+//
+//                    } else {
+//                        
+//                        
+//                    }
+//
+//                        
+//
+//            });
 
-                var apiUrl = api + route;
-
-                request({
-                    url: apiUrl,
-                    json: {
-                        "user": {
-
-                            "userID": sessions[sessionId].fbid,
-                            "plattform": 1
-                        },
-                        "methode": "gibAufgabe",
-                        "modul": context.modul,
-                        "thema": {
-                            "id": context.thema
-                        }
-                    }
-                }, function (error, response, body) {
-
-                    if (!error && response.statusCode === 200) {
-
-                        context.Aufgabe = body.aufgabe.frage;
-                        context.verweis = body.aufgabe.verweis;
-                        context.hinweis = body.aufgabe.hinweis;
-                        context.bewerten = body.aufgabe.bewerten;
-                        context.antwort1 = body.antwort[0];
-
-                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
-                        //gesendet werden
-
-
-
-                    } else {
-                        
-                        
-                    }
-
-                        
-
-            });
-
-                context.Aufgabe = "Hier ist deine " + modul + "!";
-
-                context.A = "Aussage A";
-                context.B = "Aussage B";
-                context.C = "Aussage C";
-
+            
 
                 //Abspeichern der Richtig und Falschen Antwort
 
                 delete context.missingModul;
                 
-            } else {
+            } else if(thema) {
+                console.log("Thema ist da aber Modul fehlt");
+                console.log(thema);
                 
                 //wenn modul fehlt
                 context.missingModul = true;
                 
+                delete context.missingThema;
                 
             }
 
