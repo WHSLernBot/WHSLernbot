@@ -457,7 +457,7 @@ const actions = {
             
             //er überschreibt die variable nur wenn Sie auch in der Nachricht vorhanden ist.
             //sonst ist die variable die alte schonmal genutzte variable im Context
-            if(firstEntityValue(entities, "thema")) {
+            if(firstEntityValue(entities, "thema") != null) {
                 thema = firstEntityValue(entities, "thema");
                 console.log("thema in der Nachricht ");
                 console.log(thema);
@@ -469,7 +469,7 @@ const actions = {
             
             //er überschreibt die variable nur wenn Sie auch in der Nachricht vorhanden ist.
             //sonst ist die variable die alte schonmal genutzte variable im Context
-            if(firstEntityValue(entities, "modul")) {
+            if(firstEntityValue(entities, "modul") != null) {
                 modul = firstEntityValue(entities, "modul");
                 console.log("modul in der Nachricht ");
                 console.log(modul);
@@ -488,48 +488,48 @@ const actions = {
                 console.dir(modul);
                 
                 
-                var api = 'https://immense-journey-49192.herokuapp.com/';
-                var route = 'messageBot';
-
-                var apiUrl = api + route;
-
-                request({
-                    url: apiUrl,
-                    json: {
-                        "user": {
-
-                            "userID": sessions[sessionId].fbid,
-                            "plattform": 1
-                        },
-                        "methode": "gibAufgabe",
-                        "modul": context.modul,
-                        "thema": {
-                            "id": context.thema
-                        }
-                    }
-                }, function (error, response, body) {
-
-                    if (!error && response.statusCode === 200) {
-
-                        context.Aufgabe = body.aufgabe.frage;
-                        context.verweis = body.aufgabe.verweis;
-                        context.hinweis = body.aufgabe.hinweis;
-                        context.bewerten = body.aufgabe.bewerten;
-                        context.antwort1 = body.antwort[0];
-
-                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
-                        //gesendet werden
-
-
-
-                    } else {
-                        
-                        
-                    }
-
-                        
-
-            });
+//                var api = 'https://immense-journey-49192.herokuapp.com/';
+//                var route = 'messageBot';
+//
+//                var apiUrl = api + route;
+//
+//                request({
+//                    url: apiUrl,
+//                    json: {
+//                        "user": {
+//
+//                            "userID": sessions[sessionId].fbid,
+//                            "plattform": 1
+//                        },
+//                        "methode": "gibAufgabe",
+//                        "modul": context.modul,
+//                        "thema": {
+//                            "id": context.thema
+//                        }
+//                    }
+//                }, function (error, response, body) {
+//
+//                    if (!error && response.statusCode === 200) {
+//
+//                        context.Aufgabe = body.aufgabe.frage;
+//                        context.verweis = body.aufgabe.verweis;
+//                        context.hinweis = body.aufgabe.hinweis;
+//                        context.bewerten = body.aufgabe.bewerten;
+//                        context.antwort1 = body.antwort[0];
+//
+//                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
+//                        //gesendet werden
+//
+//
+//
+//                    } else {
+//                        
+//                        
+//                    }
+//
+//                        
+//
+//            });
                 
                 
                 //Aufrufen gibAufgabe der Datenbank
@@ -540,7 +540,8 @@ const actions = {
                 context.B = "Aussage B";
                 context.C = "Aussage C";
 
-
+                context.modul = modul;
+                context.thema = thema;
                 //Abspeichern der Richtig und Falschen Antwort
 
                 delete context.missingModul;
@@ -553,6 +554,8 @@ const actions = {
                 console.dir("Sind in Modul");
                 console.dir(modul);
                 //Aufrufen gibAufgabe der Datenbank
+                
+                context.modul = modul;
                 
                 context.missingThema = true; 
                 
@@ -608,6 +611,7 @@ const actions = {
             } else if(thema) {
                 console.log("Thema ist da aber Modul fehlt");
                 console.log(thema);
+                context.thema = thema;
                 
                 //wenn modul fehlt
                 context.missingModul = true;
