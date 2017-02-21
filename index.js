@@ -354,23 +354,25 @@ const actions = {
             if(note && modul) {
                 console.dir("NOTE UND MODUL VORHANDEN");
                 
-                context.note = '1,2';
+                context.note = note;
                 context.modul = modul;
                 console.dir(modul);
                 console.dir(note);
                 delete context.missingModul;
+                return resolve(context);
                 
             } else {
                 console.dir("NUR NOTE");
                 console.dir(note);
                 context.missingModul = true;
                 context.note = note;
-                console.dir(context.note);                
+                console.dir(context.note);    
+                return resolve(context);
             }
             
             
 
-            return resolve(context);
+            //return resolve(context);
         });
     },
     
