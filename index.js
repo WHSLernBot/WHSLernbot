@@ -19,9 +19,6 @@ const express = require('express');
 const fetch = require('node-fetch');
 const request = require('request');
 const http = require('http');
-var keinThema = false;
-var istAntwort = false;
-var keinModul = false;
 var Wit = null;
 let log = null;
 
@@ -311,22 +308,59 @@ const actions = {
     //löscht die Contexte aus gibAufgabe
     loesche( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
-            
-//            delete context.missingThema;
-//            delete context.missingModul;
-//            delete context.modul;
-//            delete context.thema;
-//            delete context.A;
-//            delete context.B;
-//            delete context.C;
-//            delete context.Aufgabe;
+
             delete sessions[sessionId];
-            console.dir(context.modul);
-            console.dir(context.thema);
 
             return resolve(context);
         });
     },
+    
+    
+    //speichert die Note
+    speicherNote( {context, entities, sessionId}) {
+        return new Promise(function (resolve, reject) {
+
+            var note;
+            
+            //nur modul aufrufen, wird die Funktion nicht aktivieren
+            //daher ist es mit Note zsm genannt oder kommt im zweiten schritt dazu
+            //daher ist eine Abspeciherung wie bei Note nicht nötig !!!
+            var modul = firstEntityValue(entities, "modul");
+            
+            
+            //für den fall das nur die Note geschrieben wird und dabei 100% 
+            //für den weiteren verlauf abgespeichert wird.
+            if(firstEntityValue(entities, "number") != null) {
+                note = firstEntityValue(entities, "number");
+            } else {
+                note = context.note;   
+            }
+            
+            
+            
+            if(note && modul) {
+                
+                context.number = number;
+                context.modul = modul;
+                
+                delete context.missingModul;
+                
+            } else {
+                
+                context.missingModul = true;
+                context.number = number;
+                
+                delete context.modul;
+                
+            }
+            
+            
+
+            return resolve(context);
+        });
+    },
+    
+    
 
     //Ermittelt die angemeldeten Module und Themen für den Benutzer
     gibSelektoren( {context, entities, sessionId}) {
@@ -463,10 +497,8 @@ const actions = {
 
         });
 
-
-
-
     },
+
 
     //Ermittelt eine Aufgabe für den Benutzer.
     gibAufgabe( {context, entities, sessionId}) {
@@ -508,48 +540,44 @@ const actions = {
                 console.dir(modul);
                 
                 
-//                var api = 'https://immense-journey-49192.herokuapp.com/';
-//                var route = 'messageBot';
-//
-//                var apiUrl = api + route;
-//
-//                request({
-//                    url: apiUrl,
-//                    json: {
-//                        "user": {
-//
-//                            "userID": sessions[sessionId].fbid,
-//                            "plattform": 1
-//                        },
-//                        "methode": "gibAufgabe",
-//                        "modul": context.modul,
-//                        "thema": {
-//                            "id": context.thema
-//                        }
-//                    }
-//                }, function (error, response, body) {
-//
-//                    if (!error && response.statusCode === 200) {
-//
-//                        context.Aufgabe = body.aufgabe.frage;
-//                        context.verweis = body.aufgabe.verweis;
-//                        context.hinweis = body.aufgabe.hinweis;
-//                        context.bewerten = body.aufgabe.bewerten;
-//                        context.antwort1 = body.antwort[0];
-//
-//                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
-//                        //gesendet werden
-//
-//
-//
-//                    } else {
-//                        
-//                        
-//                    }
-//
-//                        
-//
-//            });
+                var api = 'https://immense-journey-49192.herokuapp.com/';
+                var route = 'messageBot';
+
+                var apiUrl = api + route;
+
+                request({
+                    url: apiUrl,
+                    json: {
+                        "user": {
+
+                            "userID": sessions[sessionId].fbid,
+                            "plattform": 1
+                        },
+                        "methode": "gibAufgabe",
+                        "modul": modul,
+                        "thema": {
+                            "id": thema
+                        }
+                    }
+                }, function (error, response, body) {
+
+                    if (!error && response.statusCode === 200) {
+
+                        context.Aufgabe = body.aufgabe.frage;
+                        context.verweis = body.aufgabe.verweis;
+                        context.hinweis = body.aufgabe.hinweis;
+                        context.bewerten = body.aufgabe.bewerten;
+                        context.antwort1 = body.antwort[0];
+
+                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
+                        //gesendet werden
+
+                    } else {
+                        
+                        
+                    }
+
+            });
                 
                 
                 //Aufrufen gibAufgabe der Datenbank
@@ -562,8 +590,8 @@ const actions = {
 
                 context.modul = modul;
                 context.thema = thema;
+                
                 //Abspeichern der Richtig und Falschen Antwort
-
                 delete context.missingModul;
                 delete context.missingThema;
 
@@ -579,48 +607,48 @@ const actions = {
                 
                 context.missingThema = true; 
                 
-//                var api = 'https://immense-journey-49192.herokuapp.com/';
-//                var route = 'messageBot';
-//
-//                var apiUrl = api + route;
-//
-//                request({
-//                    url: apiUrl,
-//                    json: {
-//                        "user": {
-//
-//                            "userID": sessions[sessionId].fbid,
-//                            "plattform": 1
-//                        },
-//                        "methode": "gibAufgabe",
-//                        "modul": context.modul,
-//                        "thema": {
-//                            "id": context.thema
-//                        }
-//                    }
-//                }, function (error, response, body) {
-//
-//                    if (!error && response.statusCode === 200) {
-//
-//                        context.Aufgabe = body.aufgabe.frage;
-//                        context.verweis = body.aufgabe.verweis;
-//                        context.hinweis = body.aufgabe.hinweis;
-//                        context.bewerten = body.aufgabe.bewerten;
-//                        context.antwort1 = body.antwort[0];
-//
-//                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
-//                        //gesendet werden
-//
-//
-//
-//                    } else {
-//                        
-//                        
-//                    }
-//
-//                        
-//
-//            });
+                var api = 'https://immense-journey-49192.herokuapp.com/';
+                var route = 'messageBot';
+
+                var apiUrl = api + route;
+
+                request({
+                    url: apiUrl,
+                    json: {
+                        "user": {
+
+                            "userID": sessions[sessionId].fbid,
+                            "plattform": 1
+                        },
+                        "methode": "gibAufgabe",
+                        "modul": context.modul,
+                        "thema": {
+                            "id": context.thema
+                        }
+                    }
+                }, function (error, response, body) {
+
+                    if (!error && response.statusCode === 200) {
+
+                        context.Aufgabe = body.aufgabe.frage;
+                        context.verweis = body.aufgabe.verweis;
+                        context.hinweis = body.aufgabe.hinweis;
+                        context.bewerten = body.aufgabe.bewerten;
+                        context.antwort1 = body.antwort[0];
+
+                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
+                        //gesendet werden
+
+
+
+                    } else {
+                        
+                        
+                    }
+
+                        
+
+            });
 
             
 
