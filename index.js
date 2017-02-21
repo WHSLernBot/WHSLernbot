@@ -353,7 +353,7 @@ const actions = {
             } else {
                 console.dir("NUR NOTE");
                 context.missingModul = true;
-                context.note = note;
+                context.note = note + "";
                 
                 delete context.modul;
                 
