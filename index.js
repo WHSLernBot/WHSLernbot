@@ -324,7 +324,7 @@ const actions = {
             
             //nur modul aufrufen, wird die Funktion nicht aktivieren
             //daher ist es mit Note zsm genannt oder kommt im zweiten schritt dazu
-            //daher ist eine Abspeciherung wie bei Note nicht nötig !!!
+            //daher ist eine Abspeicherung wie bei Note nicht nötig !!!
             var modul = firstEntityValue(entities, "modul");
             
             
