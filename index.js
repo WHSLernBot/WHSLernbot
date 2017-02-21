@@ -326,7 +326,7 @@ const actions = {
             //daher ist es mit Note zsm genannt oder kommt im zweiten schritt dazu
             //daher ist eine Abspeicherung wie bei Note nicht nötig !!!
             var modul = firstEntityValue(entities, "modul");
-            
+            console.dir(modul);
             
             //für den fall das nur die Note geschrieben wird und dabei 100% 
             //für den weiteren verlauf abgespeichert wird.
@@ -347,13 +347,16 @@ const actions = {
                 
                 context.note = note;
                 context.modul = modul;
-                
+                console.dir(modul);
+                console.dir(note);
                 delete context.missingModul;
                 
             } else {
                 console.dir("NUR NOTE");
+                console.dir(note);
                 context.missingModul = true;
-                context.note = note + "";
+                context.note = note;
+                console.dir(context.note);
                 
                 delete context.modul;
                 
@@ -771,6 +774,7 @@ const actions = {
         });
     },
 
+    //muss weg
     speichereNote( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
             var note = firstEntityValue(entities, "number");
