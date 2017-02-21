@@ -335,7 +335,7 @@ const actions = {
             //für den weiteren verlauf abgespeichert wird.
             if(firstEntityValue(entities, "number") !== null) {
                
-                console.dir("Note gefunden");
+                console.dir("Number gefunden");
                 note = firstEntityValue(entities, "number");
                 console.dir(note);
                 
@@ -358,17 +358,14 @@ const actions = {
                 context.modul = modul;
                 console.dir(modul);
                 console.dir(note);
-                delete context.missingModul;
+                context.missingModul = false;
                 
             } else {
                 console.dir("NUR NOTE");
                 console.dir(note);
                 context.missingModul = true;
                 context.note = note;
-                console.dir(context.note);
-                
-                delete context.modul;
-                
+                console.dir(context.note);                
             }
             
             
