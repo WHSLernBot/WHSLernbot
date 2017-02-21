@@ -340,7 +340,7 @@ const actions = {
             
             if(note && modul) {
                 
-                context.number = number;
+                context.note = note;
                 context.modul = modul;
                 
                 delete context.missingModul;
@@ -348,7 +348,7 @@ const actions = {
             } else {
                 
                 context.missingModul = true;
-                context.number = number;
+                context.note = note;
                 
                 delete context.modul;
                 
