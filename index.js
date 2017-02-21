@@ -333,9 +333,9 @@ const actions = {
             
             //für den fall das nur die Note geschrieben wird und dabei 100% 
             //für den weiteren verlauf abgespeichert wird.
-            if(firstEntityValue(entities, "number") !== null) {
+            if(firstEntityValue(entities, "note") !== null) {
                 console.dir("Note gefunden");
-                note = firstEntityValue(entities, "number");
+                note = firstEntityValue(entities, "note");
                 console.dir(note);
             } else {
                 console.dir("Alte Note !!!");
