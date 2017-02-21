@@ -319,6 +319,9 @@ const actions = {
     //speichert die Note
     speicherNote( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
+            console.log("entities")
+            console.log(entities);
+            console.log("CONTEXT")
             console.log(context);
             var note;
             
@@ -330,7 +333,7 @@ const actions = {
             
             //für den fall das nur die Note geschrieben wird und dabei 100% 
             //für den weiteren verlauf abgespeichert wird.
-            if(firstEntityValue(entities, "number") != null) {
+            if(firstEntityValue(entities, "number") !== null) {
                 console.dir("Note gefunden");
                 note = firstEntityValue(entities, "number");
                 console.dir(note);
