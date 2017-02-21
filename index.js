@@ -514,7 +514,7 @@ const actions = {
             
             //er überschreibt die variable nur wenn Sie auch in der Nachricht vorhanden ist.
             //sonst ist die variable die alte schonmal genutzte variable im Context
-            if(firstEntityValue(entities, "thema") != null) {
+            if(firstEntityValue(entities, "thema") !== null) {
                 thema = firstEntityValue(entities, "thema");
                 console.log("thema in der Nachricht ");
                 console.log(thema);
@@ -526,7 +526,7 @@ const actions = {
             
             //er überschreibt die variable nur wenn Sie auch in der Nachricht vorhanden ist.
             //sonst ist die variable die alte schonmal genutzte variable im Context
-            if(firstEntityValue(entities, "modul") != null) {
+            if(firstEntityValue(entities, "modul") !== null) {
                 modul = firstEntityValue(entities, "modul");
                 console.log("modul in der Nachricht ");
                 console.log(modul);
