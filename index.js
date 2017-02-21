@@ -331,14 +331,19 @@ const actions = {
             //für den fall das nur die Note geschrieben wird und dabei 100% 
             //für den weiteren verlauf abgespeichert wird.
             if(firstEntityValue(entities, "number") != null) {
+                console.dir("Note gefunden");
                 note = firstEntityValue(entities, "number");
+                console.dir(note);
             } else {
+                console.dir("Alte Note !!!");
                 note = context.note;   
+                console.dir(note);
             }
             
             
             
             if(note && modul) {
+                console.dir("NOTE UND MODUL VORHANDEN");
                 
                 context.note = note;
                 context.modul = modul;
@@ -346,7 +351,7 @@ const actions = {
                 delete context.missingModul;
                 
             } else {
-                
+                console.dir("NUR NOTE");
                 context.missingModul = true;
                 context.note = note;
                 
