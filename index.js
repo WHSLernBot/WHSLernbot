@@ -354,11 +354,11 @@ const actions = {
             if(note && modul) {
                 console.dir("NOTE UND MODUL VORHANDEN");
                 
-                context.note = note;
+                context.note = '1,2';
                 context.modul = modul;
                 console.dir(modul);
                 console.dir(note);
-                context.missingModul = false;
+                delete context.missingModul;
                 
             } else {
                 console.dir("NUR NOTE");
