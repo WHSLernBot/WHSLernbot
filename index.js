@@ -319,7 +319,7 @@ const actions = {
     //speichert die Note
     speicherNote( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
-
+            console.log(context);
             var note;
             
             //nur modul aufrufen, wird die Funktion nicht aktivieren
