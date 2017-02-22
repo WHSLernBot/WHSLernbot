@@ -913,10 +913,16 @@ const actions = {
     //meldet den Nutzer für das gewünschter Modul An
     meldeModulAn( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
-
+            
+            var modul;
+            var i = 0;
+            while(entities[entity].length > i) {
+                modul = [modul, entities[entity][i].value];
+            }
+            
             console.log("BIn in melde ModulAN");
             console.log(entities);
-            var modul = entities;
+            console.log("DAS MODUL");
             console.log(modul);
 
             var api = 'https://immense-journey-49192.herokuapp.com/';
