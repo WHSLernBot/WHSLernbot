@@ -921,7 +921,7 @@ const actions = {
             console.log("HIER KOMMT ENTITIES MODUL");
             console.log(entities.modul);
             
-            if(entities.modul == 'undefined') {
+            if(entities.modul == undefined || entities.modul == "undefined") {
                 //FALLS der Bot in die Funktion geht ohne ein Modul zu haben
                 context.antwort = "Tut mir leid ohne Modul bei der Anmeldung verstehe ich nichts, versuche es doch einfach nochmal !";
                 
