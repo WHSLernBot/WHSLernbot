@@ -918,7 +918,7 @@ const actions = {
             var modul = new Array;
             var i = 0;
             
-            if(entities.modul.length == undefined) {
+            if(entities.modul.length == "undefined") {
                 //FALLS der Bot in die Funktion geht ohne ein Modul zu haben
                 context.antwort = "Tut mir leid ohne Modul bei der Anmeldung verstehe ich nichts, versuche es doch einfach nochmal !";
                 
