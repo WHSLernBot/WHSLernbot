@@ -918,6 +918,7 @@ const actions = {
             var i = 0;
             while(entities[entity].length > i) {
                 modul = [modul, entities[entity][i].value];
+                i = i + 1;
             }
             
             console.log("BIn in melde ModulAN");
