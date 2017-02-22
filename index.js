@@ -737,6 +737,7 @@ const actions = {
 
     },
     
+    //soll grundlegende Infos eines Nutzer ausgeben
     gibInfos( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
             
@@ -766,6 +767,45 @@ const actions = {
                     } else {
 
                         console.log("GIBINFO hat nicht geklappt !");
+
+                    }
+                });
+            
+
+            return resolve(context);
+        });
+    },
+    
+    //soll die Module ausgeben bei denen der Nutzer angemeldet ist !
+    gibMeineModule( {context, entities, sessionId}) {
+        return new Promise(function (resolve, reject) {
+            
+            console.log("In gibMeineModule Funktion");
+
+            var api = 'https://immense-journey-49192.herokuapp.com/';
+            var route = 'messageBot';
+
+            var apiUrl = api + route;
+            
+            request({
+                    url: apiUrl,
+                    json: {
+                        "user": {
+                            "userID": sessions[sessionId].fid,
+                            "plattformID": 1
+
+                        },
+                        "methode": "gibAnModule"
+                    }
+                }, function (error, response, body) {
+
+                    if (!error && response.statusCode === 200) {
+                        
+                        console.log("Juhu keine Fehler");
+
+                    } else {
+
+                        console.log("GibANModule funkt nicht BIIIIITCH");
 
                     }
                 });
