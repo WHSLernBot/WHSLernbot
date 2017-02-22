@@ -736,6 +736,44 @@ const actions = {
 
 
     },
+    
+    gibInfos( {context, entities, sessionId}) {
+        return new Promise(function (resolve, reject) {
+            
+            console.log("JAAA ICH BIN DRIN IN GIBINFOS !!!!!!");
+
+            var api = 'https://immense-journey-49192.herokuapp.com/';
+            var route = 'messageBot';
+
+            var apiUrl = api + route;
+            
+            request({
+                    url: apiUrl,
+                    json: {
+                        "user": {
+                            "userID": sessions[sessionId].fid,
+                            "plattformID": 1
+
+                        },
+                        "methode": "gibInfos"
+                    }
+                }, function (error, response, body) {
+
+                    if (!error && response.statusCode === 200) {
+                        
+                        console.log("Juhu keine Fehler");
+
+                    } else {
+
+                        console.log("GIBINFO hat nicht geklappt !");
+
+                    }
+                });
+            
+
+            return resolve(context);
+        });
+    },
 
     setzeName( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
