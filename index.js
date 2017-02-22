@@ -908,12 +908,16 @@ const actions = {
             return resolve(context);
         });
     },
-
-    gibInfos( {context, entities, sessionId}) {
+    
+    
+    //meldet den Nutzer für das gewünschter Modul An
+    meldeModulAn( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
-            var modul = firstEntityValue(entities, "modul");
-
+            console.log("BIn in melde ModulAN");
+            console.log(entities);
+            var modul = [entities];
+            console.log(modul);
 
             var api = 'https://immense-journey-49192.herokuapp.com/';
             var route = 'messageBot';
@@ -948,13 +952,6 @@ const actions = {
                 });
             }
 
-            if (modul) {
-                context.modul = "Hier sind deine " + modul + "-Daten.";
-                delete context.missingModul;
-            } else {
-                context.missingModul = "Hier sind deine Statistiken";
-                delete context.modul;
-            }
 
             return resolve(context);
         });
