@@ -918,8 +918,8 @@ const actions = {
             var i = 0;
             console.log("Vor der While schleife");
             console.log(entities);
-            console.log(entities.entity);
-            console.log(entities[entity].length);
+            console.log(entities.modul);
+            console.log(entities.modul.length);
             while(entities[entity].length > i) {
                 console.log("BIN DRIN");
                 console.log(entities);
