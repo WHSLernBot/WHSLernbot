@@ -926,15 +926,14 @@ const actions = {
                  console.log("VALUE 1");
                 console.log(entities.modul[i].value);
                
-                modul = [modul, entities[entity][i].value];
+                modul.push(entities.modul[i].value);
                 i = i + 1;
+                console.log("Ende der Schleife");
             }
             
-            console.log("BIn in melde ModulAN");
-            console.log(entities);
-            console.log("DAS MODUL");
             console.log(modul);
-
+            
+           
             var api = 'https://immense-journey-49192.herokuapp.com/';
             var route = 'messageBot';
 
