@@ -916,23 +916,14 @@ const actions = {
             
             var modul = new Array;
             var i = 0;
-            console.log("Vor der While schleife");
-            console.log(entities);
-            console.log(entities.modul);
-            console.log(entities.modul.length);
+            
             while(entities.modul.length > i) {
-                console.log("BIN DRIN");
-                console.log(entities.modul.value);
-                 console.log("VALUE 1");
-                console.log(entities.modul[i].value);
                
                 modul.push(entities.modul[i].value);
                 i = i + 1;
-                console.log("Ende der Schleife");
+               
             }
-            
-            console.log(modul);
-            
+            console.log(modul);            
            
             var api = 'https://immense-journey-49192.herokuapp.com/';
             var route = 'messageBot';
@@ -948,9 +939,8 @@ const actions = {
                             "userID": sessions[sessionId].fid,
                             "plattformID": 1
                         },
-                        "methode": "speichereNote",
-                        "modul": context.modul,
-                        "userNote": context.number
+                        "methode": "meldeFuerModulAn",
+                        "modul": modul                        
                     }
                 }, function (error, response, body) {
 
