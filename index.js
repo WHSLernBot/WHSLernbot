@@ -920,13 +920,12 @@ const actions = {
             console.log(entities);
             console.log(entities.modul);
             console.log(entities.modul.length);
-            while(entities[entity].length > i) {
+            while(entities.modul.length > i) {
                 console.log("BIN DRIN");
-                console.log(entities);
-                console.log("ENTYTIES");
-                console.log(entities[entity]);
-                console.log("VALUE 1");
-                console.log(entities[entity][0].value);
+                console.log(entities.modul.value);
+                 console.log("VALUE 1");
+                console.log(entities.modul[i].value);
+               
                 modul = [modul, entities[entity][i].value];
                 i = i + 1;
             }
