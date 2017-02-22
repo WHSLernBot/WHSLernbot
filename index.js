@@ -914,7 +914,7 @@ const actions = {
     meldeModulAn( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
             
-            var modul;
+            var modul = new Array;
             var i = 0;
             console.log("Vor der While schleife");
             console.log(entities);
