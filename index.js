@@ -914,16 +914,26 @@ const actions = {
     meldeModulAn( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
             
+            //erstellt ein Array mit den Modulen bei denen man sich anmelden möchte
             var modul = new Array;
             var i = 0;
             
+            if(entities.modul.length == 0) {
+                //FALLS der Bot in die Funktion geht ohne ein Modul zu haben
+                context.antwort = "Tut mir leid ohne Modul bei der Anmeldung verstehe ich nichts, versuche es doch einfach nochmal !";
+                
+                return resolve(context);
+            }
+            
             while(entities.modul.length > i) {
                
+                //fügt jedes genannte Modul an das Array dran
                 modul.push(entities.modul[i].value);
                 i = i + 1;
                
             }
-            console.log(modul);            
+            
+            context.antwort = "Hey ich habe dich erfolgreich für dein/e Modul/e angemeldet <3";
            
             var api = 'https://immense-journey-49192.herokuapp.com/';
             var route = 'messageBot';
