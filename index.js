@@ -918,6 +918,9 @@ const actions = {
             var modul = new Array;
             var i = 0;
             
+            console.log("HIER KOMMT ENTITIES MODUL");
+            console.log(entities.modul);
+            
             if(entities.modul == 'undefined') {
                 //FALLS der Bot in die Funktion geht ohne ein Modul zu haben
                 context.antwort = "Tut mir leid ohne Modul bei der Anmeldung verstehe ich nichts, versuche es doch einfach nochmal !";
@@ -950,7 +953,7 @@ const actions = {
                             "plattformID": 1
                         },
                         "methode": "meldeFuerModulAn",
-                        "modul": modul                        
+                        "module": modul                        
                     }
                 }, function (error, response, body) {
 
