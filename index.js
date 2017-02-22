@@ -810,7 +810,8 @@ const actions = {
                     }
                 });
             
-
+            context.gibModule = true
+            ;
             return resolve(context);
         });
     },
