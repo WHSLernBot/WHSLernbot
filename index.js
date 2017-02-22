@@ -916,7 +916,7 @@ const actions = {
 
             console.log("BIn in melde ModulAN");
             console.log(entities);
-            var modul = [entities];
+            var modul = entities;
             console.log(modul);
 
             var api = 'https://immense-journey-49192.herokuapp.com/';
