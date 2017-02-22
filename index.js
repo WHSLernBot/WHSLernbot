@@ -916,7 +916,14 @@ const actions = {
             
             var modul;
             var i = 0;
+            console.log("Vor der While schleife");
             while(entities[entity].length > i) {
+                console.log("BIN DRIN");
+                console.log(entities);
+                console.log("ENTYTIES");
+                console.log(entities[entity]);
+                console.log("VALUE 1");
+                console.log(entities[entity][0].value);
                 modul = [modul, entities[entity][i].value];
                 i = i + 1;
             }
