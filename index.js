@@ -917,6 +917,7 @@ const actions = {
             var modul;
             var i = 0;
             console.log("Vor der While schleife");
+            console.log(entities);
             console.log(entities.entity);
             console.log(entities[entity].length);
             while(entities[entity].length > i) {
