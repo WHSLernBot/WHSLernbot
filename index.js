@@ -1371,7 +1371,7 @@ app.post('/webhook', (req, res) => {
 
                                 //Aufrufen Speichere Antwort
 
-                                var text = {"text": "Die Antwort war leider falsch du AFFENJUNGEN NOOB!!! Wichser...HUSO ersterklasse"};
+                                var text = {"text": "Die Antwort war leider falsch! :/"};
 
                                 fbMessage(sender, text)
                                         .then(() => null)
