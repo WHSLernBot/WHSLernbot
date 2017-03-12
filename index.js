@@ -304,7 +304,7 @@ const actions = {
             return resolve(context);
         });
     },
-    
+
     //löscht die Contexte aus gibAufgabe
     loesche( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
@@ -314,8 +314,7 @@ const actions = {
             return resolve(context);
         });
     },
-    
-    
+
     //speichert die Note
     speicherNote( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
@@ -324,59 +323,57 @@ const actions = {
             console.log("CONTEXT")
             console.log(context);
             var note;
-            
+
             //nur modul aufrufen, wird die Funktion nicht aktivieren
             //daher ist es mit Note zsm genannt oder kommt im zweiten schritt dazu
             //daher ist eine Abspeicherung wie bei Note nicht nötig !!!
             var modul = firstEntityValue(entities, "modul");
             console.dir(modul);
-            
+
             //für den fall das nur die Note geschrieben wird und dabei 100% 
             //für den weiteren verlauf abgespeichert wird.
-            if(firstEntityValue(entities, "number") !== null) {
-               
+            if (firstEntityValue(entities, "number") !== null) {
+
                 console.dir("Number gefunden");
                 note = firstEntityValue(entities, "number");
                 console.dir(note);
-                
-            } else if(firstEntityValue(entities, "note") !== null) {
+
+            } else if (firstEntityValue(entities, "note") !== null) {
                 console.dir("Note gefunden");
                 note = firstEntityValue(entities, "note");
                 console.dir(note);
             } else {
                 console.dir("Alte Note !!!");
-                note = context.note;   
+                note = context.note;
                 console.dir(note);
             }
-            
-            
-            
-            if(note && modul) {
+
+
+
+            if (note && modul) {
                 console.dir("NOTE UND MODUL VORHANDEN");
-                
+
                 context.note = note;
                 context.modul = modul;
                 console.dir(modul);
                 console.dir(note);
                 delete context.missingModul;
                 return resolve(context);
-                
+
             } else {
                 console.dir("NUR NOTE");
                 console.dir(note);
                 context.missingModul = true;
                 context.note = note;
-                console.dir(context.note);    
+                console.dir(context.note);
                 return resolve(context);
             }
-            
-            
+
+
 
             //return resolve(context);
         });
     },
-    
-    
 
     //Ermittelt die angemeldeten Module und Themen für den Benutzer
     gibSelektoren( {context, entities, sessionId}) {
@@ -515,17 +512,16 @@ const actions = {
 
     },
 
-
     //Ermittelt eine Aufgabe für den Benutzer.
     gibAufgabe( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
             var thema;
             var modul;
-            
+
             //er überschreibt die variable nur wenn Sie auch in der Nachricht vorhanden ist.
             //sonst ist die variable die alte schonmal genutzte variable im Context
-            if(firstEntityValue(entities, "thema") !== null) {
+            if (firstEntityValue(entities, "thema") !== null) {
                 thema = firstEntityValue(entities, "thema");
                 console.log("thema in der Nachricht ");
                 console.log(thema);
@@ -534,10 +530,10 @@ const actions = {
                 console.log("Alter Context wir benutzt");
                 console.log(thema);
             }
-            
+
             //er überschreibt die variable nur wenn Sie auch in der Nachricht vorhanden ist.
             //sonst ist die variable die alte schonmal genutzte variable im Context
-            if(firstEntityValue(entities, "modul") !== null) {
+            if (firstEntityValue(entities, "modul") !== null) {
                 modul = firstEntityValue(entities, "modul");
                 console.log("modul in der Nachricht ");
                 console.log(modul);
@@ -546,16 +542,16 @@ const actions = {
                 console.log("Alter Context wir benutzt");
                 console.log(modul);
             }
-            
-            
+
+
 
             //wenn modul und thema drin ist
             if (modul && thema) {
                 //es ist ein modul und thema gegeben
                 console.dir("Sind in Modul und Thema");
                 console.dir(modul);
-                
-                
+
+
                 var api = 'https://immense-journey-49192.herokuapp.com/';
                 var route = 'messageBot';
 
@@ -589,16 +585,16 @@ const actions = {
                         //gesendet werden
 
                     } else {
-                        
-                        
+
+
                     }
 
-            });
-                
-                
+                });
+
+
                 //Aufrufen gibAufgabe der Datenbank
 
-                context.Aufgabe = "Hier ist deine " + modul + " Aufgabe mit dem Thema " + thema +  "!";
+                context.Aufgabe = "Hier ist deine " + modul + " Aufgabe mit dem Thema " + thema + "!";
 
                 context.A = "Aussage A";
                 context.B = "Aussage B";
@@ -606,23 +602,23 @@ const actions = {
 
                 context.modul = modul;
                 context.thema = thema;
-                
+
                 //Abspeichern der Richtig und Falschen Antwort
                 delete context.missingModul;
                 delete context.missingThema;
 
 
-            } else if(modul) {
-                
+            } else if (modul) {
+
                 //es ist ein modul und thema gegeben
                 console.dir("Sind in Modul");
                 console.dir(modul);
                 //Aufrufen gibAufgabe der Datenbank
-                
+
                 context.modul = modul;
-                
-                context.missingThema = true; 
-                
+
+                context.missingThema = true;
+
                 var api = 'https://immense-journey-49192.herokuapp.com/';
                 var route = 'messageBot';
 
@@ -658,34 +654,34 @@ const actions = {
 
 
                     } else {
-                        
-                        
+
+
                     }
 
-                        
 
-            });
 
-            
+                });
+
+
 
                 //Abspeichern der Richtig und Falschen Antwort
 
                 delete context.missingModul;
-                
-            } else if(thema) {
+
+            } else if (thema) {
                 console.log("Thema ist da aber Modul fehlt");
                 console.log(thema);
                 context.thema = thema;
-                
+
                 //wenn modul fehlt
                 context.missingModul = true;
-                
+
                 delete context.missingThema;
-                
+
             } else {
                 context.missingModul = true;
-                
-               
+
+
             }
 
 
@@ -736,82 +732,82 @@ const actions = {
 
 
     },
-    
+
     //soll grundlegende Infos eines Nutzer ausgeben
     gibInfos( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
-            
+
             console.log("JAAA ICH BIN DRIN IN GIBINFOS !!!!!!");
 
             var api = 'https://immense-journey-49192.herokuapp.com/';
             var route = 'messageBot';
 
             var apiUrl = api + route;
-            
+
             request({
-                    url: apiUrl,
-                    json: {
-                        "user": {
-                            "userID": sessions[sessionId].fid,
-                            "plattformID": 1
+                url: apiUrl,
+                json: {
+                    "user": {
+                        "userID": sessions[sessionId].fid,
+                        "plattformID": 1
 
-                        },
-                        "methode": "gibInfos"
-                    }
-                }, function (error, response, body) {
+                    },
+                    "methode": "gibInfos"
+                }
+            }, function (error, response, body) {
 
-                    if (!error && response.statusCode === 200) {
-                        
-                        console.log("Juhu keine Fehler");
+                if (!error && response.statusCode === 200) {
 
-                    } else {
+                    console.log("Juhu keine Fehler");
 
-                        console.log("GIBINFO hat nicht geklappt !");
+                } else {
 
-                    }
-                });
-            
+                    console.log("GIBINFO hat nicht geklappt !");
+
+                }
+            });
+
 
             return resolve(context);
         });
     },
-    
+
     //soll die Module ausgeben bei denen der Nutzer angemeldet ist !
     gibMeineModule( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
-            
+
             console.log("In gibMeineModule Funktion");
 
             var api = 'https://immense-journey-49192.herokuapp.com/';
             var route = 'messageBot';
 
             var apiUrl = api + route;
-            
+
             request({
-                    url: apiUrl,
-                    json: {
-                        "user": {
-                            "userID": sessions[sessionId].fid,
-                            "plattformID": 1
+                url: apiUrl,
+                json: {
+                    "user": {
+                        "userID": sessions[sessionId].fid,
+                        "plattformID": 1
 
-                        },
-                        "methode": "gibAnModule"
-                    }
-                }, function (error, response, body) {
+                    },
+                    "methode": "gibAnModule"
+                }
+            }, function (error, response, body) {
 
-                    if (!error && response.statusCode === 200) {
-                        
-                        console.log("Juhu keine Fehler");
+                if (!error && response.statusCode === 200) {
 
-                    } else {
+                    console.log("Juhu keine Fehler");
 
-                        console.log("GibANModule funkt nicht BIIIIITCH");
+                } else {
 
-                    }
-                });
-            
+                    console.log("GibANModule funkt nicht BIIIIITCH");
+
+                }
+            });
+
             context.gibModule = true
-            ;
+                    ;
             return resolve(context);
         });
     },
@@ -908,36 +904,35 @@ const actions = {
             return resolve(context);
         });
     },
-    
-    
+
     //meldet den Nutzer für das gewünschter Modul An
     meldeModulAn( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
-            
+
             //erstellt ein Array mit den Modulen bei denen man sich anmelden möchte
             var modul = new Array;
             var i = 0;
-            
+
             console.log("HIER KOMMT ENTITIES MODUL");
             console.log(entities.modul);
-            
-            if(entities.modul == undefined || entities.modul == "undefined") {
+
+            if (entities.modul == undefined || entities.modul == "undefined") {
                 //FALLS der Bot in die Funktion geht ohne ein Modul zu haben
                 context.antwort = "Tut mir leid ohne Modul bei der Anmeldung verstehe ich nichts, versuche es doch einfach nochmal !";
-                
+
                 return resolve(context);
             }
-            
-            while(entities.modul.length > i) {
-               
+
+            while (entities.modul.length > i) {
+
                 //fügt jedes genannte Modul an das Array dran
                 modul.push(entities.modul[i].value);
                 i = i + 1;
-               
+
             }
-            
+
             context.antwort = "Hey ich habe dich erfolgreich für dein/e Modul/e angemeldet <3";
-           
+
             var api = 'https://immense-journey-49192.herokuapp.com/';
             var route = 'messageBot';
 
@@ -953,7 +948,7 @@ const actions = {
                             "plattformID": 1
                         },
                         "methode": "meldeFuerModulAn",
-                        "module": modul                        
+                        "module": modul
                     }
                 }, function (error, response, body) {
 
@@ -1270,7 +1265,7 @@ app.post('/webhook', (req, res) => {
 
                             switch (text) {
 
-                                case '!kazoo':
+                                case '!test':
 
                                     text = 'Gute Wahl! Video kommt sofort ;)'
                                     text = {text};
@@ -1292,7 +1287,7 @@ app.post('/webhook', (req, res) => {
                                                 "url": "https://goo.gl/f4sgPo"
                                             }
                                         }
-                                    }
+                                    };
 
                                     fbMessage(sender, text)
                                             .then(() => null)
@@ -1439,11 +1434,11 @@ app.post('/webhook', (req, res) => {
                                         });
 
                                 break;
-                                
-                        case '!gettingStarted':
-                            text = 'Willkommen beim WHSLernBot. Damit du mit dem lernen anfangen kannst wähle bitte zuerst eine Hochschule.';
-                            text = {text};
-                            fbMessage(sender, text)
+
+                            case '!gettingStarted':
+                                text = 'Willkommen beim WHSLernBot. Damit du mit dem lernen anfangen kannst wähle bitte zuerst eine Hochschule.';
+                                text = {text};
+                                fbMessage(sender, text)
                                         .then(() => null)
                                         .catch((err) => {
                                             console.error(
@@ -1453,7 +1448,126 @@ app.post('/webhook', (req, res) => {
                                                     err.stack || err
                                                     );
                                         });
-                            break;
+
+                                text = {
+                                    "attachment": {
+                                        "type": "template",
+                                        "payload": {
+                                            "template_type": "list",
+                                            "elements": [
+                                                {
+                                                    "title": "Classic T-Shirt Collection",
+                                                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+                                                    "subtitle": "See all our colors",
+                                                    "default_action": {
+                                                        "type": "web_url",
+                                                        "url": "https://peterssendreceiveapp.ngrok.io/shop_collection",
+                                                        "messenger_extensions": true,
+                                                        "webview_height_ratio": "tall",
+                                                        "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                                    },
+                                                    "buttons": [
+                                                        {
+                                                            "title": "View",
+                                                            "type": "web_url",
+                                                            "url": "https://peterssendreceiveapp.ngrok.io/collection",
+                                                            "messenger_extensions": true,
+                                                            "webview_height_ratio": "tall",
+                                                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "title": "Classic White T-Shirt",
+                                                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/white-t-shirt.png",
+                                                    "subtitle": "100% Cotton, 200% Comfortable",
+                                                    "default_action": {
+                                                        "type": "web_url",
+                                                        "url": "https://peterssendreceiveapp.ngrok.io/view?item=100",
+                                                        "messenger_extensions": true,
+                                                        "webview_height_ratio": "tall",
+                                                        "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                                    },
+                                                    "buttons": [
+                                                        {
+                                                            "title": "Shop Now",
+                                                            "type": "web_url",
+                                                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=100",
+                                                            "messenger_extensions": true,
+                                                            "webview_height_ratio": "tall",
+                                                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "title": "Classic Blue T-Shirt",
+                                                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/blue-t-shirt.png",
+                                                    "subtitle": "100% Cotton, 200% Comfortable",
+                                                    "default_action": {
+                                                        "type": "web_url",
+                                                        "url": "https://peterssendreceiveapp.ngrok.io/view?item=101",
+                                                        "messenger_extensions": true,
+                                                        "webview_height_ratio": "tall",
+                                                        "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                                    },
+                                                    "buttons": [
+                                                        {
+                                                            "title": "Shop Now",
+                                                            "type": "web_url",
+                                                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=101",
+                                                            "messenger_extensions": true,
+                                                            "webview_height_ratio": "tall",
+                                                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "title": "Classic Black T-Shirt",
+                                                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/black-t-shirt.png",
+                                                    "subtitle": "100% Cotton, 200% Comfortable",
+                                                    "default_action": {
+                                                        "type": "web_url",
+                                                        "url": "https://peterssendreceiveapp.ngrok.io/view?item=102",
+                                                        "messenger_extensions": true,
+                                                        "webview_height_ratio": "tall",
+                                                        "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                                    },
+                                                    "buttons": [
+                                                        {
+                                                            "title": "Shop Now",
+                                                            "type": "web_url",
+                                                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=102",
+                                                            "messenger_extensions": true,
+                                                            "webview_height_ratio": "tall",
+                                                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "buttons": [
+                                                {
+                                                    "title": "View More",
+                                                    "type": "postback",
+                                                    "payload": "payload"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                };
+                                
+                                fbMessage(sender, text)
+                                        .then(() => null)
+                                        .catch((err) => {
+                                            console.error(
+                                                    'Oops! An error occurred while forwarding the response to',
+                                                    sender,
+                                                    ':',
+                                                    err.stack || err
+                                                    );
+                                        });
+
+
+                                break;
 
                             default:
                                 text = 'YOLO geiles Ausrufezeicheeeeeeeeeeeen!';
