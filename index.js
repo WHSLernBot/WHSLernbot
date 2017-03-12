@@ -349,6 +349,39 @@ const actions = {
 
             if (note && modul) {
                 console.dir("NOTE UND MODUL VORHANDEN");
+                
+                var api = 'https://immense-journey-49192.herokuapp.com/';
+                var route = 'messageBot';
+
+                var apiUrl = api + route;
+
+                request({
+                    url: apiUrl,
+                    json: {
+                        "user": {
+                            "userID": sessions[sessionId].fbid + "",
+                            "plattformID": 1,
+                            "witSession": "12345"
+                        },
+                        "methode": "speichereNote",
+                        "modul": modul,
+                        "userNote": note  
+                    }
+                }, function (error, response, body) {
+
+                    if (!error && response.statusCode === 200) {
+
+
+                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
+                        //gesendet werden
+
+                    } else {
+
+
+                    }
+
+                });
+                
 
                 context.note = note;
                 context.modul = modul;
@@ -385,8 +418,9 @@ const actions = {
                 url: apiUrl,
                 json: {
                     "user": {
-                        "userID": sessions[sessionId].fid,
-                        "plattformID": 1
+                        "userID": sessions[sessionId].fid + "",
+                        "plattformID": 1,
+                        "witSession": "12345"
                     },
                     "methode": "gibSelektoren"
                 }
@@ -558,14 +592,17 @@ const actions = {
                     url: apiUrl,
                     json: {
                         "user": {
-
-                            "userID": sessions[sessionId].fbid,
-                            "plattform": 1
+                            "userID": sessions[sessionId].fbid + "",
+                            "plattform": 1,
+                            "witSession": "12345"
                         },
                         "methode": "gibAufgabe",
                         "modul": modul,
                         "thema": {
-                            "id": thema
+                            "id": -1,
+                            "token": [
+                                thema
+                            ]
                         }
                     }
                 }, function (error, response, body) {
@@ -615,54 +652,7 @@ const actions = {
                 context.modul = modul;
 
                 context.missingThema = true;
-
-                var api = 'https://immense-journey-49192.herokuapp.com/';
-                var route = 'messageBot';
-
-                var apiUrl = api + route;
-
-                request({
-                    url: apiUrl,
-                    json: {
-                        "user": {
-
-                            "userID": sessions[sessionId].fbid,
-                            "plattform": 1
-                        },
-                        "methode": "gibAufgabe",
-                        "modul": context.modul,
-                        "thema": {
-                            "id": context.thema
-                        }
-                    }
-                }, function (error, response, body) {
-
-                    if (!error && response.statusCode === 200) {
-
-                        context.Aufgabe = body.aufgabe.frage;
-                        context.verweis = body.aufgabe.verweis;
-                        context.hinweis = body.aufgabe.hinweis;
-                        context.bewerten = body.aufgabe.bewerten;
-                        context.antwort1 = body.antwort[0];
-
-                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
-                        //gesendet werden
-
-
-
-                    } else {
-
-
-                    }
-
-
-
-                });
-
-
-
-                //Abspeichern der Richtig und Falschen Antwort
-
+                
                 delete context.missingModul;
 
             } else if (thema) {
@@ -680,49 +670,6 @@ const actions = {
 
 
             }
-
-
-//                var api = 'https://immense-journey-49192.herokuapp.com/';
-//                var route = 'messageBot';
-//
-//                var apiUrl = api + route;
-//
-//                request({
-//                    url: apiUrl,
-//                    json: {
-//                        "user": {
-//
-//                            "userID": sessions[sessionId].fbid,
-//                            "plattform": 1
-//
-//                        },
-//                        "methode": "gibAufgabe",
-//                        "modul": context.modul,
-//                        "thema": {
-//                            "id": context.thema,
-//                            "token": context.token
-//                        }
-//                    }
-//                }, function (error, response, body) {
-//
-//                    if (!error && response.statusCode === 200) {
-//
-//                        context.aufgabeText = body.aufgabe.frage;
-//                        context.verweis = body.aufgabe.verweis;
-//                        context.hinweis = body.aufgabe.hinweis;
-//                        context.bewerten = body.aufgabe.bewerten;
-//                        context.antwort1 = body.antwort[0];
-//
-//                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
-//                        //gesendet werden
-//
-//
-//
-//                    } else {
-//
-//                        
-//
-//                    }
 
             return resolve(context);
         });
@@ -745,8 +692,9 @@ const actions = {
                 url: apiUrl,
                 json: {
                     "user": {
-                        "userID": sessions[sessionId].fid,
-                        "plattformID": 1
+                        "userID": sessions[sessionId].fid + "",
+                        "plattformID": 1,
+                        "witSession": "12345"
 
                     },
                     "methode": "gibInfos"
@@ -784,9 +732,9 @@ const actions = {
                 url: apiUrl,
                 json: {
                     "user": {
-                        "userID": sessions[sessionId].fid,
-                        "plattformID": 1
-
+                        "userID": sessions[sessionId].fid + "",
+                        "plattformID": 1,
+                        "witSession": "12345"
                     },
                     "methode": "gibAnModule"
                 }
@@ -826,9 +774,9 @@ const actions = {
                     url: apiUrl,
                     json: {
                         "user": {
-                            "userID": sessions[sessionId].fid,
-                            "plattformID": 1
-
+                            "userID": sessions[sessionId].fid + "",
+                            "plattformID": 1,
+                            "witSession": "12345"
                         },
                         "methode": "setzeName",
                         "username": context.contact
@@ -854,54 +802,7 @@ const actions = {
         });
     },
 
-    //muss weg
-    speichereNote( {context, entities, sessionId}) {
-        return new Promise(function (resolve, reject) {
-            var note = firstEntityValue(entities, "number");
-            var modul = firstEntityValue(entities, "modul");
-
-
-            var api = 'https://immense-journey-49192.herokuapp.com/';
-            var route = 'messageBot';
-
-            var apiUrl = api + route;
-
-            if (modul && note) {
-
-                request({
-                    url: apiUrl,
-                    json: {
-                        "user": {
-                            "userID": sessions[sessionId].fid,
-                            "plattformID": 1
-                        },
-                        "methode": "speichereNote",
-                        "modul": context.modul,
-                        "userNote": context.number
-                    }
-                }, function (error, response, body) {
-
-                    if (!error && response.statusCode === 200) {
-
-
-                        //i.was machen
-
-                    } else {
-
-
-
-                    }
-                });
-
-            }
-
-            context.note = note;
-            context.modul = modul;
-
-            return resolve(context);
-        });
-    },
-
+   
     //meldet den Nutzer für das gewünschter Modul An
     meldeModulAn( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
@@ -941,8 +842,9 @@ const actions = {
                     url: apiUrl,
                     json: {
                         "user": {
-                            "userID": sessions[sessionId].fid,
-                            "plattformID": 1
+                            "userID": sessions[sessionId].fid + "",
+                            "plattformID": 1,
+                            "witSession": "12345"
                         },
                         "methode": "meldeFuerModulAn",
                         "module": modul
@@ -983,8 +885,9 @@ const actions = {
                     url: apiUrl,
                     json: {
                         "user": {
-                            "userID": sessions[sessionId].fid,
-                            "plattformID": 1
+                            "userID": sessions[sessionId].fid + "",
+                            "plattformID": 1,
+                            "witSession": "12345"
                         },
                         "methode": "setzeUni",
                         "uniID": 1
@@ -1009,6 +912,7 @@ const actions = {
         });
     },
 
+    //KANN WIT.AI NICHT
     setzePruefung( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
@@ -1022,60 +926,13 @@ const actions = {
 
             if (time && modul) {
 
-                context.time = time;
-                context.modul = modul;
-
-                delete context.missingModul;
-                delete context.missingTime;
-
-            } else if (context.time && context.modul) {
-
-                delete context.missingModul;
-                delete context.missingTime;
-
-            } else if (modul) {
-                if (context.time) {
-
-                    context.modul = modul;
-
-                    delete context.missingModul;
-
-                } else {
-                    context.missingTime = true;
-                    context.modul = modul;
-
-                    delete context.missingModul;
-                }
-            } else if (time) {
-
-                if (context.modul) {
-
-                    context.time = time;
-
-                    delete context.missingTime;
-
-                } else {
-                    keinModul = true;
-                    context.missingModul = true;
-                    context.time = time;
-
-                    delete context.missingTime;
-                }
-
-            } else {
-                keinModul = true;
-                context.missingModul = true;
-            }
-
-
-            if (time && modul) {
-
                 request({
                     url: apiUrl,
                     json: {
                         "user": {
-                            "userID": sessions[sessionId].fid,
-                            "plattformID": 1
+                            "userID": sessions[sessionId].fid + "",
+                            "plattformID": 1,
+                            "witSession": "12345"
                         },
                         "methode": "setzePruefung",
                         "modul": context.modul,
@@ -1100,6 +957,7 @@ const actions = {
         });
     },
 
+    //KANN WIT.AI NICHT
     gibKlausurInfos( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
@@ -1116,8 +974,9 @@ const actions = {
                     url: apiUrl,
                     json: {
                         "user": {
-                            "userID": sessions[sessionId].fid,
-                            "plattformID": 1
+                            "userID": sessions[sessionId].fid + "",
+                            "plattformID": 1,
+                            "witSession": "12345"
                         },
                         "methode": "gibKlausurInfos",
                         "modul": modul
@@ -1142,6 +1001,7 @@ const actions = {
         });
     },
 
+    //KANN WIT.AI NICHT
     bewerteAufgabe( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
@@ -1158,8 +1018,9 @@ const actions = {
                     url: apiUrl,
                     json: {
                         "user": {
-                            "userID": sessions[sessionId].fid,
-                            "plattformID": 1
+                            "userID": sessions[sessionId].fid "",
+                            "plattformID": 1,
+                            "witSession": "12345"
                         },
                         "methode": "bewerteAufgabe",
                         "likeAufgabe": true, //Hier wird kein Wert erwartet sondern true/false!,
