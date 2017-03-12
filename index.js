@@ -608,13 +608,7 @@ const actions = {
                 }, function (error, response, body) {
 
                     if (!error && response.statusCode === 200) {
-
-                        context.Aufgabe = body.aufgabe.frage;
-                        context.verweis = body.aufgabe.verweis;
-                        context.hinweis = body.aufgabe.hinweis;
-                        context.bewerten = body.aufgabe.bewerten;
-                        context.antwort1 = body.antwort[0];
-
+                       
                         //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
                         //gesendet werden
 
