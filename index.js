@@ -1469,7 +1469,7 @@ app.post('/webhook', (req, res) => {
                                                 },
                                                 {
                                                     "title": "Weitere Unis?",
-                                                    "image_url": "http://i1383.photobucket.com/albums/ah313/Pascal_Bro/1_Music_Logo_zps8rtz7qid.jpg",
+                                                    "image_url": "http://i1383.photobucket.com/albums/ah313/Pascal_Bro/white_and_blue_twitter_zpsdci5lqwj.jpg",
                                                     "subtitle": "Zurzeit ist leider nur die Westfälische Hochschule eingetragen. ",
                                                     "buttons": [
                                                         {
