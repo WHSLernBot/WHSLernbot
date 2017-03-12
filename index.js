@@ -318,10 +318,7 @@ const actions = {
     //speichert die Note
     speicherNote( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
-            console.log("entities")
-            console.log(entities);
-            console.log("CONTEXT")
-            console.log(context);
+
             var note;
 
             //nur modul aufrufen, wird die Funktion nicht aktivieren
@@ -1183,7 +1180,6 @@ const actions = {
                 });
             }
 
-
             return resolve(context);
         });
     }
@@ -1255,11 +1251,10 @@ app.post('/webhook', (req, res) => {
 
 
                     } else if (text && !is_echo) {
-                        console.dir(event);
+
                         // Der Benutzer hat eine Textnachricht gesendet
 
-                        console.dir("Der Aktuelle Context");
-                        console.dir(sessions[sessionId].context);
+
 
                         if (text.charAt(0) === '!') {
 
@@ -1465,13 +1460,13 @@ app.post('/webhook', (req, res) => {
                                         fbMessage(sender, text)
                                                 .then(() => null)
                                                 .catch((err) => {
-                                                console.error(
-                                                    'Oops! An error occurred while forwarding the response to',
-                                                    sender,
-                                                    ':',
-                                                    err.stack || err
-                                                    );
-                                        });
+                                                    console.error(
+                                                            'Oops! An error occurred while forwarding the response to',
+                                                            sender,
+                                                            ':',
+                                                            err.stack || err
+                                                            );
+                                                });
 
                                     } else {
 
@@ -1479,15 +1474,15 @@ app.post('/webhook', (req, res) => {
                                         text = {text};
 
                                         fbMessage(sender, text)
-                                            .then(() => null)
-                                            .catch((err) => {
-                                                 console.error(
-                                                    'Oops! An error occurred while forwarding the response to',
-                                                    sender,
-                                                    ':',
-                                                    err.stack || err
-                                                    );
-                                        });
+                                                .then(() => null)
+                                                .catch((err) => {
+                                                    console.error(
+                                                            'Oops! An error occurred while forwarding the response to',
+                                                            sender,
+                                                            ':',
+                                                            err.stack || err
+                                                            );
+                                                });
 
                                     }
                                 });
@@ -1564,6 +1559,20 @@ app.post('/webhook', (req, res) => {
 
 
                                 break;
+
+                            case '!neueUni':
+                                text = 'Du hast dich schon für eine Option entschieden!';
+                                text = {text};
+                                fbMessage(sender, text)
+                                        .then(() => null)
+                                        .catch((err) => {
+                                            console.error(
+                                                    'Oops! An error occurred while forwarding the response to',
+                                                    sender,
+                                                    ':',
+                                                    err.stack || err
+                                                    );
+                                        });
 
                             default:
                                 text = 'YOLO geiles Ausrufezeicheeeeeeeeeeeen!';
