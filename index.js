@@ -1383,9 +1383,6 @@ app.post('/webhook', (req, res) => {
                                                     err.stack || err
                                                     );
                                         });
-
-
-
                             }
 
                             // Let's forward the message to the Wit.ai Bot Engine
