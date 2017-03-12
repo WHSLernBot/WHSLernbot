@@ -1456,71 +1456,35 @@ app.post('/webhook', (req, res) => {
                                             "template_type": "list",
                                             "elements": [
                                                 {
-                                                    "title": "Classic T-Shirt Collection",
-                                                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
-                                                    "subtitle": "See all our colors",
+                                                    "title": "Westfälische Hochschule Gelsenkirchen",
+                                                    "image_url": "http://i1383.photobucket.com/albums/ah313/Pascal_Bro/westfaelische-hochschule-wh-600x377_zps3accakub.png",
+                                                    "subtitle": "Die Westfälische Hochschule ist eine Fachhochschule in Nordrhein-Westfalen",
                                                     "buttons": [
                                                         {
-                                                            "title": "View",
-                                                            "type": "web_url",
-                                                            "url": "https://peterssendreceiveapp.ngrok.io/collection",
-                                                            "messenger_extensions": true,
-                                                            "webview_height_ratio": "tall",
-                                                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                                            "type": "postback",
+                                                            "title": "WHS auswählen",
+                                                            "payload":"!whs"
                                                         }
                                                     ]
                                                 },
                                                 {
-                                                    "title": "Classic White T-Shirt",
-                                                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/white-t-shirt.png",
-                                                    "subtitle": "100% Cotton, 200% Comfortable",
+                                                    "title": "Weitere Unis?",
+                                                    "image_url": "http://i1383.photobucket.com/albums/ah313/Pascal_Bro/1_Music_Logo_zps8rtz7qid.jpg",
+                                                    "subtitle": "Zurzeit ist leider nur die Westfälische Hochschule eingetragen. ",
                                                     "buttons": [
                                                         {
-                                                            "title": "Shop Now",
-                                                            "type": "web_url",
-                                                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=100",
-                                                            "messenger_extensions": true,
-                                                            "webview_height_ratio": "tall",
-                                                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "title": "Classic Blue T-Shirt",
-                                                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/blue-t-shirt.png",
-                                                    "subtitle": "100% Cotton, 200% Comfortable",
-                                                    "buttons": [
-                                                        {
-                                                            "title": "Shop Now",
-                                                            "type": "web_url",
-                                                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=101",
-                                                            "messenger_extensions": true,
-                                                            "webview_height_ratio": "tall",
-                                                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "title": "Classic Black T-Shirt",
-                                                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/black-t-shirt.png",
-                                                    "subtitle": "100% Cotton, 200% Comfortable",
-                                                    "buttons": [
-                                                        {
-                                                            "title": "Shop Now",
-                                                            "type": "web_url",
-                                                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=102",
-                                                            "messenger_extensions": true,
-                                                            "webview_height_ratio": "tall",
-                                                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                                            "type": "postback",
+                                                            "title": "Hinzufügen",
+                                                            "payload":"!neueUni" 
                                                         }
                                                     ]
                                                 }
                                             ],
                                             "buttons": [
                                                 {
-                                                    "title": "View More",
+                                                    "title": "Close",
                                                     "type": "postback",
-                                                    "payload": "payload"
+                                                    "payload": "!close"
                                                 }
                                             ]
                                         }
