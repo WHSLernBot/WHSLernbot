@@ -1018,7 +1018,7 @@ const actions = {
                     url: apiUrl,
                     json: {
                         "user": {
-                            "userID": sessions[sessionId].fid "",
+                            "userID": sessions[sessionId].fid + "",
                             "plattformID": 1,
                             "witSession": "12345"
                         },
