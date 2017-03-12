@@ -1435,6 +1435,66 @@ app.post('/webhook', (req, res) => {
 
                                 break;
 
+
+                            case '!whs':
+
+                                var api = 'https://immense-journey-49192.herokuapp.com/';
+                                var route = 'messageBot';
+
+                                var apiUrl = api + route;
+
+
+
+                                request({
+                                    url: apiUrl,
+                                    json: {
+                                        "user": {
+                                            "userID": sender,
+                                            "plattformID": 1
+                                        },
+                                        "methode": "setzeUni",
+                                        "uniID": 1
+                                    }
+                                }, function (error, response, body) {
+
+                                    if (!error && response.statusCode === 200) {
+
+                                        text = 'Okay WHS wurde zu deiner Uni gewählt';
+                                        text = {text};
+
+                                        fbMessage(sender, text)
+                                                .then(() => null)
+                                                .catch((err) => {
+                                                console.error(
+                                                    'Oops! An error occurred while forwarding the response to',
+                                                    sender,
+                                                    ':',
+                                                    err.stack || err
+                                                    );
+                                        });
+
+                                    } else {
+
+                                        text = 'Es ist wohl ein Fehler aufgetreten!';
+                                        text = {text};
+
+                                        fbMessage(sender, text)
+                                            .then(() => null)
+                                            .catch((err) => {
+                                                 console.error(
+                                                    'Oops! An error occurred while forwarding the response to',
+                                                    sender,
+                                                    ':',
+                                                    err.stack || err
+                                                    );
+                                        });
+
+                                    }
+                                });
+
+
+                                break;
+
                             case '!gettingStarted':
                                 text = 'Willkommen beim WHSLernBot. Damit du mit dem lernen anfangen kannst wähle bitte zuerst eine Hochschule.';
                                 text = {text};
@@ -1463,7 +1523,7 @@ app.post('/webhook', (req, res) => {
                                                         {
                                                             "type": "postback",
                                                             "title": "WHS auswählen",
-                                                            "payload":"!whs"
+                                                            "payload": "!whs"
                                                         }
                                                     ]
                                                 },
@@ -1475,7 +1535,7 @@ app.post('/webhook', (req, res) => {
                                                         {
                                                             "type": "postback",
                                                             "title": "Hinzufügen",
-                                                            "payload":"!neueUni" 
+                                                            "payload": "!neueUni"
                                                         }
                                                     ]
                                                 }
@@ -1490,7 +1550,7 @@ app.post('/webhook', (req, res) => {
                                         }
                                     }
                                 };
-                                
+
                                 fbMessage(sender, text)
                                         .then(() => null)
                                         .catch((err) => {
