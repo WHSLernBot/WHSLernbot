@@ -1086,6 +1086,7 @@ app.post('/webhook', (req, res) => {
                 // We retrieve the user's current session, or create one if it doesn't exist
                 // This is needed for our bot to figure out the conversation history
                 const sessionId = findOrCreateSession(sender);
+                
                 if (event.message) {
 
                     // We retrieve the message content
@@ -1104,12 +1105,9 @@ app.post('/webhook', (req, res) => {
                                 .catch(console.error);
 
 
-                    } else if (text && !is_echo) {
+                    } else if (text && !is_echo && !event.postback) {
 
                         // Der Benutzer hat eine Textnachricht gesendet
-
-
-
                         if (text.charAt(0) === '!') {
 
                             switch (text) {
