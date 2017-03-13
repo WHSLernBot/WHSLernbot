@@ -1086,7 +1086,7 @@ app.post('/webhook', (req, res) => {
                 // We retrieve the user's current session, or create one if it doesn't exist
                 // This is needed for our bot to figure out the conversation history
                 const sessionId = findOrCreateSession(sender);
-                
+
                 if (event.message && !event.postback) {
 
                     // We retrieve the message content
@@ -1226,18 +1226,18 @@ app.post('/webhook', (req, res) => {
                                                     );
                                         });
                             } else if (payload === '!ins') {
-                                
-                                console.log("" + sender);
+
+                                console.log(JSON.stringify(sender));
                                 var json = {
-                                        "user": {
-                                            "userID": JSON.stringify(sender),
-                                            "plattformID": 1,
-                                            "witSession": "12345"
-                                        },
-                                        "methode": "setzeModul",
-                                        "modulkuerzel": "INS"
-                                    };
-                                    console.dir(json);
+                                    "user": {
+                                        "userID": "" + sender,
+                                        "plattformID": 1,
+                                        "witSession": "12345"
+                                    },
+                                    "methode": "setzeModul",
+                                    "modulkuerzel": "INS"
+                                };
+                                console.dir(json);
 
                                 request({
                                     url: apiUrl,
@@ -1286,35 +1286,36 @@ app.post('/webhook', (req, res) => {
 
                                     }
                                 });
+                            } else {
+
+                                // Let's forward the message to the Wit.ai Bot Engine
+                                // This will run all actions until our bot has nothing left to do
+                                wit.runActions(
+                                        sessionId, // the user's current session
+                                        text, // the user's message
+                                        sessions[sessionId].context // the user's current session state
+                                        ).then((context) => {
+                                    // Our bot did everything it has to do.
+                                    // Now it's waiting for further messages to proceed.
+                                    console.log('Waiting for next user messages');
+
+                                    // Based on the session state, you might want to reset the session.
+                                    // This depends heavily on the business logic of your bot.
+                                    // Example: 
+                                    // if (context['done']) {
+                                    //   delete sessions[sessionId];
+                                    // }
+
+                                    // Updating the user's current session state
+
+
+                                    sessions[sessionId].context = context;
+
+                                })
+                                        .catch((err) => {
+                                            console.error('Oops! Got an error from Wit: ', err.stack || err);
+                                        });
                             }
-
-                            // Let's forward the message to the Wit.ai Bot Engine
-                            // This will run all actions until our bot has nothing left to do
-                            wit.runActions(
-                                    sessionId, // the user's current session
-                                    text, // the user's message
-                                    sessions[sessionId].context // the user's current session state
-                                    ).then((context) => {
-                                // Our bot did everything it has to do.
-                                // Now it's waiting for further messages to proceed.
-                                console.log('Waiting for next user messages');
-
-                                // Based on the session state, you might want to reset the session.
-                                // This depends heavily on the business logic of your bot.
-                                // Example: 
-                                // if (context['done']) {
-                                //   delete sessions[sessionId];
-                                // }
-
-                                // Updating the user's current session state
-
-
-                                sessions[sessionId].context = context;
-
-                            })
-                                    .catch((err) => {
-                                        console.error('Oops! Got an error from Wit: ', err.stack || err);
-                                    });
                         }
                     }
                 } else if (event.postback) {
@@ -1380,12 +1381,12 @@ app.post('/webhook', (req, res) => {
                                                             ':',
                                                             err.stack || err
                                                             );
-                                        });
+                                                });
 
-                                        
+
 
                                         var text = {
-                                            "text":"Mit welchem Modul möchtest du beginnen?",
+                                            "text": "Mit welchem Modul möchtest du beginnen?",
                                             "quick_replies": [
                                                 {
                                                     "content_type": "text",
@@ -1414,7 +1415,7 @@ app.post('/webhook', (req, res) => {
                                                             ':',
                                                             err.stack || err
                                                             );
-                                        });
+                                                });
 
                                     } else {
 
