@@ -1234,8 +1234,8 @@ app.post('/webhook', (req, res) => {
                                         "plattformID": 1,
                                         "witSession": "12345"
                                     },
-                                    "methode": "setzeModul",
-                                    "modulkuerzel": "INS"
+                                    "methode": "meldeFuerModulAn",
+                                    "module": ["INS"]
                                 };
                                 console.dir(json);
 
@@ -1247,8 +1247,8 @@ app.post('/webhook', (req, res) => {
                                             "plattformID": 1,
                                             "witSession": "12345"
                                         },
-                                        "methode": "setzeModul",
-                                        "modulkuerzel": "INS"
+                                        "methode": "meldeFuerModulAn",
+                                        "module": ["INS"]
                                     }
                                 }, function (error, response, body) {
 
