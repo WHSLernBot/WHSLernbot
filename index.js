@@ -1228,6 +1228,7 @@ app.post('/webhook', (req, res) => {
                             } else if (payload === '!ins') {
 
                                 console.log(JSON.stringify(sender));
+                                
                                 var json = {
                                     "user": {
                                         "userID": "" + sender,
@@ -1237,13 +1238,14 @@ app.post('/webhook', (req, res) => {
                                     "methode": "meldeFuerModulAn",
                                     "module": ["INS"]
                                 };
+                                
                                 console.dir(json);
 
                                 request({
                                     url: apiUrl,
                                     json: {
                                         "user": {
-                                            "userID": "\"" + sender + "\"",
+                                            "userID":  "" + sender,
                                             "plattformID": 1,
                                             "witSession": "12345"
                                         },
