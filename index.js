@@ -1226,6 +1226,11 @@ app.post('/webhook', (req, res) => {
                                                     );
                                         });
                             } else if (payload === '!ins') {
+                                
+                                var api = 'https://immense-journey-49192.herokuapp.com/';
+                                var route = 'messageBot';
+
+                                var apiUrl = api + route;
 
                                 console.log(JSON.stringify(sender));
                                 
