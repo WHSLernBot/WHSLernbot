@@ -1244,6 +1244,7 @@ app.post('/webhook', (req, res) => {
                                     if (!error && response.statusCode === 200) {
                                         console.log("Hier kommt der Body von !ins")
                                         console.dir(body);
+                                        console.dir(response.body);
                                         
                                         text = 'Okay INS wurde als Modul gespeichert! Frag mich doch direkt mal nach einer Aufgabe! :)';
                                         text = {text};
@@ -1362,6 +1363,7 @@ app.post('/webhook', (req, res) => {
                                     if (!error && response.statusCode === 200) {
                                         console.log("Hier kommt der Body von !whs")
                                         console.dir(body);
+                                        console.dir(response.body);
 
                                         text = 'Okay die WHS Gelsenkirchen ist jetzt registriert!';
                                         text = {text};
