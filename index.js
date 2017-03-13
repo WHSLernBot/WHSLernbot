@@ -189,7 +189,7 @@ const actions = {
                     url: apiUrl,
                     json: true
                 }, function (error, response, body) {
-
+                    console.log(body);
                     if (!error && response.statusCode === 200) {
 
                         switch (body.weather[0].main) {
@@ -675,7 +675,6 @@ const actions = {
     gibInfos( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
-            console.log("JAAA ICH BIN DRIN IN GIBINFOS !!!!!!");
 
             var api = 'https://immense-journey-49192.herokuapp.com/';
             var route = 'messageBot';
@@ -697,11 +696,9 @@ const actions = {
 
                 if (!error && response.statusCode === 200) {
 
-                    console.log("Juhu keine Fehler");
 
                 } else {
 
-                    console.log("GIBINFO hat nicht geklappt !");
 
                 }
             });
@@ -715,7 +712,6 @@ const actions = {
     gibMeineModule( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
-            console.log("In gibMeineModule Funktion");
 
             var api = 'https://immense-journey-49192.herokuapp.com/';
             var route = 'messageBot';
@@ -1232,20 +1228,6 @@ app.post('/webhook', (req, res) => {
 
                                 var apiUrl = api + route;
 
-                                console.log(JSON.stringify(sender));
-                                
-                                var json = {
-                                    "user": {
-                                        "userID": "" + sender,
-                                        "plattformID": 1,
-                                        "witSession": "12345"
-                                    },
-                                    "methode": "meldeFuerModulAn",
-                                    "module": ["INS"]
-                                };
-                                
-                                console.dir(json);
-
                                 request({
                                     url: apiUrl,
                                     json: {
@@ -1258,8 +1240,10 @@ app.post('/webhook', (req, res) => {
                                         "module": ["INS"]
                                     }
                                 }, function (error, response, body) {
-
+                                    
                                     if (!error && response.statusCode === 200) {
+                                        console.log("Hier kommt der Body von !ins")
+                                        console.dir(body);
                                         
                                         text = 'Okay INS wurde als Modul gespeichert! Frag mich doch direkt mal nach einer Aufgabe! :)';
                                         text = {text};
@@ -1376,8 +1360,8 @@ app.post('/webhook', (req, res) => {
                                 }, function (error, response, body) {
 
                                     if (!error && response.statusCode === 200) {
-                                        
-                                        console.dir(response);
+                                        console.log("Hier kommt der Body von !whs")
+                                        console.dir(body);
 
                                         text = 'Okay die WHS Gelsenkirchen ist jetzt registriert!';
                                         text = {text};
