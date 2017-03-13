@@ -1379,7 +1379,7 @@ app.post('/webhook', (req, res) => {
 
 
 
-                                        var text = {
+                                        var frage = {
                                             "text": "Mit welchem Modul möchtest du beginnen?",
                                             "quick_replies": [
                                                 {
@@ -1400,7 +1400,7 @@ app.post('/webhook', (req, res) => {
                                             ]
                                         };
 
-                                        fbMessage(sender, text)
+                                        fbMessage(sender, frage)
                                                 .then(() => null)
                                                 .catch((err) => {
                                                     console.error(
