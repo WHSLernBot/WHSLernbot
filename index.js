@@ -1087,7 +1087,7 @@ app.post('/webhook', (req, res) => {
                 // This is needed for our bot to figure out the conversation history
                 const sessionId = findOrCreateSession(sender);
                 
-                if (event.message) {
+                if (event.message && !event.postback) {
 
                     // We retrieve the message content
                     var {text, attachments, quick_reply, is_echo} = event.message;
@@ -1105,7 +1105,7 @@ app.post('/webhook', (req, res) => {
                                 .catch(console.error);
 
 
-                    } else if (text && !is_echo && !event.postback) {
+                    } else if (text && !is_echo) {
 
                         // Der Benutzer hat eine Textnachricht gesendet
                         if (text.charAt(0) === '!') {
