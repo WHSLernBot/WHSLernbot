@@ -1245,7 +1245,7 @@ app.post('/webhook', (req, res) => {
                                     url: apiUrl,
                                     json: {
                                         "user": {
-                                            "userID":  "" + sender,
+                                            "userID": sender + "",
                                             "plattformID": 1,
                                             "witSession": "12345"
                                         },
@@ -1255,7 +1255,7 @@ app.post('/webhook', (req, res) => {
                                 }, function (error, response, body) {
 
                                     if (!error && response.statusCode === 200) {
-
+                                        
                                         text = 'Okay INS wurde als Modul gespeichert! Frag mich doch direkt mal nach einer Aufgabe! :)';
                                         text = {text};
 
@@ -1271,7 +1271,8 @@ app.post('/webhook', (req, res) => {
                                                 });
 
                                     } else {
-
+                                        console.dir(error);
+                                        console.dir(response);
                                         text = 'Es ist wohl ein Fehler aufgetreten!';
                                         text = {text};
 
@@ -1370,6 +1371,8 @@ app.post('/webhook', (req, res) => {
                                 }, function (error, response, body) {
 
                                     if (!error && response.statusCode === 200) {
+                                        
+                                        console.dir(response);
 
                                         text = 'Okay die WHS Gelsenkirchen ist jetzt registriert!';
                                         text = {text};
