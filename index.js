@@ -1309,7 +1309,7 @@ app.post('/webhook', (req, res) => {
 
                                     if (!error && response.statusCode === 200) {
 
-                                        text = 'Okay WHS wurde zu deiner Uni gewählt';
+                                        text = 'Okay die WHS Gelsenkirchen ist als deine FH registriert!';
                                         text = {text};
 
                                         fbMessage(sender, text)
