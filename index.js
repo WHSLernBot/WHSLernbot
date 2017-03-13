@@ -1374,12 +1374,12 @@ app.post('/webhook', (req, res) => {
                                                             ':',
                                                             err.stack || err
                                                             );
-                                                });
+                                        });
 
 
 
-                                        text = {
-                                            "text": "Mit welchem Modul möchtest du beginnen?",
+                                        var frage = {
+                                            "text":"Mit welchem Modul möchtest du beginnen?",
                                             "quick_replies": [
                                                 {
                                                     "content_type": "text",
@@ -1399,7 +1399,7 @@ app.post('/webhook', (req, res) => {
                                             ]
                                         };
 
-                                        fbMessage(sender, text)
+                                        fbMessage(sender, frage)
                                                 .then(() => null)
                                                 .catch((err) => {
                                                     console.error(
@@ -1408,7 +1408,7 @@ app.post('/webhook', (req, res) => {
                                                             ':',
                                                             err.stack || err
                                                             );
-                                                });
+                                        });
 
                                     } else {
 
@@ -1428,9 +1428,6 @@ app.post('/webhook', (req, res) => {
 
                                     }
                                 });
-
-
-
 
                                 break;
 
