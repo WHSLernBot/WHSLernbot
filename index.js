@@ -1357,7 +1357,7 @@ app.post('/webhook', (req, res) => {
 
                                     if (!error && response.statusCode === 200) {
 
-                                        text = 'Okay die WHS Gelsenkirchen ist jetzt, als deine FH, registriert!';
+                                        text = 'Okay die WHS Gelsenkirchen ist jetzt registriert!';
                                         text = {text};
 
                                         fbMessage(sender, text)
@@ -1371,9 +1371,9 @@ app.post('/webhook', (req, res) => {
                                                             );
                                         });
 
+                                        
 
-
-                                        var frage = {
+                                        var text = {
                                             "text":"Mit welchem Modul möchtest du beginnen?",
                                             "quick_replies": [
                                                 {
@@ -1394,7 +1394,7 @@ app.post('/webhook', (req, res) => {
                                             ]
                                         };
 
-                                        fbMessage(sender, frage)
+                                        fbMessage(sender, text)
                                                 .then(() => null)
                                                 .catch((err) => {
                                                     console.error(
