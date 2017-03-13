@@ -349,7 +349,7 @@ const actions = {
 
             if (note && modul) {
                 console.dir("NOTE UND MODUL VORHANDEN");
-                
+
                 var api = 'https://immense-journey-49192.herokuapp.com/';
                 var route = 'messageBot';
 
@@ -365,7 +365,7 @@ const actions = {
                         },
                         "methode": "speichereNote",
                         "modul": modul,
-                        "userNote": note  
+                        "userNote": note
                     }
                 }, function (error, response, body) {
 
@@ -381,7 +381,7 @@ const actions = {
                     }
 
                 });
-                
+
 
                 context.note = note;
                 context.modul = modul;
@@ -608,7 +608,7 @@ const actions = {
                 }, function (error, response, body) {
 
                     if (!error && response.statusCode === 200) {
-                       
+
                         //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
                         //gesendet werden
 
@@ -646,7 +646,7 @@ const actions = {
                 context.modul = modul;
 
                 context.missingThema = true;
-                
+
                 delete context.missingModul;
 
             } else if (thema) {
@@ -796,7 +796,6 @@ const actions = {
         });
     },
 
-   
     //meldet den Nutzer für das gewünschter Modul An
     meldeModulAn( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
@@ -1268,48 +1267,25 @@ app.post('/webhook', (req, res) => {
 
                         switch (text) {
 
-                            case '!hilfe':
-                                text = 'Dies ist ein Lernbot der WHS Gelsenkirchen, schreib mir Sachen wie "Gib mir eine Aufgabe" oder "Melde mich bei der Prüfung XY am Datum an." Du kannst mich auch nach dem Wetter fragen ;)';
-                                text = {text};
 
-                                fbMessage(sender, text)
-                                        .then(() => null)
-                                        .catch((err) => {
-                                            console.error(
-                                                    'Oops! An error occurred while forwarding the response to',
-                                                    sender,
-                                                    ':',
-                                                    err.stack || err
-                                                    );
-                                        });
-
-                                break;
-
-
-                            case '!whs':
-
-                                var api = 'https://immense-journey-49192.herokuapp.com/';
-                                var route = 'messageBot';
-
-                                var apiUrl = api + route;
-
-
-
+                            case '!ins':
+                                
                                 request({
                                     url: apiUrl,
                                     json: {
                                         "user": {
-                                            "userID": sender,
-                                            "plattformID": 1
+                                            "userID": sender + "",
+                                            "plattformID": 1,
+                                            "witSession": "12345"
                                         },
-                                        "methode": "setzeUni",
-                                        "uniID": 1
+                                        "methode": "setzeModul",
+                                        "modulkuerzel": "INS"
                                     }
                                 }, function (error, response, body) {
 
                                     if (!error && response.statusCode === 200) {
 
-                                        text = 'Okay die WHS Gelsenkirchen ist als deine FH registriert!';
+                                        text = 'Okay INS wurde als Modul gespeichert! Frag mich doch direkt mal nach einer Aufgabe! :)';
                                         text = {text};
 
                                         fbMessage(sender, text)
@@ -1341,6 +1317,119 @@ app.post('/webhook', (req, res) => {
 
                                     }
                                 });
+                                
+                                break;
+
+                            case '!hilfe':
+                                text = 'Dies ist ein Lernbot der WHS Gelsenkirchen, schreib mir Sachen wie "Gib mir eine Aufgabe" oder "Melde mich bei der Prüfung XY am Datum an." Du kannst mich auch nach dem Wetter fragen ;)';
+                                text = {text};
+
+                                fbMessage(sender, text)
+                                        .then(() => null)
+                                        .catch((err) => {
+                                            console.error(
+                                                    'Oops! An error occurred while forwarding the response to',
+                                                    sender,
+                                                    ':',
+                                                    err.stack || err
+                                                    );
+                                        });
+
+                                break;
+
+
+                            case '!whs':
+
+                                var api = 'https://immense-journey-49192.herokuapp.com/';
+                                var route = 'messageBot';
+
+                                var apiUrl = api + route;
+
+
+
+                                request({
+                                    url: apiUrl,
+                                    json: {
+                                        "user": {
+                                            "userID": sender + "",
+                                            "plattformID": 1,
+                                            "witSession": "12345"
+                                        },
+                                        "methode": "setzeUni",
+                                        "uniID": 1
+                                    }
+                                }, function (error, response, body) {
+
+                                    if (!error && response.statusCode === 200) {
+
+                                        text = 'Okay die WHS Gelsenkirchen ist als deine FH registriert!';
+                                        text = {text};
+
+                                        fbMessage(sender, text)
+                                                .then(() => null)
+                                                .catch((err) => {
+                                                    console.error(
+                                                            'Oops! An error occurred while forwarding the response to',
+                                                            sender,
+                                                            ':',
+                                                            err.stack || err
+                                                            );
+                                                });
+
+
+
+                                        text = {
+                                            "text": "Mit welchem Modul möchtest du beginnen?",
+                                            "quick_replies": [
+                                                {
+                                                    "content_type": "text",
+                                                    "title": "INS",
+                                                    "payload": "!ins"
+                                                },
+                                                {
+                                                    "content_type": "text",
+                                                    "title": "Möglichkeit B",
+                                                    "payload": "!gmi"
+                                                },
+                                                {
+                                                    "content_type": "text",
+                                                    "title": "Möglichkeit C",
+                                                    "payload": "!opr"
+                                                }
+                                            ]
+                                        };
+
+                                        fbMessage(sender, text)
+                                                .then(() => null)
+                                                .catch((err) => {
+                                                    console.error(
+                                                            'Oops! An error occurred while forwarding the response to',
+                                                            sender,
+                                                            ':',
+                                                            err.stack || err
+                                                            );
+                                                });
+
+                                    } else {
+
+                                        text = 'Es ist wohl ein Fehler aufgetreten!';
+                                        text = {text};
+
+                                        fbMessage(sender, text)
+                                                .then(() => null)
+                                                .catch((err) => {
+                                                    console.error(
+                                                            'Oops! An error occurred while forwarding the response to',
+                                                            sender,
+                                                            ':',
+                                                            err.stack || err
+                                                            );
+                                                });
+
+                                    }
+                                });
+
+
 
 
                                 break;
