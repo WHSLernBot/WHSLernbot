@@ -1227,10 +1227,10 @@ app.post('/webhook', (req, res) => {
                                         });
                             } else if (payload === '!ins') {
                                 
-                                console.log("\"" + sender + "\"");
+                                console.log("" + sender);
                                 var json = {
                                         "user": {
-                                            "userID": "\"" + sender + "\"",
+                                            "userID": JSON.stringify(sender),
                                             "plattformID": 1,
                                             "witSession": "12345"
                                         },
