@@ -681,7 +681,7 @@ const actions = {
                 } else if (thema === "HTML") {
 
                     
-                            = "Mit welchem Tag kann man in HTML Bereiche markieren?";
+                    context.Aufgabe = "Mit welchem Tag kann man in HTML Bereiche markieren?";
 
                     context.A = "(A) Mit dem Tag <span>";
                     context.B = "(B) Mit dem Tag <pre>";
