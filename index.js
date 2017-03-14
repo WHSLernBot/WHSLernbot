@@ -270,9 +270,9 @@ const actions = {
                 "text": "Dieses Thema ist mir noch nicht bekannt :( !" 
             };
             
-            if(context.thema === "Html") {
+            if(context.thema === "HTML") {
                 
-                var frage = {
+                frage = {
                 "text": "Welche Antwort meinst du ist richtig?",
                 "quick_replies": [
                     {
@@ -295,7 +295,7 @@ const actions = {
                 
             } else if(context.thema === "XML"){
                 
-                var frage = {
+                frage = {
                 "text": "Welche Antwort meinst du ist richtig?",
                 "quick_replies": [
                     {
