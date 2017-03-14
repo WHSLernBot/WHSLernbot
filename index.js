@@ -1321,7 +1321,7 @@ app.post('/webhook', (req, res) => {
                         switch (text) {
 
                             case '!hilfe':
-                                text = 'Dies ist ein Lernbot der WHS Gelsenkirchen, du solltest dich erstmal für ein oder mehrere Module anmelden indem du etwa sowas wie "Dieses Semester mache ich OPR" schreibst. Danach kannst du nach Aufgaben für dieses Modul fragen z.B. mit "Gib mir eine Aufgabe". Du kannst mich auch nach dem Wetter fragen ;)';
+                                text = 'Dies ist ein Lernbot der WHS Gelsenkirchen, du solltest dich erstmal für ein oder mehrere Module anmelden indem du sowas wie "Dieses Semester mache ich OPR" schreibst. Danach kannst du nach Aufgaben für dieses Modul fragen z.B. mit "Gib mir eine Aufgabe". Du kannst mich auch nach dem Wetter fragen ;)';
                                 text = {text};
 
                                 fbMessage(sender, text)
