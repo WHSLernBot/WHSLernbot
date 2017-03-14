@@ -264,8 +264,13 @@ const actions = {
     //Erstellt die Quickreplies für die Fragen
     replies( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
+            
             var sender = sessions[sessionId].fbid;
-            if(context.thema === "HTML") {
+            var frage = {
+                "text": "Dieses Thema ist mir noch nicht bekannt :( !" 
+            };
+            
+            if(context.thema === "Html") {
                 
                 var frage = {
                 "text": "Welche Antwort meinst du ist richtig?",
