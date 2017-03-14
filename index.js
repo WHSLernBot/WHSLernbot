@@ -267,7 +267,7 @@ const actions = {
             
             var sender = sessions[sessionId].fbid;
             var frage = {
-                "text": "Dieses Thema ist mir noch nicht bekannt :( !" 
+                "text": "Für dieses Thema habe ich leider noch keine Aufgabe :( !" 
             };
             
             if(context.thema === "HTML") {
@@ -342,6 +342,7 @@ const actions = {
     loesche( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
             console.dir("Bin in loesche");
+            
             delete context.Aufgabe;
             delete context.A;
             delete context.B;
