@@ -341,8 +341,8 @@ const actions = {
     //löscht die Contexte aus gibAufgabe
     loesche( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
-
-            delete sessions[sessionId];
+            console.dir("Bin in loesche");
+            delete sessions[sessionId].context;
 
             return resolve(context);
         });
