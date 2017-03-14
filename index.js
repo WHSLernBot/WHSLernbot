@@ -265,8 +265,9 @@ const actions = {
     replies( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
             var sender = sessions[sessionId].fbid;
-
-            var frage = {
+            if(context.thema === "HTML") {
+                
+                var frage = {
                 "text": "Welche Antwort meinst du ist richtig?",
                 "quick_replies": [
                     {
@@ -286,6 +287,33 @@ const actions = {
                     }
                 ]
             };
+                
+            } else if(context.thema === "XML"){
+                
+                var frage = {
+                "text": "Welche Antwort meinst du ist richtig?",
+                "quick_replies": [
+                    {
+                        "content_type": "text",
+                        "title": "A",
+                        "payload": "falsch"
+                    },
+                    {
+                        "content_type": "text",
+                        "title": "B",
+                        "payload": "richtig"
+                    },
+                    {
+                        "content_type": "text",
+                        "title": "C",
+                        "payload": "falsch"
+                    }
+                ]
+            };
+                
+                
+            }
+            
 
 
             fbMessage(sender, frage)
@@ -583,54 +611,68 @@ const actions = {
                 console.dir(modul);
 
 
-                var api = 'https://immense-journey-49192.herokuapp.com/';
-                var route = 'messageBot';
-
-                var apiUrl = api + route;
-
-                request({
-                    url: apiUrl,
-                    json: {
-                        "user": {
-                            "userID": sessions[sessionId].fbid + "",
-                            "plattform": 1,
-                            "witSession": "12345"
-                        },
-                        "methode": "gibAufgabe",
-                        "modul": modul,
-                        "thema": {
-                            "id": -1,
-                            "token": [
-                                thema
-                            ]
-                        }
-                    }
-                }, function (error, response, body) {
-
-                    if (!error && response.statusCode === 200) {
-
-                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
-                        //gesendet werden
-
-                    } else {
-
-
-                    }
-
-                });
+//                var api = 'https://immense-journey-49192.herokuapp.com/';
+//                var route = 'messageBot';
+//
+//                var apiUrl = api + route;
+//
+//                request({
+//                    url: apiUrl,
+//                    json: {
+//                        "user": {
+//                            "userID": sessions[sessionId].fbid + "",
+//                            "plattform": 1,
+//                            "witSession": "12345"
+//                        },
+//                        "methode": "gibAufgabe",
+//                        "modul": modul,
+//                        "thema": {
+//                            "id": -1,
+//                            "token": [
+//                                thema
+//                            ]
+//                        }
+//                    }
+//                }, function (error, response, body) {
+//
+//                    if (!error && response.statusCode === 200) {
+//
+//                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
+//                        //gesendet werden
+//
+//                    } else {
+//
+//
+//                    }
+//
+//                });
 
 
                 //Aufrufen gibAufgabe der Datenbank
+                if (thema === "XML") {
+                    
+                    context.Aufgabe = "Wofür steht die Abkürzung XML?";
 
-                context.Aufgabe = "Hier ist deine " + modul + " Aufgabe mit dem Thema " + thema + "!";
+                    context.A = "(A) Extreme Mega Language";
+                    context.B = "(B) Extensible Markup Language";
+                    context.C = "(C) Extensible Machine Language";
 
-                context.A = "Aussage A";
-                context.B = "Aussage B";
-                context.C = "Aussage C";
 
+
+                } else if (thema === "HTML") {
+
+                    context.Aufgabe = "Mit welchem Tag kann man in HTML Bereiche markieren?";
+
+                    context.A = "(A) Mit dem Tag <span>";
+                    context.B = "(B) Mit dem Tag <pre>";
+                    context.C = "(C) Mit dem Tag <figure>";
+
+                    
+
+
+                }
                 context.modul = modul;
                 context.thema = thema;
-
                 //Abspeichern der Richtig und Falschen Antwort
                 delete context.missingModul;
                 delete context.missingThema;
@@ -1222,7 +1264,7 @@ app.post('/webhook', (req, res) => {
                                                     );
                                         });
                             } else if (payload === '!ins') {
-                                
+
                                 var api = 'https://immense-journey-49192.herokuapp.com/';
                                 var route = 'messageBot';
 
@@ -1240,12 +1282,12 @@ app.post('/webhook', (req, res) => {
                                         "module": ["INS"]
                                     }
                                 }, function (error, response, body) {
-                                    
+
                                     if (!error && response.statusCode === 200) {
                                         console.log("Hier kommt der Body von !ins")
                                         console.dir(body);
                                         console.dir(response.body);
-                                        
+
                                         text = 'Okay INS wurde als Modul gespeichert! Frag mich doch direkt mal nach einer Aufgabe! :)';
                                         text = {text};
 
