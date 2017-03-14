@@ -342,7 +342,21 @@ const actions = {
     loesche( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
             console.dir("Bin in loesche");
-            delete sessions[sessionId].context;
+            delete context.Aufgabe;
+            delete context.A;
+            delete context.B;
+            delete context.C;
+            delete context.modul;
+            delete context.thema;
+            delete context.missingModul;
+            delete context.missingThema;
+            
+            delete context.location;
+            delete context.missingLocation;
+            delete context.wrongLocation;
+            delete context.forecast;
+            
+            delete context.note;
 
             return resolve(context);
         });
@@ -666,7 +680,8 @@ const actions = {
 
                 } else if (thema === "HTML") {
 
-                    context.Aufgabe = "Mit welchem Tag kann man in HTML Bereiche markieren?";
+                    
+                            = "Mit welchem Tag kann man in HTML Bereiche markieren?";
 
                     context.A = "(A) Mit dem Tag <span>";
                     context.B = "(B) Mit dem Tag <pre>";
