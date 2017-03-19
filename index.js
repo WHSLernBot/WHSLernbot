@@ -28,7 +28,15 @@ let log = null;
 
 //Erstellen der Notwendigen Objekte aus Bibliotheken von Node.js
 try {
-   
+
+    Wit = require('../').Wit;
+    log = require('../').log;
+} catch (e) {
+    Wit = require('node-wit').Wit;
+    log = require('node-wit').log;
+}
+try {
+
     Wit = require('../').Wit;
     log = require('../').log;
 } catch (e) {
@@ -159,21 +167,12 @@ const actions = {
 
     send( {sessionId}, {text}) {
 
-        // Our bot has something to say!
-        // Let's retrieve the Facebook user whose session belongs to
+        //Festlegen des Empfängers
         const recipientId = sessions[sessionId].fbid;
 
         if (recipientId) {
 
-
-            //Noch stark zu bearbeiten!!    
-
             text = {text};
-
-            // Yay, we found our recipient!
-            // Let's forward our bot response to her.
-            // We return a promise to let our bot know when we're done sending
-
 
             return fbMessage(recipientId, text)
                     .then(() => null)
@@ -615,41 +614,46 @@ const actions = {
             if (modul && thema) {
                 //es ist ein modul und thema gegeben
 
-//                var api = 'https://immense-journey-49192.herokuapp.com/';
-//                var route = 'messageBot';
-//
-//                var apiUrl = api + route;
-//
-//                request({
-//                    url: apiUrl,
-//                    json: {
-//                        "user": {
-//                            "userID": sessions[sessionId].fbid + "",
-//                            "plattform": 1,
-//                            "witSession": "12345"
-//                        },
-//                        "methode": "gibAufgabe",
-//                        "modul": modul,
-//                        "thema": {
-//                            "id": -1,
-//                            "token": [
-//                                thema
-//                            ]
-//                        }
-//                    }
-//                }, function (error, response, body) {
-//
-//                    if (!error && response.statusCode === 200) {
-//
-//                        //Hier noch Antwort einfügen!! Frage und Antwort muss getrennt
-//                        //gesendet werden
-//
-//                    } else {
-//
-//
-//                    }
-//
-//                });
+                var api = 'https://immense-journey-49192.herokuapp.com/';
+                var route = 'messageBot';
+
+                var apiUrl = api + route;
+
+                request({
+                    url: apiUrl,
+                    json: {
+                        "user": {
+                            "userID": sessions[sessionId].fbid + "",
+                            "plattform": 1,
+                            "witSession": "12345"
+                        },
+                        "methode": "gibAufgabe",
+                        "modul": modul,
+                        "thema": {
+                            "id": -1,
+                            "token": [
+                                thema
+                            ]
+                        }
+                    }
+                }, function (error, response, body) {
+
+                    if (!error && response.statusCode === 200) {
+
+                        contex.Aufgabe = body.aufgabe;
+                        context.A = body.antwort[0];
+                        context.B = body.antwort[1];
+                        context.C = body.antwort[2];
+                        context.verweis = body.verweis;
+                        context.hinweis = body.hinweis;
+
+                    } else {
+
+                        context.error = "Ich konnte dir leider keine Aufgabe schicken, da ein Fehler in der Datenbank vorliegt";
+
+                    }
+
+                });
 
 
 
@@ -659,27 +663,6 @@ const actions = {
                 delete context.missingModul;
                 delete context.missingThema;
 
-
-            } else if (modul) {
-
-                //es ist ein modul und thema gegeben
-
-                //Aufrufen gibAufgabe der Datenbank
-
-                context.modul = modul;
-
-                context.missingThema = true;
-
-                delete context.missingModul;
-
-            } else if (thema) {
-
-                context.thema = thema;
-
-                //wenn modul fehlt
-                context.missingModul = true;
-
-                delete context.missingThema;
 
             } else {
                 context.missingModul = true;
@@ -1282,9 +1265,9 @@ app.post('/webhook', (req, res) => {
                             }
                         }
                     }
-                //Spezielles Event, welches kein Nachrichten Objekt des User ist.
-                //Postbacks sind Nachrichten, welche in Facebook hinterlegt werden können,
-                //welche ausgelöst werden, sollte der User etwas bestimmte drücken, wie z.B.: Buttons, Templates. 
+                    //Spezielles Event, welches kein Nachrichten Objekt des User ist.
+                    //Postbacks sind Nachrichten, welche in Facebook hinterlegt werden können,
+                    //welche ausgelöst werden, sollte der User etwas bestimmte drücken, wie z.B.: Buttons, Templates. 
                 } else if (event.postback) {
 
                     const {payload} = event.postback;
@@ -1314,7 +1297,7 @@ app.post('/webhook', (req, res) => {
 
                                 break;
 
-                            // Testfall zum Setzen einer Universität, in diesem Fall WHS.
+                                // Testfall zum Setzen einer Universität, in diesem Fall WHS.
                             case '!whs':
 
                                 var api = 'https://immense-journey-49192.herokuapp.com/';
@@ -1405,8 +1388,8 @@ app.post('/webhook', (req, res) => {
                                 });
 
                                 break;
-                            
-                            //Dieses Event wird ausgelöst, wenn auf Los Gehts/Get Started gedrückt wird.
+
+                                //Dieses Event wird ausgelöst, wenn auf Los Gehts/Get Started gedrückt wird.
                             case '!gettingStarted':
 
                                 text = 'Willkommen beim WHSLernBot. Damit du mit dem lernen anfangen kannst wähle bitte zuerst eine Hochschule.';
@@ -1477,8 +1460,8 @@ app.post('/webhook', (req, res) => {
 
 
                                 break;
-                            
-                            //Testfall für das erneute Auswählen in einem Template.
+
+                                //Testfall für das erneute Auswählen in einem Template.
                             case '!neueUni':
                                 text = 'Du hast dich schon für eine Option entschieden!';
                                 text = {text};
@@ -1492,7 +1475,7 @@ app.post('/webhook', (req, res) => {
                                                     err.stack || err
                                                     );
                                         });
-                           //Default Ausgabe wenn ein nicht abgedeckter Fall auftritt.                
+                                //Default Ausgabe wenn ein nicht abgedeckter Fall auftritt.                
                             default:
                                 text = 'Nicht erkanntes Postback event!';
                                 text = {text};
@@ -1529,8 +1512,7 @@ function verifyRequestSignature(req, res, buf) {
     var signature = req.headers["x-hub-signature"];
 
     if (!signature) {
-        // For testing, let's log an error. In production, you should throw an
-        // error.
+        //Hier wird zu Testzwecken nur ein Log erstellt.
         console.error("Couldn't validate the signature.");
     } else {
         var elements = signature.split('=');
