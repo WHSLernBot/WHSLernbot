@@ -1,5 +1,7 @@
 'use strict';
 
+//Schritt anleitung von Facebook/Wit.ai zum aufsetzen eines Bots.
+
 // Messenger API integration example
 // We assume you have:
 // * a Wit.ai bot setup (https://wit.ai/docs/quickstart)
@@ -13,6 +15,8 @@
 // 5. Subscribe your page to the Webhooks using verify_token and `https://<your_ngrok_io>/webhook` as callback URL.
 // 6. Talk to your bot on Messenger!
 
+
+//Laden der Bibliotheken in unser Projekt.
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const express = require('express');
@@ -22,8 +26,9 @@ const http = require('http');
 var Wit = null;
 let log = null;
 
+//Erstellen der Notwendigen Objekte aus Bibliotheken von Node.js
 try {
-    // if running from repo
+   
     Wit = require('../').Wit;
     log = require('../').log;
 } catch (e) {
@@ -36,24 +41,26 @@ try {
 // Webserver parameter
 const PORT = process.env.PORT || 8445;
 
-// Wit.ai parameters
+// Unser Spezieller WIT_TOKEN um uns Zugriff zu WIT.ai zu gewähren.
 const WIT_TOKEN = process.env.WIT_TOKEN;
 
-// Messenger API parameters
+//PB_PAGE_TOKEN dient zur Zuweisung der APP
 const FB_PAGE_TOKEN = process.env.FB_PAGE_TOKEN;
 if (!FB_PAGE_TOKEN) {
     throw new Error('missing FB_PAGE_TOKEN');
 }
+
+//FB_APP_SECRET zur bestätifung unserer APP, kann als Passwort gesehen werden.
 const FB_APP_SECRET = process.env.FB_APP_SECRET;
 if (!FB_APP_SECRET) {
     throw new Error('missing FB_APP_SECRET');
 }
 
 
-//Diesen Token kann man auch noch generieren lassen
+//Unser FB_VERIFY_TOKEN, welcher bestätigt das dieser Node.js zu unserer APP gehört.
 const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 if (!FB_VERIFY_TOKEN) {
-    throw new Error('missing FB_APP_SECRET');
+    throw new Error('missing FB_VERIFY_SECRET');
 }
 
 // ----------------------------------------------------------------------------
@@ -62,6 +69,10 @@ if (!FB_VERIFY_TOKEN) {
 // See the Send API reference
 // https://developers.facebook.com/docs/messenger-platform/send-api-reference
 
+
+//Mit dieser Methode können Nachrichten an Facebook gesendet werden
+//@id Die Facebook ID eines Nutzers
+//@text Die Nachricht, welche an den Nutzer gesendet werden soll.
 const fbMessage = (id, text) => {
     const body = JSON.stringify({
         recipient: {id},
@@ -86,33 +97,36 @@ const fbMessage = (id, text) => {
 };
 
 // ----------------------------------------------------------------------------
-// Wit.ai bot specific code
+// Wit.ai bot spezifischer Code
 
-// This will contain all user sessions.
-// Each session has an entry:
+// Hier werden alle Userinformationen in Sessions gespeichert
+// Jede Session hat einen Eintrag
 // sessionId -> {fbid: facebookUserId, context: sessionState}
-
 const sessions = {};
 
+//Erstellt oder sucht eine Session für einen User, falls dieser schon eine hat,
+// oder eben nicht!
 const findOrCreateSession = (fbid) => {
     let sessionId;
 
-    // Let's see if we already have a session for the user fbid
+    // Prüfen ob zu dem gegebenen User schon eine Session existiert
     Object.keys(sessions).forEach(k => {
         if (sessions[k].fbid === fbid) {
-            // Yep, got it!
+            //Falls eine Session gefunden wurde
             sessionId = k;
         }
     });
     if (!sessionId) {
-        // No session found for user fbid, let's create a new one
+        // Erstellen einer neuen Session
         sessionId = new Date().toISOString();
         sessions[sessionId] = {fbid: fbid, context: {}};
     }
     return sessionId;
 };
 
-
+//Hilfsmethode zum auslesen der von Wit.ai übergebenen Informationen zum Gespräch.
+//@entities JsonObject mit allen Einträgen.
+//@entity Name der gesuchten Entity.
 const firstEntityValue = (entities, entity) => {
     const val = entities && entities[entity] &&
             Array.isArray(entities[entity]) &&
@@ -126,7 +140,21 @@ const firstEntityValue = (entities, entity) => {
 };
 
 
-// Innerhalb von actions müssen unsere Funktionen reingepackt werden
+// Innerhalb dieser Variable werden alle Funktionen des Wit.ai Bots erstellt.
+// Liste aller Funktionen :
+// send
+// getForecast
+// replies
+// loesche
+// speichereNote
+// gibSelektoren
+// gibAufgabe
+// gibInfos
+// gibMeineModule
+// setzeName
+// meldeModulAn
+// setzeUni
+//
 const actions = {
 
     send( {sessionId}, {text}) {
@@ -264,61 +292,61 @@ const actions = {
     //Erstellt die Quickreplies für die Fragen
     replies( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
-            
+
             var sender = sessions[sessionId].fbid;
             var frage = {
-                "text": "Für dieses Thema habe ich leider noch keine Aufgabe :( !" 
+                "text": "Für dieses Thema habe ich leider noch keine Aufgabe :( !"
             };
-            
-            if(context.thema === "HTML") {
-                
+
+            if (context.thema === "HTML") {
+
                 frage = {
-                "text": "Welche Antwort meinst du ist richtig?",
-                "quick_replies": [
-                    {
-                        "content_type": "text",
-                        "title": "A",
-                        "payload": "richtig"
-                    },
-                    {
-                        "content_type": "text",
-                        "title": "B",
-                        "payload": "falsch"
-                    },
-                    {
-                        "content_type": "text",
-                        "title": "C",
-                        "payload": "falsch"
-                    }
-                ]
-            };
-                
-            } else if(context.thema === "XML"){
-                
+                    "text": "Welche Antwort meinst du ist richtig?",
+                    "quick_replies": [
+                        {
+                            "content_type": "text",
+                            "title": "A",
+                            "payload": "richtig"
+                        },
+                        {
+                            "content_type": "text",
+                            "title": "B",
+                            "payload": "falsch"
+                        },
+                        {
+                            "content_type": "text",
+                            "title": "C",
+                            "payload": "falsch"
+                        }
+                    ]
+                };
+
+            } else if (context.thema === "XML") {
+
                 frage = {
-                "text": "Welche Antwort meinst du ist richtig?",
-                "quick_replies": [
-                    {
-                        "content_type": "text",
-                        "title": "A",
-                        "payload": "falsch"
-                    },
-                    {
-                        "content_type": "text",
-                        "title": "B",
-                        "payload": "richtig"
-                    },
-                    {
-                        "content_type": "text",
-                        "title": "C",
-                        "payload": "falsch"
-                    }
-                ]
-            };
-                
-                
+                    "text": "Welche Antwort meinst du ist richtig?",
+                    "quick_replies": [
+                        {
+                            "content_type": "text",
+                            "title": "A",
+                            "payload": "falsch"
+                        },
+                        {
+                            "content_type": "text",
+                            "title": "B",
+                            "payload": "richtig"
+                        },
+                        {
+                            "content_type": "text",
+                            "title": "C",
+                            "payload": "falsch"
+                        }
+                    ]
+                };
+
+
             }
-            
+
 
 
             fbMessage(sender, frage)
@@ -338,11 +366,11 @@ const actions = {
         });
     },
 
-    //löscht die Contexte aus gibAufgabe
+    //Löscht die Contexte aus gibAufgabe
     loesche( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
             console.dir("Bin in loesche");
-            
+
             delete context.Aufgabe;
             delete context.A;
             delete context.B;
@@ -351,19 +379,19 @@ const actions = {
             delete context.thema;
             delete context.missingModul;
             delete context.missingThema;
-            
+
             delete context.location;
             delete context.missingLocation;
             delete context.wrongLocation;
             delete context.forecast;
-            
+
             delete context.note;
 
             return resolve(context);
         });
     },
 
-    //speichert die Note
+    //Speichert die Note zu einem Modul
     speicherNote( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
@@ -559,38 +587,6 @@ const actions = {
         });
     },
 
-    createJson( {context, entities, sessionId}) {
-        return new Promise(function (resolve, reject) {
-
-            var text = {};
-            text["text"] = "Welches Modul meinst du?"
-
-            var quick = [];
-
-            var item = {};
-            item["name"] = "Pascal";
-            item["alter"] = 12;
-
-            quick.push(item);
-
-            var item = {};
-            item["name"] = "Peter";
-            item["alter"] = 115;
-
-            quick.push(item);
-
-            text["quick_replies"] = quick;
-
-            var body = JSON.stringify(text);
-
-            context.done = "Es wurde ein Json erstellt Check logs!";
-
-            return resolve(context);
-
-        });
-
-    },
-
     //Ermittelt eine Aufgabe für den Benutzer.
     gibAufgabe( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
@@ -598,38 +594,26 @@ const actions = {
             var thema;
             var modul;
 
-            //er überschreibt die variable nur wenn Sie auch in der Nachricht vorhanden ist.
-            //sonst ist die variable die alte schonmal genutzte variable im Context
+            // Er überschreibt die Variable nur wenn Sie auch in der Nachricht vorhanden ist.
+            // sonst ist die variable die alte schonmal genutzte variable im Context
             if (firstEntityValue(entities, "thema") !== null) {
                 thema = firstEntityValue(entities, "thema");
-                console.log("thema in der Nachricht ");
-                console.log(thema);
+
             } else {
                 thema = context.thema;
-                console.log("Alter Context wir benutzt");
-                console.log(thema);
             }
 
-            //er überschreibt die variable nur wenn Sie auch in der Nachricht vorhanden ist.
-            //sonst ist die variable die alte schonmal genutzte variable im Context
+            // Er überschreibt die variable nur wenn Sie auch in der Nachricht vorhanden ist.
+            // sonst ist die variable die alte schonmal genutzte variable im Context
             if (firstEntityValue(entities, "modul") !== null) {
                 modul = firstEntityValue(entities, "modul");
-                console.log("modul in der Nachricht ");
-                console.log(modul);
             } else {
                 modul = context.modul;
-                console.log("Alter Context wir benutzt");
-                console.log(modul);
             }
 
-
-
-            //wenn modul und thema drin ist
+            // Wenn modul und thema drin ist
             if (modul && thema) {
                 //es ist ein modul und thema gegeben
-                console.dir("Sind in Modul und Thema");
-                console.dir(modul);
-
 
 //                var api = 'https://immense-journey-49192.herokuapp.com/';
 //                var route = 'messageBot';
@@ -668,30 +652,7 @@ const actions = {
 //                });
 
 
-                //Aufrufen gibAufgabe der Datenbank
-                if (thema === "XML") {
-                    
-                    context.Aufgabe = "Wofür steht die Abkürzung XML?";
 
-                    context.A = "(A) Extreme Mega Language";
-                    context.B = "(B) Extensible Markup Language";
-                    context.C = "(C) Extensible Machine Language";
-
-
-
-                } else if (thema === "HTML") {
-
-                    
-                    context.Aufgabe = "Mit welchem Tag kann man in HTML Bereiche markieren?";
-
-                    context.A = "(A) Mit dem Tag <span>";
-                    context.B = "(B) Mit dem Tag <pre>";
-                    context.C = "(C) Mit dem Tag <figure>";
-
-                    
-
-
-                }
                 context.modul = modul;
                 context.thema = thema;
                 //Abspeichern der Richtig und Falschen Antwort
@@ -702,8 +663,7 @@ const actions = {
             } else if (modul) {
 
                 //es ist ein modul und thema gegeben
-                console.dir("Sind in Modul");
-                console.dir(modul);
+
                 //Aufrufen gibAufgabe der Datenbank
 
                 context.modul = modul;
@@ -713,8 +673,7 @@ const actions = {
                 delete context.missingModul;
 
             } else if (thema) {
-                console.log("Thema ist da aber Modul fehlt");
-                console.log(thema);
+
                 context.thema = thema;
 
                 //wenn modul fehlt
@@ -725,7 +684,6 @@ const actions = {
             } else {
                 context.missingModul = true;
 
-
             }
 
             return resolve(context);
@@ -734,7 +692,7 @@ const actions = {
 
     },
 
-    //soll grundlegende Infos eines Nutzer ausgeben
+    //Soll grundlegende Infos eines Nutzer ausgeben.
     gibInfos( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
@@ -771,7 +729,7 @@ const actions = {
         });
     },
 
-    //soll die Module ausgeben bei denen der Nutzer angemeldet ist !
+    //Soll die Module ausgeben bei denen der Nutzer angemeldet ist !
     gibMeineModule( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
@@ -810,6 +768,7 @@ const actions = {
         });
     },
 
+    //Speichert den übergebenen Benutzernamen in der Datenbank ab.
     setzeName( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
@@ -843,19 +802,18 @@ const actions = {
 
                     } else {
 
-
+                        context.error = "Hmm dein Name fällt mir schwer! Kannst du ihn mir nochmal nennen? ;)"
 
                     }
                 });
 
             }
 
-
             return resolve(context);
         });
     },
 
-    //meldet den Nutzer für das gewünschter Modul An
+    //Meldet den Nutzer für das gewünschter Modul an.
     meldeModulAn( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
@@ -921,6 +879,7 @@ const actions = {
         });
     },
 
+    //Legt eine Uni für einem Benutzer fest.
     setzeUni( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
@@ -951,20 +910,18 @@ const actions = {
                         context.uni = "Ok deine Uni ist also die " + uni;
 
                     } else {
-
-                        //Fehlerfall
+                        //Für den Fall eines Fehlers
+                        context.error = "Leider ist ein Fehler, beim setzen deiner Uni, passiert! :( Könntest du noch einmal deine Uni nennen?"
 
                     }
                 });
             }
 
-            context.uni = "Ok deine Uni ist also die " + uni;
-
             return resolve(context);
         });
     },
 
-    //KANN WIT.AI NICHT
+    //Setz eine Prüfungs für einen Nutzer zu einem bestimmten Modul.
     setzePruefung( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
@@ -995,11 +952,11 @@ const actions = {
 
                     if (!error && response.statusCode === 200) {
 
-                        //Antwort Variable erstellen wit.ai
+                        context.antwort = "Okay deine Prüfung für das Modul " + modul + " wurde für den " + time + "eingetragen."
 
                     } else {
 
-                        //Fehlerfall
+                        context.error = "Ich konnte deine Prüfung leider nicht setzen! Btte überprüf dein Datum und das Modul noch einmal!"
 
                     }
                 });
@@ -1009,7 +966,7 @@ const actions = {
         });
     },
 
-    //KANN WIT.AI NICHT
+    //Gibt die Klausrinformationen über ein bestimmtes Modul
     gibKlausurInfos( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
@@ -1037,23 +994,22 @@ const actions = {
 
                     if (!error && response.statusCode === 200) {
 
-                        context.infos = "Ok hier sind die Infos zur " + modul + " Klausur !!!";
-                        //NATÜRLICH DIE INFOS NOCH!!
+                        context.infos = "Ok hier sind die Infos zur " + modul + " Klausur! Infos: \n " + body.info;
+
 
                     } else {
 
-                        //Fehlerfall
+                        context.error = "Leider habe ich es nicht geschafft dir Informationen über dieses Modul zu beschaffen :( Versuche es evtl später nochmal! :)"
 
                     }
                 });
             }
 
-
             return resolve(context);
         });
     },
 
-    //KANN WIT.AI NICHT
+    //Gibt der Datebank die Bewertung der aktuellen Aufgabe an.
     bewerteAufgabe( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
@@ -1083,11 +1039,11 @@ const actions = {
                     if (!error && response.statusCode === 200) {
 
                         context.bewertung = "Ok also findest du die Aufgabe " + wert;
-                        //NATÜRLICH DIE INFOS NOCH!!
+
 
                     } else {
 
-                        //Fehlerfall
+                        context.error = "Leider ist beim Bewerten was schief gelaufen!";
 
                     }
                 });
@@ -1099,14 +1055,15 @@ const actions = {
 
 };
 
-// Setting up our bot
+// Erstellt eine Wit.ai Variable
+// Regelt den Zugriff auf unser Wit.ai Konto über unseren zugewiesenen WIT_TOKEN. 
 const wit = new Wit({
     accessToken: WIT_TOKEN,
     actions,
     logger: new log.Logger(log.INFO)
 });
 
-// Starting our webserver and putting it all together
+// Erstellt eine Express Variable, welche den Zugang zum Server festlegt.
 const app = express();
 app.use(({method, url}, rsp, next) => {
     rsp.on('finish', () => {
@@ -1116,7 +1073,7 @@ app.use(({method, url}, rsp, next) => {
 });
 app.use(bodyParser.json({verify: verifyRequestSignature}));
 
-// Webhook setup
+// Route für den Facebook Webhook.
 app.get('/webhook', (req, res) => {
     if (req.query['hub.mode'] === 'subscribe' &&
             req.query['hub.verify_token'] === FB_VERIFY_TOKEN) {
@@ -1126,11 +1083,11 @@ app.get('/webhook', (req, res) => {
     }
 });
 
-// Message handler
+// POST Route für Facebook, an welchen die User Daten geschickt werden.
 app.post('/webhook', (req, res) => {
 
-    // Parse the Messenger payload
-    // See the Webhook reference
+    // Auswerten des Benutzerinputs
+    // Weitere Informationen unter:
     // https://developers.facebook.com/docs/messenger-platform/webhook-reference
     const data = req.body;
 
@@ -1138,17 +1095,16 @@ app.post('/webhook', (req, res) => {
         data.entry.forEach(entry => {
             entry.messaging.forEach(event => {
 
-                // Yay! We got a new message!
-                // We retrieve the Facebook user ID of the sender
+                // Ermitteln/Festelgen des Absenders
                 const sender = event.sender.id;
 
-                // We retrieve the user's current session, or create one if it doesn't exist
-                // This is needed for our bot to figure out the conversation history
+                // Prüfen ob der Absender schon eine Session besitzt, wenn nicht
+                // wird eine neue Session erstellt 
                 const sessionId = findOrCreateSession(sender);
 
                 if (event.message && !event.postback) {
 
-                    // We retrieve the message content
+                    // Prüfen auf Art der Benutzer Nachricht.
                     var {text, attachments, quick_reply, is_echo} = event.message;
 
                     if (quick_reply) {
@@ -1163,50 +1119,17 @@ app.post('/webhook', (req, res) => {
                         fbMessage(sender, 'Zurzeit kann ich leider noch keine Anhänge bearbeiten!')
                                 .catch(console.error);
 
-
+                        //Prüfen ob eine der Benutzer eine Textnachricht gesendet hat
+                        //(!is_echo prüft ob es die Nachricht ist die wir dem Nutzer geschickt haben, welche immer als Echo bekommen,und sortiert diese aus.)
                     } else if (text && !is_echo) {
 
-                        // Der Benutzer hat eine Textnachricht gesendet
+                        // Alle Nachrichten die mit ! anfangen sind zum Testen gedacht
                         if (text.charAt(0) === '!') {
 
                             switch (text) {
 
-                                case '!test':
-
-                                    text = 'Gute Wahl! Video kommt sofort ;)'
-                                    text = {text};
-
-                                    fbMessage(sender, text)
-                                            .then(() => null)
-                                            .catch((err) => {
-                                                console.error(
-                                                        'Oops! An error occurred while forwarding the response to',
-                                                        sender,
-                                                        ':',
-                                                        err.stack || err
-                                                        );
-                                            });
-
-                                    text = {"attachment": {
-                                            "type": "video",
-                                            "payload": {
-                                                "url": "https://goo.gl/f4sgPo"
-                                            }
-                                        }
-                                    };
-
-                                    fbMessage(sender, text)
-                                            .then(() => null)
-                                            .catch((err) => {
-                                                console.error(
-                                                        'Oops! An error occurred while forwarding the response to',
-                                                        sender,
-                                                        ':',
-                                                        err.stack || err
-                                                        );
-                                            });
-                                    break;
-
+                                //Testbefehl zum Senden eines GIF-Bildes.
+                                //Quelle: https://www.giphy.com // Link: https://media.giphy.com/media/5Zesu5VPNGJlm/giphy.gif
                                 case '!monkey' :
 
                                     text = {"attachment": {
@@ -1232,7 +1155,7 @@ app.post('/webhook', (req, res) => {
                                     break;
 
                                 default:
-                                    text = 'YOLO geiles Ausrufezeichen!';
+                                    text = 'Nicht erkannter Test befehl';
                                     text = {text};
                                     fbMessage(sender, text)
                                             .then(() => null)
@@ -1248,12 +1171,11 @@ app.post('/webhook', (req, res) => {
                             }
 
                         } else {
-
+                            //Payload ist eine spezielle Textnachricht, 
+                            //welche beim klicken von Buttons im Chat automatisch an Node.js gesendet werden.
                             if (payload === 'richtig') {
 
-
-                                //Aufrufen SpeichereAntwort
-
+                                //Sollte eine Antowrt richtig sein, wird der User darüber informiert.
                                 var text = {"text": "Die Antwort war richtig!"};
 
                                 fbMessage(sender, text)
@@ -1270,7 +1192,7 @@ app.post('/webhook', (req, res) => {
                             } else if (payload === 'falsch') {
 
 
-                                //Aufrufen Speichere Antwort
+                                //Sollte eine Antowrt falsch sein, wird der User darüber informiert.
 
                                 var text = {"text": "Die Antwort war leider falsch! :/"};
 
@@ -1286,6 +1208,7 @@ app.post('/webhook', (req, res) => {
                                         });
                             } else if (payload === '!ins') {
 
+                                //Testfall für das Setzen eins Moduls, in dem Fall INS.
                                 var api = 'https://immense-journey-49192.herokuapp.com/';
                                 var route = 'messageBot';
 
@@ -1305,9 +1228,6 @@ app.post('/webhook', (req, res) => {
                                 }, function (error, response, body) {
 
                                     if (!error && response.statusCode === 200) {
-                                        console.log("Hier kommt der Body von !ins")
-                                        console.dir(body);
-                                        console.dir(response.body);
 
                                         text = 'Okay INS wurde als Modul gespeichert! Frag mich doch direkt mal nach einer Aufgabe! :)';
                                         text = {text};
@@ -1324,8 +1244,6 @@ app.post('/webhook', (req, res) => {
                                                 });
 
                                     } else {
-                                        console.dir(error);
-                                        console.dir(response);
                                         text = 'Es ist wohl ein Fehler aufgetreten!';
                                         text = {text};
 
@@ -1344,36 +1262,29 @@ app.post('/webhook', (req, res) => {
                                 });
                             } else {
 
-                                // Let's forward the message to the Wit.ai Bot Engine
-                                // This will run all actions until our bot has nothing left to do
+                                //Standardfall: Nachricht an Wit.ai weiterleiten 
                                 wit.runActions(
-                                        sessionId, // the user's current session
-                                        text, // the user's message
-                                        sessions[sessionId].context // the user's current session state
+                                        sessionId, // Aktuelle SessionID.
+                                        text, // Nachricht von dem Benutzer.
+                                        sessions[sessionId].context //Der Context vom Benutzergespräch 
                                         ).then((context) => {
-                                    // Our bot did everything it has to do.
-                                    // Now it's waiting for further messages to proceed.
+                                    //Der Bot hat die Anfrage bearbeitet und wartet auf die nächste Nachricht.
                                     console.log('Waiting for next user messages');
 
-                                    // Based on the session state, you might want to reset the session.
-                                    // This depends heavily on the business logic of your bot.
-                                    // Example: 
-                                    // if (context['done']) {
-                                    //   delete sessions[sessionId];
-                                    // }
-
-                                    // Updating the user's current session state
 
 
+                                    //Aktualisiert den Benutzer Context
                                     sessions[sessionId].context = context;
 
-                                })
-                                        .catch((err) => {
-                                            console.error('Oops! Got an error from Wit: ', err.stack || err);
-                                        });
+                                }).catch((err) => {
+                                    console.error('Oops! Error von Wit erhalten: ', err.stack || err);
+                                });
                             }
                         }
                     }
+                //Spezielles Event, welches kein Nachrichten Objekt des User ist.
+                //Postbacks sind Nachrichten, welche in Facebook hinterlegt werden können,
+                //welche ausgelöst werden, sollte der User etwas bestimmte drücken, wie z.B.: Buttons, Templates. 
                 } else if (event.postback) {
 
                     const {payload} = event.postback;
@@ -1381,8 +1292,11 @@ app.post('/webhook', (req, res) => {
 
                     if (payload.charAt(0) === '!') {
 
+                        //Hier wird ! als markierung Verwendet.
                         switch (text) {
 
+                            //Sollte das Peristent Menu geöffnet worden sein und auf Hilfe gedrückt wurde, 
+                            //wird diese Nachricht an den User geschickt.
                             case '!hilfe':
                                 text = 'Dies ist ein Lernbot der WHS Gelsenkirchen, du kannst nach Aufgaben für dein angemeldetes Modul fragen mit z.B. "Gib mir eine Aufgabe". Außerdem kannst du mich auch nach dem Wetter fragen ;)';
                                 text = {text};
@@ -1400,15 +1314,13 @@ app.post('/webhook', (req, res) => {
 
                                 break;
 
-
+                            // Testfall zum Setzen einer Universität, in diesem Fall WHS.
                             case '!whs':
 
                                 var api = 'https://immense-journey-49192.herokuapp.com/';
                                 var route = 'messageBot';
 
                                 var apiUrl = api + route;
-
-
 
                                 request({
                                     url: apiUrl,
@@ -1424,9 +1336,6 @@ app.post('/webhook', (req, res) => {
                                 }, function (error, response, body) {
 
                                     if (!error && response.statusCode === 200) {
-                                        console.log("Hier kommt der Body von !whs")
-                                        console.dir(body);
-                                        console.dir(response.body);
 
                                         text = 'Okay die WHS Gelsenkirchen ist jetzt registriert!';
                                         text = {text};
@@ -1496,8 +1405,10 @@ app.post('/webhook', (req, res) => {
                                 });
 
                                 break;
-
+                            
+                            //Dieses Event wird ausgelöst, wenn auf Los Gehts/Get Started gedrückt wird.
                             case '!gettingStarted':
+
                                 text = 'Willkommen beim WHSLernBot. Damit du mit dem lernen anfangen kannst wähle bitte zuerst eine Hochschule.';
                                 text = {text};
                                 fbMessage(sender, text)
@@ -1566,7 +1477,8 @@ app.post('/webhook', (req, res) => {
 
 
                                 break;
-
+                            
+                            //Testfall für das erneute Auswählen in einem Template.
                             case '!neueUni':
                                 text = 'Du hast dich schon für eine Option entschieden!';
                                 text = {text};
@@ -1580,9 +1492,9 @@ app.post('/webhook', (req, res) => {
                                                     err.stack || err
                                                     );
                                         });
-
+                           //Default Ausgabe wenn ein nicht abgedeckter Fall auftritt.                
                             default:
-                                text = 'YOLO geiles Ausrufezeicheeeeeeeeeeeen!';
+                                text = 'Nicht erkanntes Postback event!';
                                 text = {text};
                                 fbMessage(sender, text)
                                         .then(() => null)
@@ -1608,10 +1520,8 @@ app.post('/webhook', (req, res) => {
 });
 
 /*
- * Verify that the callback came from Facebook. Using the App Secret from
- * the App Dashboard, we can verify the signature that is sent with each
- * callback in the x-hub-signature field, located in the header.
- *
+ * Überprüft ob eine Anfrage tatsächlich von Facebook kommt,dazu wird das FB_APP_SECRET verwendet.
+ * 
  * https://developers.facebook.com/docs/graph-api/webhooks#setup
  *
  */
@@ -1637,12 +1547,6 @@ function verifyRequestSignature(req, res, buf) {
     }
 }
 
-function messageCreator(context, entities) {
-
-
-
-
-}
-
+//Startt den Server auf den von Heroku zugewiesenen Port.
 app.listen(PORT);
 console.log('Listening on :' + PORT + '...');
