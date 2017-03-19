@@ -162,7 +162,9 @@ const firstEntityValue = (entities, entity) => {
 // setzeName
 // meldeModulAn
 // setzeUni
-//
+// 
+// Hier können die einzelnen Wit Funktionen erstellt werden.
+// See https://wit.ai/docs/quickstart
 const actions = {
 
     send( {sessionId}, {text}) {
@@ -191,8 +193,8 @@ const actions = {
             return Promise.resolve();
     }
     },
-    // You should implement your custom actions here
-    // See https://wit.ai/docs/quickstart
+    
+    
 
 
     //Funktion zum Abrufen von Wetter Daten auf openweathermap.org.
