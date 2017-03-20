@@ -99,7 +99,6 @@ const fbMessage = (id, text) => {
                 if (json.error && json.error.message) {
                     throw new Error(json.error.message);
                 }
-                console.dir(json);
                 return json;
             });
 };
@@ -218,7 +217,7 @@ const actions = {
                     url: apiUrl,
                     json: true
                 }, function (error, response, body) {
-                    console.log(body);
+                    
                     if (!error && response.statusCode === 200) {
 
                         switch (body.weather[0].main) {
@@ -370,7 +369,6 @@ const actions = {
     //Löscht die Contexte aus gibAufgabe
     loesche( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
-            console.dir("Bin in loesche");
 
             delete context.Aufgabe;
             delete context.A;
@@ -408,24 +406,23 @@ const actions = {
             //für den weiteren verlauf abgespeichert wird.
             if (firstEntityValue(entities, "number") !== null) {
 
-                console.dir("Number gefunden");
+                
                 note = firstEntityValue(entities, "number");
-                console.dir(note);
+                
 
             } else if (firstEntityValue(entities, "note") !== null) {
-                console.dir("Note gefunden");
+                
                 note = firstEntityValue(entities, "note");
-                console.dir(note);
+                
             } else {
-                console.dir("Alte Note !!!");
+                
                 note = context.note;
-                console.dir(note);
+                
             }
 
 
 
             if (note && modul) {
-                console.dir("NOTE UND MODUL VORHANDEN");
 
                 var api = 'https://immense-journey-49192.herokuapp.com/';
                 var route = 'messageBot';
@@ -462,17 +459,15 @@ const actions = {
 
                 context.note = note;
                 context.modul = modul;
-                console.dir(modul);
-                console.dir(note);
+               
                 delete context.missingModul;
                 return resolve(context);
 
             } else {
-                console.dir("NUR NOTE");
-                console.dir(note);
+                
                 context.missingModul = true;
                 context.note = note;
-                console.dir(context.note);
+                
                 return resolve(context);
             }
 
@@ -877,29 +872,29 @@ const actions = {
 
             if (uni) {
 
-                request({
-                    url: apiUrl,
-                    json: {
-                        "user": {
-                            "userID": sessions[sessionId].fid + "",
-                            "plattformID": 1,
-                            "witSession": "12345"
-                        },
-                        "methode": "setzeUni",
-                        "uniID": 1
-                    }
-                }, function (error, response, body) {
+    request({
+        url: apiUrl,
+        json: {
+            "user": {
+                "userID": sessions[sessionId].fid + "",
+                "plattformID": 1,
+                "witSession": "12345"
+            },
+            "methode": "setzeUni",
+            "uniID": 1
+        }
+    }, function (error, response, body) {
 
-                    if (!error && response.statusCode === 200) {
+        if (!error && response.statusCode === 200) {
 
-                        context.uni = "Ok deine Uni ist also die " + uni;
+            context.uni = "Ok deine Uni ist also die " + uni;
 
-                    } else {
-                        //Für den Fall eines Fehlers
-                        context.error = "Leider ist ein Fehler, beim setzen deiner Uni, passiert! :( Könntest du noch einmal deine Uni nennen?"
+        } else {
+            //Für den Fall eines Fehlers
+            context.error = "Leider ist ein Fehler, beim setzen deiner Uni, passiert! :( Könntest du noch einmal deine Uni nennen?"
 
-                    }
-                });
+        }
+    });
             }
 
             return resolve(context);
