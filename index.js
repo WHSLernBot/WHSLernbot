@@ -1,19 +1,16 @@
 'use strict';
 
-//Schritt anleitung von Facebook/Wit.ai zum aufsetzen eines Bots.
+//Schritt Anleitung von Facebook/Wit.ai zum aufsetzen eines Bots.
 
-// Messenger API integration example
-// We assume you have:
-// * a Wit.ai bot setup (https://wit.ai/docs/quickstart)
-// * a Messenger Platform setup (https://developers.facebook.com/docs/messenger-platform/quickstart)
-// You need to `npm install` the following dependencies: body-parser, express, request.
+// Integration von Wit.ai in den Facebook CHat
+// Vorrausetzung
+// * Ein Wit.ai Bot Projekt  (https://wit.ai/docs/quickstart)
+// * Eine Facebook Seite/App (https://developers.facebook.com/docs/messenger-platform/quickstart)
+// Folgende Module müssen mittels 'npm install' in der Eingabeaufforderung installiert werden: body-parser, express, request.
 //
-// 1. npm install body-parser express request
-// 2. Download and install ngrok from https://ngrok.com/download
-// 3. ./ngrok http 8445
 // 4. WIT_TOKEN=your_access_token FB_APP_SECRET=your_app_secret FB_PAGE_TOKEN=your_page_token node examples/messenger.js
-// 5. Subscribe your page to the Webhooks using verify_token and `https://<your_ngrok_io>/webhook` as callback URL.
-// 6. Talk to your bot on Messenger!
+// 5. Verknüpfe deine Webseite als Webhooks in deinen Facebook App Einstellungen. verify_token and `https://deine-domain.de/webhook` als Callback URL.
+// 6. Du kannst jetzt mit deinem Bot in Facebook Kommunizieren.
 
 
 //Laden der Bibliotheken in unser Projekt.
