@@ -71,7 +71,7 @@ if (!FB_VERIFY_TOKEN) {
 // ----------------------------------------------------------------------------
 // Messenger API specific code
 
-// See the Send API reference
+// Hier kann sich der Funktionsumfang von der Facebook Messenger API angesehen werden.
 // https://developers.facebook.com/docs/messenger-platform/send-api-reference
 
 
@@ -185,7 +185,7 @@ const actions = {
         } else {
 
             console.error('Oops! Couldn\'t find user for session:', sessionId);
-            // Giving the wheel back to our bot
+            
             return Promise.resolve();
     }
     },
@@ -195,6 +195,8 @@ const actions = {
 
     //Funktion zum Abrufen von Wetter Daten auf openweathermap.org.
     //Aktuell nur das aktuelle Wetter
+    //appid kann unter Vorbehalt verwendet werden. Zu Sicherheit sollten sich aber 
+    //die AGBs der Webseite nochmals durchgelesen werden und ein eigener Account + appid erstellt werden.
     getForecast( {context, entities, sessionId}) {
         return new Promise(function (resolve, reject) {
 
